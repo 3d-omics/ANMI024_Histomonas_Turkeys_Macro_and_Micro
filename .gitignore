@@ -1,0 +1,34 @@
+# Large data files that exceed GitHub's 50-100MB limit
+./data/micro/MSEB0042_59/quantify/multiqc_data.json
+./data/micro/MSEB0042_59/preprocess_data/multiqc_kraken.txt
+./data/micro/MSEB0042_59/preprocess_data/multiqc_fastp.txt
+./data/micro/MSEB0042_59/preprocess_data/multiqc_nonpareil.txt
+./data/micro/MSEB0042_59/preprocess_data/multiqc_data.json
+./data/micro/MSEB0042_45/preprocess_data/multiqc_kraken.txt
+./data/micro/MSEB0042_45/preprocess_data/multiqc_fastp.txt
+./data/micro/MSEB0042_45/preprocess_data/multiqc_data.json
+./data/macro/preprocess_data/multiqc_data.json
+./data/MAG_catalogue/drep.0.95.fa
+./data/MAG_catalogue/dram.annotations.tsv.gz
+
+# R session and workspace files
+.RData
+.Rhistory
+.Rproj.user/
+
+# Bookdown build files
+_book/
+*.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
+# Large intermediate processing files (if any)
+data/micro/preprocess_data/
+data/macro/preprocess_data/
+

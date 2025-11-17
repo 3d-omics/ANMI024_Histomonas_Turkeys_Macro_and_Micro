@@ -1,0 +1,138 @@
+# Export Data for MicrobeTag
+
+This file exports data for collaboration with MicrobeTag partners.
+
+## Load required data
+
+Load all necessary data objects
+```{r export_load_data, message=FALSE, eval=FALSE}
+# Load macro sample metadata
+load("data/macro/sample_metadata.Rdata")
+
+# Load macro sample counts (includes genome_counts_macro_filt_30_zerosrem)
+load("data/macro/counts.Rdata")
+
+# Load genome metadata
+load("data/MAG_catalogue/data.Rdata")
+
+# Load metabolites data (MM samples - Histomonas Turkey, digesta)
+load("data/Afekta_Histomonas_Metabolites/metabolites_data.Rdata")
+```
+
+## Export sample metadata (macro samples)
+
+This file contains metadata for macro samples (digesta samples from the Histomonas Turkey experiment).
+
+**Description**: 
+- Contains sample information including animal IDs, treatment groups, age categories, tissue types, and other experimental metadata
+- Each row represents one macro sample
+- Sample names start with "D" (e.g., D001, D002)
+
+**Columns include**:
+- `sample`: Sample identifier (e.g., D001)
+- `animal`: Animal identifier
+- `treatment`: Treatment group
+- `age_category`: Age category (e.g., dpi - days post infection)
+- `tissue`: Tissue type
+- Additional metadata columns as relevant
+
+Export macro sample metadata
+```{r export_sample_metadata_macro, eval=FALSE}
+write_csv(sample_metadata_macro, "export/sample_metadata_macro.csv")
+cat("Exported sample_metadata_macro to export/sample_metadata_macro.csv\n")
+cat("Dimensions:", nrow(sample_metadata_macro), "rows,", ncol(sample_metadata_macro), "columns\n")
+```
+
+## Export metabolites data (MM samples)
+
+This file contains metabolomics abundance data for MM samples (Histomonas Turkey experiment, digesta samples).
+
+**Description**:
+- Contains metabolite abundance values for each sample
+- Each row represents one metabolite (identified by Curated ID)
+- Each column (after Curated ID) represents one sample (animal ID, e.g., M001, M002)
+- Only includes metabolites with ID level 1 (high confidence identifications)
+- Only includes samples from the MM group (Histomonas Turkey, digesta)
+
+**Data structure**:
+- First column: `Curated ID` - Metabolite name
+- Subsequent columns: Animal IDs (e.g., M001, M002, etc.) with abundance values
+
+Export metabolites MM data
+```{r export_metabolites_mm, eval=FALSE}
+write_csv(metabolites_mm, "export/metabolites_mm.csv")
+cat("Exported metabolites_mm to export/metabolites_mm.csv\n")
+cat("Dimensions:", nrow(metabolites_mm), "rows (metabolites),", ncol(metabolites_mm), "columns (Curated ID + samples)\n")
+cat("Number of samples:", ncol(metabolites_mm) - 1, "\n")
+```
+
+## Export genome metadata
+
+This file contains metadata for all Metagenome-Assembled Genomes (MAGs) used in the analysis.
+
+**Description**:
+- Contains taxonomic and functional information for each MAG
+- Each row represents one MAG (genome)
+- Includes taxonomic classifications (phylum, order, family, genus, species)
+- Includes genome characteristics (length, GC content, completeness, contamination)
+- Includes database identifiers (GTDB, NCBI, etc.)
+
+**Columns include**:
+- `genome`: Genome identifier (e.g., MPB:bin_000001)
+- `phylum`, `order`, `family`, `genus`, `species`: Taxonomic classifications
+- `length`: Genome length in base pairs
+- `gc_content`: GC content percentage
+- `completeness`: Genome completeness estimate
+- `contamination`: Estimated contamination level
+- Additional metadata columns as relevant
+
+Export genome metadata
+```{r export_genome_metadata, eval=FALSE}
+write_csv(genome_metadata, "export/genome_metadata.csv")
+cat("Exported genome_metadata to export/genome_metadata.csv\n")
+cat("Dimensions:", nrow(genome_metadata), "rows (genomes),", ncol(genome_metadata), "columns\n")
+```
+
+## Export genome counts (macro samples, filtered)
+
+This file contains genome abundance counts for macro samples after filtering.
+
+**Description**:
+- Contains genome copy counts (normalized for genome length) for each sample
+- Each row represents one MAG (genome)
+- Each column (after genome) represents one sample
+- Only includes samples that passed the 30% coverage filtering threshold
+- Only includes genomes that have non-zero counts in at least one sample
+- Samples with all-zero counts have been removed
+
+**Filtering criteria**:
+- Genomes with <30% coverage in a sample were set to zero
+- Samples with all-zero counts were removed
+- Genomes with all-zero counts across all samples were removed
+
+**Data structure**:
+- First column: `genome` - Genome identifier (e.g., MPB:bin_000001)
+- Subsequent columns: Sample identifiers (e.g., D001, D002) with genome count values
+
+**Note**: These are genome counts (normalized for genome length), not raw read counts. They represent estimated genome copy numbers per sample.
+
+Export genome counts (macro samples, filtered)
+```{r export_genome_counts_macro, eval=FALSE}
+write_csv(genome_counts_macro_filt_30_zerosrem, "export/genome_counts_macro_filt_30_zerosrem.csv")
+cat("Exported genome_counts_macro_filt_30_zerosrem to export/genome_counts_macro_filt_30_zerosrem.csv\n")
+cat("Dimensions:", nrow(genome_counts_macro_filt_30_zerosrem), "rows (genomes),", ncol(genome_counts_macro_filt_30_zerosrem), "columns (genome + samples)\n")
+cat("Number of samples:", ncol(genome_counts_macro_filt_30_zerosrem) - 1, "\n")
+cat("Number of genomes:", nrow(genome_counts_macro_filt_30_zerosrem), "\n")
+```
+
+## Summary
+
+All data files have been exported to the `export/` directory:
+
+1. **sample_metadata_macro.csv**: Macro sample metadata
+2. **metabolites_mm.csv**: Metabolite abundances for MM samples (Histomonas Turkey, digesta)
+3. **genome_metadata.csv**: MAG metadata and taxonomy
+4. **genome_counts_macro_filt_30_zerosrem.csv**: Filtered genome counts for macro samples
+
+These files are ready for sharing with MicrobeTag collaborators.
+

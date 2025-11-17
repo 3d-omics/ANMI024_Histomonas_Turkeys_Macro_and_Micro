@@ -1,0 +1,28 @@
+# Package Versions
+
+```{r plot_packages_versions, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+pkgs_all <- installed.packages()
+
+get_install_date <- function(pkg) {
+  desc_file <- system.file("DESCRIPTION", package = pkg)
+  if (file.exists(desc_file)) {
+    file.info(desc_file)$mtime
+  } else {
+    NA
+  }
+}
+
+R_packages <- data.frame(
+  Package     = pkgs_all[, "Package"],
+  Version     = pkgs_all[, "Version"],
+  InstallDate = as.POSIXct(sapply(pkgs_all[, "Package"], get_install_date),
+                           origin = "1970-01-01")
+)
+
+R_packages <- R_packages[order(R_packages$InstallDate, decreasing = TRUE), ]
+
+knitr::kable(head(R_packages, 20))
+
+```
+
+

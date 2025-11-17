@@ -1,0 +1,972 @@
+# Sequencing Statistics
+
+```{r load_data_seq_stats, eval=FALSE}
+load("data/macro/sample_metadata.Rdata")
+load("data/macro/counts.Rdata")
+load("data/macro/seq_stats.Rdata")
+load("data/micro/sample_metadata.Rdata")
+load("data/micro/counts.Rdata")
+load("data/micro/seq_stats.Rdata")
+load("data/MAG_catalogue/data.Rdata")
+load("data/data_colors.Rdata")
+```
+
+## Prepare tidy tables for plotting
+
+Create tidy table for sequencing stats before & after trimming (micro)
+```{r tidy_plot_data_stats_before_after_micro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_data_stats_before_after <- plot_data_stats %>%
+  pivot_longer(
+    cols = c(
+    total_sequences_before_trim, total_sequences_after_trim,
+    percent_gc_before_trim, percent_gc_after_trim,
+    total_bases_before_trim, total_bases_after_trim),
+    names_to = c("Metric", "Condition"), # Split column names
+    names_pattern = "(.*)_(before|after)_trim") %>%
+  pivot_wider(names_from = Metric, values_from = value) %>%
+  mutate(Condition = factor(Condition, levels = c("before", "after")))
+```
+
+Create tidy table for sequencing stats before & after trimming (macro)
+```{r tidy_plot_data_stats_before_after_macro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_data_stats_before_after_macro <- plot_data_stats_macro %>%
+  pivot_longer(
+    cols = c(
+    total_sequences_before_trim, total_sequences_after_trim,
+    percent_gc_before_trim, percent_gc_after_trim,
+    total_bases_before_trim, total_bases_after_trim),
+    names_to = c("Metric", "Condition"), # Split column names
+    names_pattern = "(.*)_(before|after)_trim") %>%
+  pivot_wider(names_from = Metric, values_from = value) %>%
+  mutate(Condition = factor(Condition, levels = c("before", "after")))
+```
+
+Create tidy table for read counts (micro)
+```{r tidy_plot_data_stats_counts_micro, warning=FALSE, comments="", message=FALSE}
+category_counts <- tibble::tibble(
+  category = c(
+    "bacteria_total_mapped", "turkey_total_mapped", "histomonas_total_mapped", "chicken_total_mapped",
+    "human_total_mapped", "swine_total_mapped", "unmapped", "removed_sequences_after_trim"),
+  label = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human",  "Swine",  "Unmapped", "Removed"),
+  color = c( "#B92D65", "#79b1a3", "#e35d51", "#E8BD50", "#1092b4", "#3baf6f", "#8d98ae", "#2b2d42"))
+
+tidy_plot_data_stats_counts <- plot_data_stats %>%
+  pivot_longer(
+    cols = c(
+      chicken_total_mapped, human_total_mapped,
+      swine_total_mapped, bacteria_total_mapped, turkey_total_mapped, histomonas_total_mapped,
+      unmapped, removed_sequences_after_trim),
+    names_to = "mapping_status", values_to = "counts") %>%
+  left_join(category_counts, by = c("mapping_status" = "category")) %>%
+  # order the groups in desired order
+  mutate(label = factor(label,
+         levels = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human", "Swine", "Unmapped", "Removed")))
+
+# set labels & colours as colour palette
+color_palette_tidy_plot_data_stats_counts <- setNames(category_counts$color, category_counts$label)
+```
+
+Create tidy table for read counts (macro)
+```{r tidy_plot_data_stats_counts_macro, warning=FALSE, comments="", message=FALSE}
+category_counts <- tibble::tibble(
+  category = c(
+    "bacteria_total_mapped", "turkey_total_mapped", "histomonas_total_mapped","chicken_total_mapped",  
+    "human_total_mapped", "swine_total_mapped", "unmapped", "removed_sequences_after_trim"),
+  label = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human",  "Swine",  "Unmapped", "Removed"),
+  color = c( "#B92D65", "#79b1a3", "#e35d51", "#E8BD50", "#1092b4", "#3baf6f", "#8d98ae", "#2b2d42"))
+
+tidy_plot_data_stats_counts_macro <- plot_data_stats_macro %>%
+  pivot_longer(
+    cols = c(
+      chicken_total_mapped, human_total_mapped,
+      swine_total_mapped, bacteria_total_mapped, turkey_total_mapped, histomonas_total_mapped,
+      unmapped, removed_sequences_after_trim),
+    names_to = "mapping_status", values_to = "counts") %>%
+  left_join(category_counts, by = c("mapping_status" = "category")) %>%
+  # order the groups in desired order
+  mutate(label = factor(label,
+         levels = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human", "Swine", "Unmapped", "Removed")))
+
+# set labels & colours as colour palette
+color_palette_tidy_plot_data_stats_counts <- setNames(category_counts$color, category_counts$label)
+```
+
+Create tidy table for read percentages (micro)
+```{r tidy_plot_data_stats_counts_prc_micro, warning=FALSE, comments="", message=FALSE}
+category_prc <- tibble::tibble(
+  category = c(
+    "bacteria_percentage", "turkey_percentage", "histomonas_percentage",  "chicken_percentage",  
+    "human_percentage", "swine_percentage", "unmapped_percentage", "trimmed_reads_percentage"),
+  label = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human",  "Swine",  "Unmapped", "Removed"),
+  color = c( "#B92D65", "#79b1a3", "#e35d51", "#E8BD50", "#1092b4", "#3baf6f", "#8d98ae", "#2b2d42"))
+
+tidy_plot_data_stats_counts_prc <- plot_data_stats %>%
+  pivot_longer(
+    cols = c(
+      chicken_percentage, human_percentage,
+      swine_percentage, bacteria_percentage, turkey_percentage, histomonas_percentage,
+      unmapped_percentage, trimmed_reads_percentage),
+    names_to = "mapping_status", values_to = "counts") %>%
+  left_join(category_prc, by = c("mapping_status" = "category")) %>%
+  # order the groups in desired order
+  mutate(label = factor(label,
+         levels = c("Bacteria", "Turkey", "Histomonas",  "Chicken", "Human", "Swine", "Unmapped", "Removed")))
+
+# set labels & colours as colour palette
+color_palette_tidy_plot_data_stats_counts <- setNames(category_counts$color, category_counts$label)
+```
+
+Create tidy table for read percentages (macro)
+```{r tidy_plot_data_stats_counts_prc_macro, warning=FALSE, comments="", message=FALSE}
+category_prc <- tibble::tibble(
+  category = c(
+    "bacteria_percentage", "turkey_percentage", "histomonas_percentage",  "chicken_percentage",  
+    "human_percentage", "swine_percentage", "unmapped_percentage", "trimmed_reads_percentage"),
+  label = c("Bacteria", "Turkey", "Histomonas", "Chicken", "Human",  "Swine",  "Unmapped", "Removed"),
+  color = c( "#B92D65", "#79b1a3", "#e35d51", "#E8BD50", "#1092b4", "#3baf6f", "#8d98ae", "#2b2d42"))
+
+tidy_plot_data_stats_counts_prc_macro <- plot_data_stats_macro %>%
+  pivot_longer(
+    cols = c(
+      chicken_percentage, human_percentage,
+      swine_percentage, bacteria_percentage, turkey_percentage, histomonas_percentage,
+      unmapped_percentage, trimmed_reads_percentage),
+    names_to = "mapping_status", values_to = "counts") %>%
+  left_join(category_prc, by = c("mapping_status" = "category")) %>%
+  # order the groups in desired order
+  mutate(label = factor(label,
+         levels = c("Bacteria",  "Turkey", "Histomonas", "Chicken", "Human", "Swine", "Unmapped", "Removed")))
+
+# set labels & colours as colour palette
+color_palette_tidy_plot_data_stats_counts <- setNames(category_counts$color, category_counts$label)
+```
+
+
+Create tidy tables for genome counts (micro)
+```{r tidy_plot_genome_counts_micro, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+tidy_plot_genome_counts <-  genome_counts %>%
+    pivot_longer(-genome, names_to = "microsample", values_to = "count") %>% 
+    left_join(genome_metadata, by = join_by(genome == genome)) %>% 
+    left_join(sample_metadata, by = join_by(microsample == microsample)) %>% 
+    left_join(final_combined_stats, by = join_by(microsample == microsample)) %>%
+    # Flatten section if it's a list
+    mutate(section = unlist(section)) %>% 
+    # Filter out rows with count <= 0 
+    # (that are redundant after pivot_longer, but important for b div)
+    filter(count > 0) %>%
+    mutate(phylum = factor(phylum, levels = phylum_level_vector),
+           order = factor(order, levels = order_level_vector))
+```
+
+## Macro-samples
+
+### Number of bases & reads
+```{r plot_seq_stats_macro_bases_reads, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+var <- "total_bases_before_trim"
+summary_stats <-plot_data_stats_macro %>%
+  group_by(type_simple, batch) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+
+barplot_bases <- plot_data_stats_macro %>%
+  ggplot(aes(x = type_simple, y = total_bases_before_trim, color = bacteria_percentage, shape=filter_status)) +
+  labs(x = "Sample type", y = "Number of bases before trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+  geom_boxplot(outlier.shape = NA) +
+      geom_jitter(width = 0.1, alpha = 0.6, size = 3) +
+  facet_nested(. ~ batch, scales = "free", space = "free") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 10, 0.2, 0.2)) +
+  geom_text(
+    data = summary_stats,
+    aes(x = type_simple, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7,
+    size = 4, alpha = 1, color = "black") 
+
+# barplot_bases
+
+var <- "total_sequences_after_trim"
+summary_stats <-plot_data_stats_macro %>%
+  group_by(type_simple, batch) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+barplot_reads_after <- plot_data_stats_macro %>%
+  ggplot(aes(x = type_simple, y = total_sequences_after_trim, color = bacteria_percentage, shape=filter_status)) +
+  labs(x = "Sample type", y = "Number of reads after trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1, alpha = 0.6, size = 3) +
+  facet_nested(. ~ batch, scales = "free", space = "free") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.6)) +
+  geom_text(
+    data = summary_stats,
+    aes(x = type_simple, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7,
+    size = 4, alpha = 1, color = "black")
+
+# barplot_trimmed_reads + barplot_reads_after +
+#   plot_annotation(tag_levels = 'a') +
+#   plot_layout(guides = "collect") &
+#   theme(legend.position = "bottom", legend.box = "vertical")
+
+
+barplot_bases + barplot_reads_after +
+    plot_annotation(tag_levels = 'a') +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom", legend.box = "vertical")
+
+```
+
+### % of reads mapped to references, removed by trimming, unmapped
+```{r plot_seq_stats_macro_reads_prc, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=8}
+var <- "counts"
+summary_stats <- tidy_plot_data_stats_counts_prc_macro %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage","turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  group_by(type_simple, batch, label) %>% #treatment_expl, age, 
+  summarise(
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    median = median(.data[[var]], na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(
+    label_txt = paste0(
+      "", round(median, 1),"%",
+      " [", round(Q1, 1), "–", round(Q3, 1), "]"))
+knitr::kable(summary_stats)
+
+boxplot_reads_prc_1 <- tidy_plot_data_stats_counts_prc_macro %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage", "turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  ggplot(aes(x = batch, y = counts, color = label)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  facet_nested(. ~ label, scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = NULL,y = "Reads %") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = batch, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -1.5,
+    size = 3, alpha = 1, color = "black")
+
+# boxplot_reads_prc_1
+```
+
+### Composition of reads vs. references
+```{r plot_buffer_reads_1, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+barplot_1 <- tidy_plot_data_stats_counts_macro %>%
+  ggplot(aes(x = counts, y = microsample, fill = label)) +
+  geom_bar(stat="identity", colour="white", linewidth=0.1, position = "fill") + #plot stacked bars with white borders
+  scale_fill_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  labs(x = "Counts",y = "Microsample",fill = "Read type") +
+  facet_nested(type_simple + batch ~ ., scales = "free", space = "free", switch = "y") + # treatment + day + animal + 
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_blank(),
+        legend.position = "bottom") +
+  ggtitle("Ratio of reads")
+# barplot_1
+
+barplot_2 <- tidy_plot_data_stats_counts_macro %>%
+  ggplot(aes(x = counts, y = microsample, fill = label)) +
+  geom_bar(stat="identity", colour="white", linewidth=0.1) + #plot stacked bars with white borders
+  scale_fill_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  labs(x = "Counts",y = "Samples",fill = "Read type") +
+  facet_nested(type_simple  ~ ., scales = "free", space = "free", switch = "y") +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_blank(),
+        legend.position = "bottom",
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) 
+# barplot_2
+```
+
+
+```{r plot_seq_stats_macro_combo, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+(boxplot_reads_prc_1 |barplot_2  )    +
+  plot_layout(
+    ncol = 2,        # single column
+    widths = c(2, 2),   # assign relative heights
+    guides = "collect"
+  ) + 
+  plot_annotation(tag_levels = 'a') &
+    theme(legend.position = "bottom", legend.box = "vertical")
+
+
+```
+
+
+## Micro-samples
+
+
+### Number of bases
+```{r plot_seq_stats_micro_bases_section, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+var <- "total_bases_before_trim"
+summary_stats <-plot_data_stats %>%
+  group_by(type_simple, section) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+
+barplot_bases_all <- plot_data_stats %>%
+  ggplot(aes(x = section, y = total_bases_before_trim)) +
+  labs(x = "Type", y = "Number of bases before trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+
+  # single boxplot per batch
+  geom_boxplot(outlier.shape = NA) +
+
+  # keep color & shape for jitter points only
+  geom_jitter(aes(color = bacteria_percentage, shape = filter_status),
+              width = 0.3, alpha = 0.5, size = 2) +
+
+  facet_nested(type_simple ~ ., scales = "free", space = "fixed") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(
+        plot.margin = margin(0.2, 10, 0.2, 0.2),
+        axis.title.x = element_blank(),  # remove x-axis title
+    axis.text.x = element_blank(),   # remove tick labels #axis.text.x = element_text(angle = 90, hjust = 1)
+    axis.ticks.x = element_blank(),  # remove tick marks
+    ) +
+  geom_text(
+    data = summary_stats,
+    aes(x = section, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7, size = 3, alpha = 1, color = "black")
+
+
+ # barplot_bases_all
+```
+
+```{r plot_seq_stats_micro_bases_batch, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+var <- "total_bases_before_trim"
+summary_stats <-plot_data_stats %>%
+  group_by(type_simple, batch) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+
+barplot_bases_batch <- plot_data_stats %>%
+  ggplot(aes(x = batch, y = total_bases_before_trim)) +
+  labs(x = "Batch", y = "Number of bases before trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+
+  # single boxplot per batch
+  geom_boxplot(aes(group = batch), outlier.shape = NA) +
+
+  # keep color & shape for jitter points only
+  geom_jitter(aes(color = bacteria_percentage, shape = filter_status),
+              width = 0.1, alpha = 0.5, size = 2) +
+
+  facet_nested(type_simple ~ ., scales = "free", space = "fixed") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) +
+  geom_text(
+    data = summary_stats,
+    aes(x = batch, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7, size = 3, alpha = 1, color = "black")
+
+
+ # barplot_bases_batch
+```
+ 
+ 
+```{r plot_seq_stats_micro_bases_combo_fixed, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+
+(barplot_bases_all + barplot_bases_batch) +
+ plot_annotation(tag_levels = 'a') +
+  plot_layout(guides = "collect",
+              ncol = 2,        # single column
+              width = c(1, 8)) &
+  theme(legend.position = "bottom", legend.box = "vertical")
+
+```
+ 
+ 
+### Number of reads after trimming
+```{r plot_seq_stats_micro_reads_section, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+var <- "total_sequences_after_trim"
+summary_stats <-plot_data_stats %>%
+  group_by(type_simple, section) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+
+barplot_trimmed_reads_all <- plot_data_stats %>%
+  ggplot(aes(x = section, y = total_sequences_after_trim)) +
+  labs(x = "Type", y = "Number of reads after trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+
+  # single boxplot per batch
+  geom_boxplot(outlier.shape = NA) +
+
+  # keep color & shape for jitter points only
+  geom_jitter(aes(color = bacteria_percentage, shape = filter_status),
+              width = 0.3, alpha = 0.5, size = 2) +
+
+  facet_nested(type_simple ~ ., scales = "free", space = "fixed") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(
+        plot.margin = margin(0.2, 10, 0.2, 0.2),
+        axis.title.x = element_blank(),  # remove x-axis title
+        axis.text.x = element_blank(),   # remove tick labels #axis.text.x = element_text(angle = 90, hjust = 1)
+        axis.ticks.x = element_blank(),  # remove tick marks
+    ) +
+  geom_text(
+    data = summary_stats,
+    aes(x = section, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7, size = 3, alpha = 1, color = "black")
+
+
+ # barplot_trimmed_reads_all
+```
+
+```{r plot_seq_stats_micro_reads_batch, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+var <- "total_sequences_after_trim"
+summary_stats <-plot_data_stats %>%
+  group_by(type_simple, batch) %>%  # replace with your grouping var if any
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+knitr::kable(summary_stats)
+
+
+barplot_reads_batch <- plot_data_stats %>%
+  ggplot(aes(x = batch, y = total_sequences_after_trim)) +
+  labs(x = "Batch", y = "Number of reads after trimming") +
+  scale_color_gradient(low = "#c90076", high = "#3598bf", name = "bacteria_percentage") +
+  scale_shape_manual(values = c("Retained by filtering" = 16, "Excluded from filtering" = 17)) +
+
+  # single boxplot per batch
+  geom_boxplot(aes(group = batch), outlier.shape = NA) +
+
+  # keep color & shape for jitter points only
+  geom_jitter(aes(color = bacteria_percentage, shape = filter_status),
+              width = 0.1, alpha = 0.5, size = 2) +
+
+  facet_nested(type_simple ~ ., scales = "free", space = "fixed") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) +
+  geom_text(
+    data = summary_stats,
+    aes(x = batch, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -7, size = 3, alpha = 1, color = "black")
+
+
+ # barplot_reads_batch
+```
+
+```{r plot_seq_stats_micro_reads_combo, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+
+(barplot_trimmed_reads_all + barplot_reads_batch) +
+ plot_annotation(tag_levels = 'a') +
+  plot_layout(guides = "collect",
+              ncol = 2,        # single column
+              width = c(1, 8)) &
+  theme(legend.position = "bottom", legend.box = "vertical")
+
+```
+
+### % of reads mapped to references, removed by trimming, unmapped
+```{r plot_seq_stats_micro_reads_prc_batch, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=8}
+var <- "counts"
+summary_stats <- tidy_plot_data_stats_counts_prc %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage","turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  group_by(type_simple, batch, label) %>% #treatment_expl, age, 
+  summarise(
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    median = median(.data[[var]], na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(
+    label_txt = paste0(
+      "", round(median, 1),"%",
+      "\n[", round(Q1, 1), "–", round(Q3, 1), "]"))
+knitr::kable(summary_stats)
+
+boxplot_reads_prc_1_batch <- tidy_plot_data_stats_counts_prc %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage", "turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  ggplot(aes(x = batch, y = counts, color = label)) +
+  geom_boxplot(outlier.shape = NA, color="black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  facet_nested(label ~ ., scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = NULL,y = "Reads %") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2),
+        axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.20))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = batch, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -0.8,
+    size = 2, alpha = 1, color = "black")
+
+boxplot_reads_prc_1_batch
+```
+
+
+
+```{r plot_seq_stats_micro_reads_prc_section, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=8}
+var <- "counts"
+summary_stats <- tidy_plot_data_stats_counts_prc %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage","turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  group_by(type_simple, section, label) %>% #treatment_expl, age, 
+  summarise(
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    median = median(.data[[var]], na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(
+    label_txt = paste0(
+      "", round(median, 1),"%",
+      "\n[", round(Q1, 1), "–", round(Q3, 1), "]"))
+knitr::kable(summary_stats)
+
+boxplot_reads_prc_1_all <- tidy_plot_data_stats_counts_prc %>%
+  filter(type_simple == "P")%>%
+  filter(mapping_status %in% c("bacteria_percentage", "turkey_percentage", "unmapped_percentage", "trimmed_reads_percentage")) %>%
+  ggplot(aes(x = section, y = counts, color = label)) +
+  geom_boxplot(outlier.shape = NA, color="black") +
+  geom_jitter(width = 0.3, alpha = 0.3) +
+  scale_color_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  facet_nested(label ~ ., scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = NULL,y = "Reads %") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 10, 0.2, 0.2),
+        axis.title.x = element_blank(),  # remove x-axis title
+        axis.text.x = element_blank(),   # remove tick labels #axis.text.x = element_text(angle = 90, hjust = 1)
+        axis.ticks.x = element_blank(),  # remove tick marks
+        ) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.21))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = section, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -0.3,
+    size = 3, alpha = 1, color = "black")
+
+boxplot_reads_prc_1_all
+```
+```{r plot_seq_stats_micro_reads_prc_combo, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+
+(boxplot_reads_prc_1_all + boxplot_reads_prc_1_batch) +
+ plot_annotation(tag_levels = 'a') +
+  plot_layout(guides = "collect",
+              ncol = 2,        # single column
+              width = c(1, 8)) &
+  theme(legend.position = "bottom", legend.box = "vertical")
+
+```
+
+### Collection attempts
+
+```{r plot_seq_stats_collection_attempts, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+
+collection_attempts_plot_simple <- plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  # filter(batch == "MSEB0048")
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two"
+  )) %>%
+  mutate(collection_attempts_text = factor(collection_attempts_text, levels = c("Fail", "Two", "One"))) %>%
+  ggplot(aes(x = batch,  fill = collection_attempts_text)) +
+    labs(x = NULL, y = "# of collection attempts") +
+    geom_bar() + #position = "fill"
+   geom_text(stat = "count",
+            aes(label = ..count.., 
+                group = collection_attempts_text),
+            position = position_stack(vjust = 0.5), 
+            color = "white") +   # text colour; adjust for contrast
+    scale_fill_manual(values = c("#685d79","#d9727f","#fcbb6d")) +    
+    facet_nested(.  ~ type_simple, scales = "free", space = "free",switch = "y") +
+    theme_minimal() +
+    custom_ggplot_theme +
+    theme(axis.text.x = element_text(angle = 90),
+          plot.margin = unit(c(0, 0, 0, 0), "cm"),
+          panel.spacing = unit(0.3, "lines"),
+          strip.text = element_text(size = 10, face = "bold", color = "black")) 
+
+collection_attempts_plot_simple
+```
+
+```{r plot_seq_stats_filter_status, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+
+filter_status_plot_simple <- plot_data_stats %>%
+  ggplot(aes(x = batch,  fill = filter_status)) +
+    labs(x = NULL, y = "# of collection attempts") +
+    geom_bar() + #position = "fill"
+   geom_text(stat = "count",
+            aes(label = ..count.., 
+                group = filter_status),
+            position = position_stack(vjust = 0.5), 
+            color = "white") +   # text colour; adjust for contrast
+    scale_fill_manual(values = c("#685d79","#d9727f","#fcbb6d")) +    
+    facet_nested(.  ~ type_simple, scales = "free", space = "free",switch = "y") +
+    theme_minimal() +
+    custom_ggplot_theme +
+    theme(axis.text.x = element_text(angle = 0),
+          plot.margin = unit(c(0, 0, 0, 0), "cm"),
+          panel.spacing = unit(0.3, "lines"),
+          strip.text = element_text(size = 10, face = "bold", color = "black")) 
+
+filter_status_plot_simple &
+  theme(legend.position = "bottom", legend.box = "vertical") 
+```
+
+
+
+
+### Collection attempts vs filtering retention
+```{r plot_seq_stats_collection_vs_filter, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=7}
+collection_attempts_plot <- plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two"
+  )) %>%
+  mutate(collection_attempts_text = factor(collection_attempts_text, levels = c("Fail", "Two", "One"))) %>%
+  ggplot(aes(x = batch,  fill = collection_attempts_text)) +
+    labs(x = NULL, y = "# of collection attempts") +
+    geom_bar() + #position = "fill"
+    scale_fill_manual(values = c("#685d79","#d9727f","#fcbb6d")) +    
+    facet_nested(.  ~ filter_status, scales = "free", space = "free",switch = "y") +
+    theme_minimal() +
+    custom_ggplot_theme +
+    theme(axis.text.x = element_blank(),
+          plot.margin = unit(c(0, 0, 0, 0), "cm"),
+          panel.spacing = unit(0.3, "lines"),
+          strip.text = element_text(size = 10, face = "bold", color = "black")) 
+
+barplot_collection_reads_after <- plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two"
+  )) %>%
+  ggplot(aes(x = batch, y = total_sequences_after_trim)) +
+    labs(x = "Batch", y = "# of reads after trimming") +
+    geom_boxplot(outlier.shape = NA) +
+        geom_jitter(aes(color = collection_attempts_text),
+                    width = 0.2, alpha = 0.5, size=1.5) +
+      scale_color_manual(values = c("#685d79","#d9727f","#fcbb6d")) +    
+    facet_nested(. ~ filter_status, scales = "free", space = "free") +
+    theme_minimal() +
+    custom_ggplot_theme +
+    guides(color = "none") +  # Remove legend
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),
+          strip.background = element_blank(),
+          strip.text.x = element_blank(),
+          plot.margin = unit(c(0, 0, 0, 0), "cm"),
+          panel.spacing = unit(0.3, "lines"),
+          strip.text = element_text(size = 10, face = "bold", color = "black"))   
+  
+  
+# collection_attempts_plot / barplot_collection_reads_after +
+#   plot_annotation(tag_levels = 'a') +
+#   plot_layout(guides = "collect") &
+#   theme(legend.position = "bottom", legend.box = "vertical") 
+#     # ggtitle("*Microsample M305574 removed (2 attempts)")
+
+
+scale_fonts = 0.9
+
+plot_attempts <- collection_attempts_plot / barplot_collection_reads_after +
+  plot_annotation(tag_levels = 'a') +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom", legend.box = "vertical") 
+    # ggtitle("*Microsample M305574 removed (2 attempts)")
+
+
+
+plot_attempts +
+  theme(
+    legend.position = "none") & theme(
+  axis.text  = element_text(size = rel(scale_fonts)),   # axis tick labels
+  axis.title = element_text(size = rel(scale_fonts)),   # axis titles
+  strip.text = element_text(size = rel(scale_fonts)),   # facet labels
+  plot.title = element_text(size = rel(scale_fonts)),   # plot titles
+  legend.text = element_text(size = rel(scale_fonts)),  # legend text
+  legend.title = element_text(size = rel(scale_fonts))  # legend title
+)
+```
+
+```{r plot_seq_stats_collection_filter_table, warning=FALSE, comments="", message=FALSE, fig.height=10, fig.width=10}
+plot_data_stats %>%
+  filter(collection_attempts > 0,
+         type_simple == "P") %>%
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two",
+    TRUE ~ "Other"
+  )) %>%
+  count(filter_status, collection_attempts_text) %>%
+  group_by(filter_status) %>%
+  mutate(percent = 100 * n / sum(n)) %>%
+  ungroup()
+```
+
+```{r plot_seq_stats_filter_excluded_summary, warning=FALSE, comments="", message=FALSE, fig.height=10, fig.width=10}
+plot_data_stats %>%
+  filter(collection_attempts > 0,
+         type_simple == "P") %>%
+  count(filter_status) %>%
+  # group_by(filter_status) %>%
+  mutate(percent = 100 * n / sum(n)) %>%
+  ungroup()
+
+var <- "total_sequences_after_trim"
+plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  filter(filter_status == "Excluded from filtering") %>%
+  select(microsample, filter_status, collection_attempts, collection, total_sequences_after_trim) %>%
+  group_by(filter_status) %>%  
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  )
+```
+
+```{r plot_seq_stats_filter_retained_table, warning=FALSE, comments="", message=FALSE, fig.height=10, fig.width=10}
+plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  filter(filter_status == "Retained by filtering") %>%
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two")) %>%
+  select(microsample, filter_status, collection_attempts_text, total_sequences_after_trim) %>%
+  count(collection_attempts_text) %>%
+  mutate(percent = 100 * n / sum(n))
+```
+
+```{r plot_seq_stats_filter_retained_summary, warning=FALSE, comments="", message=FALSE, fig.height=10, fig.width=10}
+var <- "total_sequences_after_trim"
+plot_data_stats %>%
+  filter(collection_attempts >0) %>%
+  filter(type_simple == "P") %>%
+  filter(filter_status == "Retained by filtering") %>%
+  mutate(collection_attempts_text = case_when(
+    collection == "Fail" ~ "Fail",
+    collection_attempts == 1 ~ "One",
+    collection_attempts == 2 ~ "Two")) %>%
+  select(microsample, filter_status, collection_attempts_text, total_sequences_after_trim) %>%
+  group_by(collection_attempts_text) %>%  
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = paste0("", format(median, scientific = TRUE, digits = 2)))
+```
+
+
+
+```{r neg_vs_pos_prep, warning=FALSE, comments="", message=FALSE}
+
+# Select data & pivot to wide df
+neg_vs_pos_wide <- tidy_plot_genome_counts %>%
+  # arrange samples: first negatives, then positives (for ALDEx2).
+  arrange(type_simple) %>% 
+  select(genome, microsample, count) %>%
+  pivot_wider(
+    names_from = genome,   
+    values_from = count,   
+    values_fill = 0
+  ) %>%
+  select(where(~ any(. != 0))) %>%
+  mutate(across(-microsample, ~ . / rowSums(across(where(is.numeric))) * 100 )) %>%
+  column_to_rownames(var = "microsample")
+
+# Remove taxa in few samples, and samples with few taxa
+neg_vs_pos_wide <- remove_samples_or_taxa(df = neg_vs_pos_wide,
+                                     min_samples_per_taxon = 10,
+                                     min_taxa_per_sample = 10)
+
+# Remove taxa with less than 0.1% rel. abun. in all samples
+# neg_vs_pos_wide <- neg_vs_pos_wide %>% select(where(~ any(. >= 0.1)))
+
+
+
+
+```
+
+
+```{r plot_seq_stats_pca, warning = FALSE, comments = "", message = FALSE, fig.height = 7, fig.width=10}
+# Perform PCA & make PCA plot
+neg_pos_PCA <- perform_pca(neg_vs_pos_wide, z_delete = TRUE)
+
+plot_data_stats_temp <- plot_data_stats %>%
+  mutate(collection_type_simple = case_when (
+    type_simple == "N" ~ "Negative Sample",
+    collection == "Fail" ~ "Microsample: Failed Collection",
+    collection_attempts == 0 ~ "Microsample: One Collection",
+    collection_attempts == 1 ~ "Microsample: One Collection",
+    collection_attempts == 2 ~ "Microsample: Two Collections"))
+
+
+neg_pos_pca_plot <- plot_pca(neg_pos_PCA$pca_result,
+  samples_color_metadata = "collection_type_simple",
+  samples_shape_metadata = "filter_status",
+  samples_color_value = c("#685d79","#fcbb6d", "#d9727f", "#3cb2bd"),
+  loadings_color_metadata = "order",
+  loadings_color_value = order_colors,
+  loadings_taxon_level = "species",
+  sample_metadata = plot_data_stats_temp,
+  genome_metadata = genome_metadata,
+  order_colors,
+  custom_ggplot_theme,
+  loadings_number = 20 # nrow(neg_vs_pos_ALDEx2_significant)
+) +
+  theme(plot.margin = unit(c(0, 0, 1, 0), "cm"))
+
+neg_pos_pca_plot
+```
+
+
+```{r plot_seq_stats_permanova, warning = FALSE, comments = "", message = FALSE, fig.height = 7, fig.width=10}
+
+# Calculate Euclidean distance on CLR data
+neg_pos_dist_matrix <- vegdist(neg_pos_PCA$df_clr_dist, method = "euclidean")
+
+# Make sure that filtered df and metadata have the same number & order of rows
+# Get the exact order of rownames from the PCA data
+pca_rownames <- rownames(neg_pos_PCA$df_clr_dist)
+
+# Filter and reorder metadata to match exactly
+neg_pos_metadata_adonis <- plot_data_stats_temp %>%
+  filter(microsample %in% pca_rownames) %>%
+  # Create a factor with levels in the exact order of pca_rownames, then arrange
+  mutate(microsample_ordered = factor(microsample, levels = pca_rownames)) %>%
+  arrange(microsample_ordered) %>%
+  select(microsample, animal, treatment, age_category, filter_status, collection_type_simple)
+
+# Verify the order matches
+all(neg_pos_metadata_adonis$microsample == pca_rownames)
+
+# Run PERMANOVA
+adonis2_result <- adonis2(
+  neg_pos_dist_matrix ~  animal + filter_status + collection_type_simple ,
+  data = neg_pos_metadata_adonis,
+  permutations = 999,
+  by = "terms"
+)
+
+knitr::kable(adonis2_result)
+```
+
+```{r plot_seq_stats_filter_summary_table, warning = FALSE, comments = "", message = FALSE, fig.height = 7, fig.width=10}
+plot_data_stats_temp %>%
+  select(microsample, type_simple, filter_status) %>%
+  group_by(type_simple) %>%
+  count(filter_status) %>%
+  mutate(percent = 100 * n / sum(n))
+
+plot_data_stats_temp %>%
+  select(microsample, type_simple, collection, filter_status) %>%
+  group_by(type_simple, collection) %>%
+  count(filter_status) %>%
+  mutate(percent = 100 * n / sum(n))
+```
+
+
+
+
+
+
+
+
+
+
+

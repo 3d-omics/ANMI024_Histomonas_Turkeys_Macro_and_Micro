@@ -1,0 +1,211 @@
+# Metabolomics Data Preparation
+
+This file processes metabolomics data from Afekta partners for Histomonas experiments.
+
+## Load metabolomics data
+
+### Load abundance values and metabolites metadata
+```{r metabolites_load_data, message=FALSE, eval=FALSE}
+# Load abundance values (samples as columns)
+metabolites_abundance <- read_csv("data/Afekta_Histomonas_Metabolites/histomonas_metabolomics_abundance_values.csv", 
+                                  show_col_types = FALSE)
+
+# Load metabolites metadata
+metabolites_metadata <- read_csv("data/Afekta_Histomonas_Metabolites/histomonas_metabolomics_metabolites.csv",
+                                 show_col_types = FALSE)
+```
+
+## Classify samples by type
+
+Sample naming convention:
+- **H samples**: H###aN (Histomonas Chicken experiment, host tissue) or H###M (Histomonas Chicken experiment, digesta)
+- **M samples**: M###N (Histomonas Turkey experiment, host tissue) or M###M (Histomonas Turkey experiment, digesta)
+
+### Identify sample columns and classify by type
+```{r metabolites_classify_samples, message=FALSE, eval=FALSE}
+# Get all column names (excluding SAMPLE_ID and Curated ID)
+sample_cols <- colnames(metabolites_abundance)[-c(1, 2)]
+
+# Classify samples into 4 groups
+# HN: H samples ending in "aN" (Histomonas Chicken, host tissue)
+# HM: H samples ending in "M" but NOT "aN" (Histomonas Chicken, digesta)
+# MN: M samples ending in "N" but NOT "M" (Histomonas Turkey, host tissue)
+# MM: M samples ending in "M" (Histomonas Turkey, digesta)
+
+hn_samples <- sample_cols[grepl("^H\\d+aN$", sample_cols)]
+hm_samples <- sample_cols[grepl("^H\\d+M$", sample_cols) & !grepl("aN$", sample_cols)]
+mn_samples <- sample_cols[grepl("^M\\d+N$", sample_cols)]
+mm_samples <- sample_cols[grepl("^M\\d+M$", sample_cols)]
+
+cat("Sample counts:\n")
+cat("  HN (H + aN):", length(hn_samples), "\n")
+cat("  HM (H + M):", length(hm_samples), "\n")
+cat("  MN (M + N):", length(mn_samples), "\n")
+cat("  MM (M + M):", length(mm_samples), "\n")
+```
+
+
+## Create dataframes for each sample type
+
+### HN: Histomonas Chicken, host tissue
+
+#### Create dataframe for HN samples
+```{r metabolites_create_hn, message=FALSE, eval=FALSE}
+# Select HN samples, join with metadata to filter by ID level, then extract animal IDs
+metabolites_hn <- metabolites_abundance %>%
+  select(SAMPLE_ID, `Curated ID`, all_of(hn_samples)) %>%
+  # Join with metadata to get ID level
+  left_join(metabolites_metadata %>% select(Feature_ID, `ID level`), 
+            by = c("SAMPLE_ID" = "Feature_ID")) %>%
+  # Filter for level 1 (high confidence) metabolites only
+  filter(`ID level` == 1) %>%
+  # Remove metadata columns
+  select(-SAMPLE_ID, -`ID level`) %>%
+  # Extract animal ID from column names (first 4 characters: H###)
+  rename_with(~ str_extract(.x, "^H\\d+"), .cols = all_of(hn_samples)) %>%
+  # Keep only Curated ID and abundance columns
+  select(`Curated ID`, everything())
+```
+
+### HM: Histomonas Chicken, digesta
+
+#### Create dataframe for HM samples
+```{r metabolites_create_hm, message=FALSE, eval=FALSE}
+# Select HM samples, join with metadata to filter by ID level, then extract animal IDs
+metabolites_hm <- metabolites_abundance %>%
+  select(SAMPLE_ID, `Curated ID`, all_of(hm_samples)) %>%
+  # Join with metadata to get ID level
+  left_join(metabolites_metadata %>% select(Feature_ID, `ID level`), 
+            by = c("SAMPLE_ID" = "Feature_ID")) %>%
+  # Filter for level 1 (high confidence) metabolites only
+  filter(`ID level` == 1) %>%
+  # Remove metadata columns
+  select(-SAMPLE_ID, -`ID level`) %>%
+  # Extract animal ID from column names (first 4 characters: H###)
+  rename_with(~ str_extract(.x, "^H\\d+"), .cols = all_of(hm_samples)) %>%
+  # Keep only Curated ID and abundance columns
+  select(`Curated ID`, everything())
+```
+
+### MN: Histomonas Turkey, host tissue
+
+#### Create dataframe for MN samples
+```{r metabolites_create_mn, message=FALSE, eval=FALSE}
+# Select MN samples, join with metadata to filter by ID level, then extract animal IDs
+metabolites_mn <- metabolites_abundance %>%
+  select(SAMPLE_ID, `Curated ID`, all_of(mn_samples)) %>%
+  # Join with metadata to get ID level
+  left_join(metabolites_metadata %>% select(Feature_ID, `ID level`), 
+            by = c("SAMPLE_ID" = "Feature_ID")) %>%
+  # Filter for level 1 (high confidence) metabolites only
+  filter(`ID level` == 1) %>%
+  # Remove metadata columns
+  select(-SAMPLE_ID, -`ID level`) %>%
+  # Extract animal ID from column names (first 4 characters: M###)
+  rename_with(~ str_extract(.x, "^M\\d+"), .cols = all_of(mn_samples)) %>%
+  # Keep only Curated ID and abundance columns
+  select(`Curated ID`, everything())
+```
+
+### MM: Histomonas Turkey, digesta
+
+#### Create dataframe for MM samples
+```{r metabolites_create_mm, message=FALSE, eval=FALSE}
+# Select MM samples, join with metadata to filter by ID level, then extract animal IDs
+metabolites_mm <- metabolites_abundance %>%
+  select(SAMPLE_ID, `Curated ID`, all_of(mm_samples)) %>%
+  # Join with metadata to get ID level
+  left_join(metabolites_metadata %>% select(Feature_ID, `ID level`), 
+            by = c("SAMPLE_ID" = "Feature_ID")) %>%
+  # Filter for level 1 (high confidence) metabolites only
+  filter(`ID level` == 1) %>%
+  # Remove metadata columns
+  select(-SAMPLE_ID, -`ID level`) %>%
+  # Extract animal ID from column names (first 4 characters: M###)
+  rename_with(~ str_extract(.x, "^M\\d+"), .cols = all_of(mm_samples)) %>%
+  # Keep only Curated ID and abundance columns
+  select(`Curated ID`, everything())
+```
+<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>
+read_lints
+
+## Save processed data
+
+### Save metabolomics dataframes
+```{r metabolites_save, eval=FALSE}
+save(
+  metabolites_hn,
+  metabolites_hm,
+  metabolites_mn,
+  metabolites_mm,
+  metabolites_metadata,
+  file = "data/Afekta_Histomonas_Metabolites/metabolites_data.Rdata"
+)
+```
+
+## Validation
+
+### Validate metabolomics data
+```{r metabolites_validation, eval=FALSE}
+# Check dimensions
+cat("Metabolites dataframes dimensions:\n")
+cat("  HN:", nrow(metabolites_hn), "rows,", ncol(metabolites_hn), "columns\n")
+cat("  HM:", nrow(metabolites_hm), "rows,", ncol(metabolites_hm), "columns\n")
+cat("  MN:", nrow(metabolites_mn), "rows,", ncol(metabolites_mn), "columns\n")
+cat("  MM:", nrow(metabolites_mm), "rows,", ncol(metabolites_mm), "columns\n")
+cat("\n")
+
+# Check number of samples (animals) per sample type
+cat("Number of samples (animals) per sample type:\n")
+cat("  HN:", ncol(metabolites_hn) - 1, "samples\n")  # -1 for Curated ID column
+cat("  HM:", ncol(metabolites_hm) - 1, "samples\n")
+cat("  MN:", ncol(metabolites_mn) - 1, "samples\n")
+cat("  MM:", ncol(metabolites_mm) - 1, "samples\n")
+cat("\n")
+
+# Check unique metabolites
+cat("Unique metabolites:\n")
+cat("  Total unique Curated IDs:", n_distinct(metabolites_hn$`Curated ID`, na.rm = TRUE), "\n")
+cat("\n")
+
+# Display top rows
+cat("Top 5 rows of HN dataframe:\n")
+knitr::kable(head(metabolites_hn, 5))
+cat("\n")
+
+# Show column names (sample IDs)
+cat("Sample IDs (first 10):\n")
+cat("  HN:", paste(head(colnames(metabolites_hn)[-1], 10), collapse = ", "), "\n")
+cat("  HM:", paste(head(colnames(metabolites_hm)[-1], 10), collapse = ", "), "\n")
+cat("  MN:", paste(head(colnames(metabolites_mn)[-1], 10), collapse = ", "), "\n")
+cat("  MM:", paste(head(colnames(metabolites_mm)[-1], 10), collapse = ", "), "\n")
+```
+
+## Notes on metabolites metadata
+
+The metabolites metadata file (`histomonas_metabolomics_metabolites.csv`) contains valuable information for downstream analyses:
+
+### Available metadata fields:
+- **Feature_ID**: Unique identifier for each metabolite feature (matches SAMPLE_ID in abundance file)
+- **Mode**: LC-MS mode (HILIC_neg, HILIC_pos, RP_pos, RP_neg) - useful for mode-specific analyses
+- **Retention time**: Chromatographic retention time (min) - useful for quality control
+- **m/z**: Mass-to-charge ratio - useful for identification and quality control
+- **Adduct type**: Ionization adduct ([M+H]+, [M-H]-, [M+Na]+, etc.) - important for interpretation
+- **Curated ID**: Metabolite name - human-readable identifier
+- **Database identifiers**: 
+  - HMDB (Human Metabolome Database)
+  - LipidMaps (for lipid metabolites)
+  - Other databases
+- **KEGG**: KEGG compound ID - useful for pathway enrichment analysis
+- **ID level**: Confidence level (1 = high confidence, 2 = medium confidence) - important for filtering
+- **Chemical taxonomy**: Chemical class/functional group - useful for grouping and summarizing metabolites
+
+### Suggested uses:
+1. **Filtering by ID level**: Use level 1 (high confidence) metabolites for primary analyses
+2. **Grouping by chemical taxonomy**: Analyze metabolite classes (amino acids, lipids, nucleotides, etc.)
+3. **Mode-based analysis**: Separate analyses by LC-MS mode (HILIC vs RP, positive vs negative)
+4. **Pathway analysis**: Use KEGG IDs for pathway enrichment analysis (e.g., with KEGG pathway databases)
+5. **Database integration**: Use HMDB/LipidMaps IDs for additional annotations and cross-referencing
+6. **Quality control**: Filter by retention time or m/z for data quality checks
+7. **Metabolite class summaries**: Group metabolites by chemical taxonomy for class-level comparisons
+

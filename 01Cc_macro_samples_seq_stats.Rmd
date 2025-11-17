@@ -1,0 +1,360 @@
+# Macro-sample Sequencing Statistics
+
+Remember to change M to D, as only microsamples start from M, and these are macro-samples.
+
+## Load required data
+
+Load sample metadata
+```{r macro_stats_load_data, message=FALSE, eval=FALSE}
+load("data/macro/sample_metadata.Rdata")
+load("data/macro/counts.Rdata")
+```
+
+## FastP sequencing statistics
+
+Download preprocess_data.zip & place in appropriate directory.
+
+Get the multiqc_fastp.txt: FastP results, including QC. Packed in JSON format.
+(Does not contain gc and % unique content for before trimming.)
+
+Load and process FastP sequencing statistics
+```{r macro_stats_fastp, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+fastp_seq_stats_macro <- read_tsv("data/macro/preprocess_data/multiqc_fastp.txt", 
+           col_select = c("Sample", "summary", "duplication", "filtering_result", "adapter_cutting"), 
+           show_col_types = FALSE) %>%
+  mutate(Sample = str_extract(Sample, "D\\d+"))%>%
+  mutate(duplication = as.numeric(gsub(".*:\\s*([0-9\\.]+).*", "\\1", duplication))) %>%
+  rename(microsample = Sample) %>%
+  mutate(
+    summary_clean = gsub("'", "\"", summary),
+    total_sequences_before_trim = map_dbl(summary_clean, ~ fromJSON(.)$before_filtering$total_reads),
+    total_bases_before_trim = map_dbl(summary_clean, ~ fromJSON(.)$before_filtering$total_bases),
+    percent_gc_before_trim = map_dbl(summary_clean, ~ fromJSON(.)$before_filtering$gc_content),
+    total_sequences_after_trim = map_dbl(summary_clean, ~ fromJSON(.)$after_filtering$total_reads),
+    total_bases_after_trim = map_dbl(summary_clean, ~ fromJSON(.)$after_filtering$total_bases),
+    percent_gc_after_trim = map_dbl(summary_clean, ~ fromJSON(.)$after_filtering$gc_content)
+  ) %>%
+  mutate(
+    adaptor_clean = gsub("'", "\"", adapter_cutting),
+    adapter_trimmed_reads = map_dbl(adaptor_clean, ~ fromJSON(.)$adapter_trimmed_reads),
+    adapter_trimmed_bases = map_dbl(adaptor_clean, ~ fromJSON(.)$adapter_trimmed_bases)
+  ) %>%
+  mutate(
+    filtering_clean = gsub("'", "\"", filtering_result),
+    passed_filter_reads = map_dbl(filtering_clean, ~ fromJSON(.)$passed_filter_reads),
+    low_quality_reads = map_dbl(filtering_clean, ~ fromJSON(.)$low_quality_reads),
+    too_many_N_reads = map_dbl(filtering_clean, ~ fromJSON(.)$too_many_N_reads),
+    too_short_reads = map_dbl(filtering_clean, ~ fromJSON(.)$too_short_reads)
+  ) %>%
+  select(-summary_clean,-summary, -adaptor_clean, -filtering_result, -filtering_clean) %>%
+  filter(grepl("^D", microsample)) %>%
+  group_by(microsample) %>%
+  summarise(
+    total_sequences_before_trim = sum(total_sequences_before_trim, na.rm = TRUE),
+    total_bases_before_trim = sum(total_bases_before_trim, na.rm = TRUE),
+    total_sequences_after_trim = sum(total_sequences_after_trim, na.rm = TRUE),
+    total_bases_after_trim = sum(total_bases_after_trim, na.rm = TRUE),
+    percent_gc_before_trim = mean(percent_gc_before_trim, na.rm = TRUE)*100,
+    percent_gc_after_trim = mean(percent_gc_after_trim, na.rm = TRUE),
+    duplication = mean(duplication, na.rm = TRUE)*100,
+    adapter_trimmed_reads = sum(adapter_trimmed_reads, na.rm = TRUE),
+    adapter_trimmed_bases = sum(adapter_trimmed_bases, na.rm = TRUE),
+    passed_filter_reads = sum(passed_filter_reads, na.rm = TRUE),
+    low_quality_reads = sum(low_quality_reads, na.rm = TRUE),
+    too_many_N_reads = sum(too_many_N_reads, na.rm = TRUE),
+    too_short_reads = sum(too_short_reads, na.rm = TRUE)   
+    ) %>%
+  filter(microsample %in% sample_metadata_macro$sample)
+```
+
+
+
+## Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas
+
+Get the multiqc_samtools_stats.txt.
+
+This is calculated on the trimmed reads. 
+The reads are mapped to these references:
+  1. turkey (Turkey_5.1),
+  2. histomonas (Hmelea),
+  3. chicken (GRCg7b), 
+  4. human (GRCh38), and
+  5. swine (Sscrofa11.1)) sequentially.
+
+To find the number of reads mapped to each reference you have to either
+  - estimate number from the columns: reads_mapped + (reads_mapped - reads_mapped_and_paired) OR
+  - subtract the number of reads that entered the analysis (e.g. column 'total_passed' of human - from column 'total_passed' of chicken = reads mapped to human).
+  If you try both, these numbers should be equal. 
+  
+Load and process non-bacterial mapping statistics
+```{r macro_stats_non_bacteria_mapping, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+stats_non_bacteria_mapping_macro <- read_tsv("data/macro/preprocess_data/multiqc_samtools_stats.txt", show_col_types = FALSE) %>%
+  # make new columns
+  mutate(reference = case_when(
+      # for type of reference based on reference code
+      grepl("GRCh38", Sample, ignore.case = TRUE) ~ "human",
+      grepl("GRCg7b", Sample, ignore.case = TRUE) ~ "chicken",
+      grepl("Sscrofa11.1", Sample, ignore.case = TRUE) ~ "swine",
+      grepl("Turkey_5.1", Sample, ignore.case = TRUE) ~ "turkey",
+      grepl("Hmelea", Sample, ignore.case = TRUE) ~ "histomonas",
+      TRUE ~ NA_character_),
+      # for microsample names
+      microsample = str_extract(Sample, "D\\d+"),
+      # for number of reads as input to each reference mapping
+      chicken_total_passed = ifelse(reference == "chicken", raw_total_sequences, NA_real_),
+      human_total_passed = ifelse(reference == "human", raw_total_sequences, NA_real_),
+      swine_total_passed = ifelse(reference == "swine", raw_total_sequences, NA_real_),
+      turkey_total_passed = ifelse(reference == "turkey", raw_total_sequences, NA_real_),
+      histomonas_total_passed = ifelse(reference == "histomonas", raw_total_sequences, NA_real_),
+      # for number of reads that mapped to each reference 
+      chicken_total_mapped = ifelse(reference == "chicken", reads_mapped + (reads_mapped - reads_mapped_and_paired), NA_real_),
+      human_total_mapped = ifelse(reference == "human", reads_mapped + (reads_mapped - reads_mapped_and_paired), NA_real_),
+      swine_total_mapped = ifelse(reference == "swine", reads_mapped + (reads_mapped - reads_mapped_and_paired), NA_real_),
+      turkey_total_mapped = ifelse(reference == "turkey", reads_mapped + (reads_mapped - reads_mapped_and_paired), NA_real_),
+      histomonas_total_mapped = ifelse(reference == "histomonas", reads_mapped + (reads_mapped - reads_mapped_and_paired), NA_real_),
+      # for unmapped reads after mapping to all three references
+      swine_unmapped = ifelse(reference == "swine", swine_total_passed - swine_total_mapped, NA_real_)) %>%
+  # select relevant columns
+  select(microsample,
+        chicken_total_passed, human_total_passed, swine_total_passed, turkey_total_passed, histomonas_total_passed,
+        chicken_total_mapped, human_total_mapped, swine_total_mapped, turkey_total_mapped, histomonas_total_mapped,
+        swine_unmapped) %>%
+  # sum reads for same microsample for each reference
+  group_by(microsample) %>%
+  summarise(across(
+    starts_with("chicken_") | starts_with("human_") | starts_with("swine_")| starts_with("turkey_") | starts_with("histomonas_"), 
+    sum, na.rm = TRUE)) %>%
+  filter(grepl("^D", microsample)) %>%
+  filter(microsample %in% sample_metadata_macro$sample)
+```
+
+
+
+## Bacterial mapped reads
+
+Download quantify.zip & place in appropriate directory.
+Get the multiqc_samtools_stats.txt.
+
+This is calculated on the trimmed reads after filtering for turkey, histomonas, human, chicken, and pig reads.
+'Unmapped reads' are trimmed reads that did not map to the turkey, histomonas, human, chicken, and swine references, or to the bacterial MAG catalogue.
+
+Load and process bacterial mapping statistics
+```{r macro_stats_bacteria_mapping, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+stats_bacteria_mapping_macro <- read_tsv("data/macro/quantify/multiqc_samtools_stats.txt", show_col_types = FALSE) %>%
+    # select only the dereplicated to 95% (as the file includes also the 98% and 99%)
+  filter(str_detect(Sample, "0\\.95") & str_detect(Sample, "REF0029")) %>%
+    # make new columns
+  mutate(
+    microsample = str_extract(Sample, "D\\d+"),
+    bacteria_total_passed = raw_total_sequences,
+    bacteria_total_mapped = reads_mapped,
+    unmapped = reads_unmapped
+  ) %>%
+  # sum reads of the same microsample because some samples were sequence multiple times
+  group_by(microsample) %>% 
+  summarise(
+    bacteria_total_passed = sum(bacteria_total_passed, na.rm = TRUE), 
+    bacteria_total_mapped = sum(bacteria_total_mapped, na.rm = TRUE),
+    unmapped = sum(unmapped, na.rm = TRUE)
+  ) %>%
+  # select relevant columns
+  select(microsample, bacteria_total_passed, bacteria_total_mapped, unmapped) %>%
+  # keep microsamples starting with D (i.e., remove 'NA' or 'undetermined')
+  filter(grepl("^D", microsample)) 
+```
+
+
+
+## Alternative way to estimate bacterial read counts (from count table)
+
+Calculate bacterial read counts from count table
+```{r macro_stats_bacteria_mapping_alternative, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+stats_bacteria_mapping_alternative_macro <- read_counts_macro %>%
+  # Move genome names to rownames
+  column_to_rownames(var = "genome") %>%
+  # Transpose the data
+  t() %>% 
+  # Convert back to a data frame
+  as.data.frame() %>%
+  # Move sample names into a column
+  rownames_to_column(var = "microsample") %>%
+  # sum the counts of all genomes in each sample (i.e., sum of each row)
+  mutate(bacteria_total_read_counts = rowSums(select(., -microsample))) %>% 
+  # select to show only the total_counts column
+  select(microsample, bacteria_total_read_counts) %>% 
+  # select only microsamples starting with 'D' (i.e. not 'NA' or 'Undetermined')
+  filter(grepl("^D", microsample))
+```
+
+
+
+## Sanity checks
+
+Check if the two methods of counting bacterial reads agree:
+
+Compare bacterial mapping methods
+```{r macro_stats_compare_bacterial_mapping, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+comparison_bacteria_mapping_macro <- stats_bacteria_mapping_alternative_macro %>%
+  # Join on 'microsample'
+  inner_join(stats_bacteria_mapping_macro, by = "microsample") %>% 
+  # Compare the two columns
+  mutate(same_counts = bacteria_total_read_counts == bacteria_total_mapped) 
+
+# Check if all values are the same
+# TRUE if all are the same, FALSE otherwise
+all(comparison_bacteria_mapping_macro$same_counts) 
+
+# Filter & show rows where the counts between the two columns differ
+comparison_bacteria_mapping_macro %>%
+  filter(!same_counts) %>%
+  mutate(difference = bacteria_total_read_counts- bacteria_total_mapped) %>%
+  select(microsample, bacteria_total_read_counts, bacteria_total_mapped, difference)
+```
+
+
+
+
+## Combine relevant sequencing statistics
+
+Combine all sequencing statistics into a single dataframe
+```{r macro_stats_combined, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+stats_combined_macro <- reduce(list(fastp_seq_stats_macro,
+                              stats_non_bacteria_mapping_macro, 
+                              stats_bacteria_mapping_macro,
+                              stats_bacteria_mapping_alternative_macro), 
+                         full_join, by = "microsample") %>%
+  filter(grepl("^D", microsample))  %>%
+  mutate(removed_sequences_after_trim = total_sequences_before_trim - total_sequences_after_trim)
+
+# estimate some percentages for easier plotting.
+final_combined_stats_macro <- stats_combined_macro %>%
+  mutate(
+    trimmed_reads_percentage = ((total_sequences_before_trim-total_sequences_after_trim)/total_sequences_before_trim)*100,
+    human_percentage = (human_total_mapped/total_sequences_after_trim)*100,
+    chicken_percentage = (chicken_total_mapped/total_sequences_after_trim)*100,
+    swine_percentage = (swine_total_mapped/total_sequences_after_trim)*100,
+    turkey_percentage = (turkey_total_mapped/total_sequences_after_trim)*100,
+    histomonas_percentage = round((histomonas_total_mapped/total_sequences_after_trim)*100, 7),
+    bacteria_percentage = (bacteria_total_mapped/total_sequences_after_trim)*100,
+    unmapped_percentage = (unmapped/total_sequences_after_trim)*100,
+    bacteria_percentage_enriched = (bacteria_total_mapped/(bacteria_total_mapped+unmapped)*100),
+    unmapped_percentage_enriched = (unmapped/(bacteria_total_mapped+unmapped)*100),
+    adapter_contamination_pct = (adapter_trimmed_bases / total_bases_before_trim)*100,
+    histomonas_over_bacteria = round((histomonas_total_mapped/bacteria_total_mapped),7),
+    bacteria_over_turkey = (bacteria_total_mapped/turkey_total_mapped),
+    unique_pct = 100-duplication
+)
+```
+
+Add filter_status column
+
+```{r macro_stats_add_filter_status, eval=FALSE}
+# Load retained_samples_macro_filt_30 from counts data
+load("data/macro/counts.Rdata")
+
+# Add filter_status column to indicate which samples were retained by filtering
+final_combined_stats_macro <- final_combined_stats_macro %>%
+  mutate(filter_status = if_else(
+    microsample %in% retained_samples_macro_filt_30,
+    "Retained by filtering",
+    "Excluded from filtering"
+  ))
+```
+
+## Create plot_data_stats_macro
+
+Combine sequencing statistics with sample metadata and alpha diversity for plotting.
+
+Create plot_data_stats_macro with sequencing stats, metadata, and alpha diversity
+```{r macro_stats_plot_data_stats, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+# Load alpha diversity data (already loaded in load_data chunk)
+# Combine sequencing stats with sample metadata and alpha diversity
+plot_data_stats_macro <- final_combined_stats_macro %>%
+  left_join(alpha_div_macro_filtered_30, by = join_by(microsample == microsample)) %>%
+  left_join(sample_metadata_macro, by = join_by(microsample == sample))
+
+```
+
+## Save working objects
+
+Save sequencing statistics data
+```{r macro_stats_save, eval=FALSE}
+# Save seq stats-related objects to separate file
+save(
+  final_combined_stats_macro,
+  plot_data_stats_macro,
+  file = "data/macro/seq_stats.Rdata"
+)
+```
+
+## Validation
+
+Validate sequencing statistics
+```{r macro_stats_validation, eval=FALSE}
+# Check dimensions
+cat("Final combined stats dimensions:\n")
+print(dim(final_combined_stats_macro))
+cat("\nNumber of samples:", nrow(final_combined_stats_macro), "\n\n")
+
+# Check that sanity checks pass
+cat("Sanity check results:\n")
+cat("Bacterial mapping methods agree:", all(comparison_bacteria_mapping_macro$same_counts), "\n")
+if (!all(comparison_bacteria_mapping_macro$same_counts)) {
+  cat("  Number of samples with differences:", sum(!comparison_bacteria_mapping_macro$same_counts), "\n")
+  knitr::kable(comparison_bacteria_mapping_macro %>% 
+    filter(!same_counts) %>%
+    mutate(difference = bacteria_total_read_counts - bacteria_total_mapped) %>%
+    select(microsample, bacteria_total_read_counts, bacteria_total_mapped, difference))
+}
+cat("\n")
+
+# Verify percentages sum correctly (should be close to 100% for read composition)
+cat("Percentage validation:\n")
+# Check that percentages for read composition make sense
+sample_check <- final_combined_stats_macro %>%
+  mutate(
+    total_pct_check = human_percentage + chicken_percentage + swine_percentage + 
+                      turkey_percentage + histomonas_percentage + 
+                      bacteria_percentage + unmapped_percentage
+  ) %>%
+  select(microsample, total_sequences_after_trim, total_pct_check, 
+         human_percentage, chicken_percentage, swine_percentage, 
+         turkey_percentage, histomonas_percentage, bacteria_percentage, unmapped_percentage)
+
+cat("Mean total percentage (should be ~100):", mean(sample_check$total_pct_check, na.rm = TRUE), "\n")
+cat("Range of total percentage:", range(sample_check$total_pct_check, na.rm = TRUE), "\n\n")
+
+# Check for anomalies
+cat("Anomaly checks:\n")
+# Samples with very low bacterial percentage
+low_bacteria <- final_combined_stats_macro %>%
+  filter(bacteria_percentage < 1) %>%
+  select(microsample, bacteria_percentage, total_sequences_after_trim)
+if (nrow(low_bacteria) > 0) {
+  cat("Samples with <1% bacterial reads:", nrow(low_bacteria), "\n")
+  knitr::kable(head(low_bacteria, 10))
+} else {
+  cat("OK: No samples with <1% bacterial reads\n")
+}
+cat("\n")
+
+# Samples with very high unmapped percentage
+high_unmapped <- final_combined_stats_macro %>%
+  filter(unmapped_percentage > 50) %>%
+  select(microsample, unmapped_percentage, total_sequences_after_trim)
+if (nrow(high_unmapped) > 0) {
+  cat("Samples with >50% unmapped reads:", nrow(high_unmapped), "\n")
+  knitr::kable(head(high_unmapped, 10))
+} else {
+  cat("OK: No samples with >50% unmapped reads\n")
+}
+cat("\n")
+
+# Summary statistics
+cat("Summary statistics:\n")
+cat("  Mean bacterial percentage:", mean(final_combined_stats_macro$bacteria_percentage, na.rm = TRUE), "%\n")
+cat("  Mean unmapped percentage:", mean(final_combined_stats_macro$unmapped_percentage, na.rm = TRUE), "%\n")
+cat("  Mean histomonas percentage:", mean(final_combined_stats_macro$histomonas_percentage, na.rm = TRUE), "%\n")
+cat("  Mean turkey percentage:", mean(final_combined_stats_macro$turkey_percentage, na.rm = TRUE), "%\n")
+```
+

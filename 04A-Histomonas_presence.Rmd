@@ -1,0 +1,161 @@
+# Histomonas Presence
+
+```{r load_data_quality, eval=FALSE}
+load("data/macro/plot_data.Rdata")
+load("data/micro/plot_data.Rdata")
+load("data/data_colors.Rdata")
+```
+
+## Macro
+```{r plot_histomonas_macro_boxplot, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+var <- "histomonas_percentage"
+summary_stats <- plot_data_stats_macro %>%
+  filter(treatment != "TM0") %>%
+  group_by(treatment_expl, age_category) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 3)) #format(median, scientific = TRUE, digits = 5))
+knitr::kable(summary_stats)
+
+boxplot_reads_prc_1 <- plot_data_stats_macro %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = age_category, y = histomonas_percentage, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5, size = 2) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl, scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "% reads mapping to Histomonas") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = age_category, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+  # ggtitle("XX")
+
+# boxplot_reads_prc_1
+```
+
+```{r plot_histomonas_macro_barplot, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+barplot_hist <- plot_data_stats_macro %>%
+    filter(treatment != "TM0") %>%
+  ggplot(aes(x = microsample, y = histomonas_total_mapped, fill = treatment)) +
+  geom_bar(stat = "identity", colour = "white", linewidth = 0.1) +
+  scale_fill_manual(values = treatment_colours_bright) +
+  labs(x = "Samples", y = "Histomonas reads", fill = "Read type") +
+  facet_nested(. ~ treatment_expl + age_category, scales = "free", space = "free") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_text(),
+        legend.position = "bottom",
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) #+
+  #ggtitle("XX")
+
+# barplot_hist
+```
+
+```{r plot_histomonas_macro_combo, warning=FALSE, comments="", message=FALSE, fig.height=6, fig.width=10}
+
+(boxplot_reads_prc_1 + barplot_hist) + 
+  plot_layout(
+    ncol = 1,        # single column
+    heights = c(2, 1),   # assign relative heights
+    guides = "collect"
+  ) + 
+  plot_annotation(tag_levels = 'a') &
+    theme(legend.position = "bottom", legend.box = "vertical")
+```
+
+
+
+
+## Micro
+
+```{r plot_histomonas_micro_boxplot, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+var <- "histomonas_percentage"
+summary_stats <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  filter(type_simple == "P") %>%
+  group_by(treatment_expl, age_category, type_simple, animal) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 5)) #format(median, scientific = TRUE, digits = 5))
+knitr::kable(summary_stats)
+
+boxplot_reads_prc_2 <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  filter(type_simple == "P") %>%
+  ggplot(aes(x = type_simple, y = histomonas_percentage, color = treatment)) + # x = age_category
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5, size = 2) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl + age_category + animal, scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "% reads mapping to Histomonas") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = type_simple, y = median, label = label_txt), # x = age_category
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+  # ggtitle("XX")
+
+# boxplot_reads_prc_2
+```
+
+```{r plot_histomonas_micro_barplot, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=15}
+barplot_hist_2 <- plot_data_stats %>%
+    filter(treatment != "TM0") %>%
+    filter(type_simple == "P") %>%
+  ggplot(aes(x = microsample, y = histomonas_total_mapped, fill = treatment)) +
+  geom_bar(stat = "identity", colour = "white", linewidth = 0.1) +
+  scale_fill_manual(values = treatment_colours_bright) +
+  labs(x = "Samples", y = "Histomonas reads", fill = "Read type") +
+  facet_nested(. ~ treatment_expl + age_category + animal, scales = "free", space = "free") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_text(),
+        legend.position = "bottom",
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2),
+        panel.grid.major = element_line(color = "white"),
+        panel.grid.minor = element_line(color = "#dde3e9")) # Customize major grid lines #+
+  #ggtitle("XX")
+
+# barplot_hist_2
+```
+
+
+```{r plot_histomonas_micro_combo, warning=FALSE, comments="", message=FALSE, fig.height=10, fig.width=10}
+
+(boxplot_reads_prc_2 + barplot_hist_2) + 
+  plot_layout(
+    ncol = 1,        # single column
+    heights = c(1, 2),   # assign relative heights
+    guides = "collect"
+  ) + 
+  plot_annotation(tag_levels = 'a') &
+    theme(legend.position = "bottom", legend.box = "vertical")
+```

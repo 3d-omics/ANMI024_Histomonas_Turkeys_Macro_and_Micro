@@ -1,0 +1,147 @@
+# Macro-sample Metadata
+
+Load and process macro-sample metadata from Airtable
+```{r macro_meta_sample_metadata, message=FALSE, eval=FALSE}
+sample_metadata_macro <- airtable("5-SE-Info", "apphvsV2YKhTCMKGS") %>% 
+  # select columns to extract
+  read_airtable(., fields = c(
+    "ID", "LabBatch_text", "ExperimentalUnitIndexedLibrary", 
+    "SampleTypeIndexedLibrary", "TreatmentIndexedLibrary", "AgeIndexedLibrary"), id_to_col = TRUE) %>%
+  # rename columns
+  rename(
+    batch = "LabBatch_text",
+    sample = "ID",
+    animal = "ExperimentalUnitIndexedLibrary",
+    tissue = "SampleTypeIndexedLibrary",
+    treatment = "TreatmentIndexedLibrary",
+    age = "AgeIndexedLibrary" #Days Post Infection
+  ) %>%
+    # select relevant batches
+  filter(batch == "S3B014") %>%
+  # select relevant columns
+  select(sample, batch, animal, tissue, treatment, age) %>%
+  # un-nest columns that appeared as a list
+  unnest(c(sample, batch, animal, tissue, treatment, age)) %>%
+  # order the column 'size' - for plotting in correct order later
+  mutate(age = factor(age, levels = c(0, 7, 9, 12, 14, 21))) %>%
+  mutate(age_category = case_when(
+    age == 0 ~ "a",
+    age == 7 ~ "b",
+    age %in% c(9, 12, 14) ~ "c",
+    age == 21 ~ "d",
+    TRUE ~ NA_character_  # Handles any unexpected values
+  )) %>%
+  mutate(
+      treatment_expl = case_when(
+        treatment == "TM1" ~ "VaccinatedCloacal&Histomonas",
+        treatment == "TM2" ~ "VaccinatedOral&Histomonas",
+        treatment == "TM3" ~ "OnlyHistomonas",
+        treatment == "TM4" ~ "ControlGroup",
+        treatment == "TM0" ~ "LabControl")
+    )  %>%
+  mutate(  type_simple = case_when(
+    treatment == "TM0" ~ "N",
+    treatment %in% c("TM1", "TM2","TM3", "TM4") ~ "P"
+  )) %>%
+  # order df by sample
+  arrange(sample)
+```
+
+## Save working objects
+
+Save macro-sample metadata
+```{r macro_meta_save, eval=FALSE}
+save(
+  sample_metadata_macro,
+  file = "data/macro/sample_metadata.Rdata"
+)
+```
+
+## Validation
+
+Validate macro-sample metadata
+```{r macro_meta_validation, eval=FALSE}
+# Check dimensions
+cat("Sample metadata dimensions:\n")
+print(dim(sample_metadata_macro))
+cat("\nNumber of samples:", nrow(sample_metadata_macro), "\n")
+cat("Number of columns:", ncol(sample_metadata_macro), "\n\n")
+
+# Check column names
+cat("Column names:\n")
+print(colnames(sample_metadata_macro))
+cat("\n")
+
+# Display top 10 rows
+cat("Top 10 rows of sample_metadata_macro:\n")
+knitr::kable(head(sample_metadata_macro, 10))
+cat("\n")
+
+# Summary statistics for each column
+cat("Summary of unique values per column:\n")
+for (col in colnames(sample_metadata_macro)) {
+  if (is.factor(sample_metadata_macro[[col]]) || is.character(sample_metadata_macro[[col]])) {
+    cat("\n", col, ":\n")
+    knitr::kable(table(sample_metadata_macro[[col]], useNA = "ifany"))
+  } else if (is.numeric(sample_metadata_macro[[col]])) {
+    cat("\n", col, ":\n")
+    cat("  Min:", min(sample_metadata_macro[[col]], na.rm = TRUE), "\n")
+    cat("  Max:", max(sample_metadata_macro[[col]], na.rm = TRUE), "\n")
+    cat("  Mean:", mean(sample_metadata_macro[[col]], na.rm = TRUE), "\n")
+    cat("  Unique values:", length(unique(sample_metadata_macro[[col]])), "\n")
+  }
+}
+cat("\n")
+
+# Visualizations
+# Animals per batch
+cat("Animals per batch:\n")
+animals_per_batch <- sample_metadata_macro %>%
+  group_by(batch) %>%
+  summarise(n_animals = n_distinct(animal), .groups = "drop")
+knitr::kable(animals_per_batch)
+cat("\n")
+
+# Animals per treatment
+cat("Animals per treatment:\n")
+animals_per_treatment <- sample_metadata_macro %>%
+  group_by(treatment) %>%
+  summarise(n_animals = n_distinct(animal), .groups = "drop")
+knitr::kable(animals_per_treatment)
+cat("\n")
+
+# Treatment per day
+cat("Samples per treatment and day:\n")
+treatment_per_day <- sample_metadata_macro %>%
+  group_by(treatment, age) %>%
+  summarise(
+    n_samples = n(),
+    animals = paste(animal, collapse = ", "),
+    day_codes = paste(age_category, collapse = ", "),
+    .groups = "drop"
+  )
+knitr::kable(treatment_per_day)
+cat("\n")
+
+# Treatment per day
+cat("Samples per treatment and day:\n")
+treatment_per_day <- sample_metadata_macro %>%
+  group_by(treatment, age_category) %>%
+  summarise(
+    n_samples = n(),
+    animals = paste(animal, collapse = ", "),
+    .groups = "drop"
+  )
+knitr::kable(treatment_per_day)
+cat("\n")
+
+
+# Tissue distribution
+cat("Samples per tissue type:\n")
+tissue_dist <- sample_metadata_macro %>%
+  group_by(tissue) %>%
+  summarise(n_samples = n(), .groups = "drop")
+knitr::kable(tissue_dist)
+cat("\n")
+```
+

@@ -1,0 +1,188 @@
+# Micro-sample Metadata
+
+Import sample metadata from the Airtable.
+Get base ID from Airtable browser URL.
+Eventually we should download these data. 
+
+## Load and process micro-sample metadata from Airtable
+```{r micro_meta_sample_metadata, message=FALSE, eval=FALSE}
+sample_metadata <- airtable("4-MSE-Info", "appKakM1bnKSekwuW") %>% 
+  # select fields to extract
+  read_airtable(., fields = c(
+    "ID", "LabBatch_text", "IntestinalSection", "SampleType",
+    "Xcoord", "Ycoord", "SizeApprox", "cryosection_text", "buffer_text",
+    "Collection_Success", "Collection_attempts", "UsedCycles", 
+    "animal_temp", "Protocol_text", "Collection_method_text", 
+    "Treatment_from_Sample", "SeriesDayCount_from_Sample"
+  ), id_to_col = TRUE) %>%
+  # select relevant batches
+  filter(LabBatch_text %in% c("MSEB0042", "MSEB0043",
+                              "MSEB0044", "MSEB0045",
+                              "MSEB0046", "MSEB0047",
+                              "MSEB0048", "MSEB0049",
+                              "MSEB0050", "MSEB0051",
+                              "MSEB0052", "MSEB0053",
+                              "MSEB0054", "MSEB0055")) %>% 
+  # rename columns
+  rename(
+    batch = LabBatch_text,
+    microsample = ID,
+    section = IntestinalSection,
+    type = SampleType,
+    cryosection = cryosection_text,
+    buffer = buffer_text,
+    collection = Collection_Success,
+    collection_attempts = Collection_attempts,
+    cycles = UsedCycles,
+    animal = animal_temp,
+    size = SizeApprox,
+    protocol = Protocol_text,
+    collection_method = Collection_method_text,
+    treatment = Treatment_from_Sample,
+    day = SeriesDayCount_from_Sample
+  ) %>%
+  # select relevant columns
+  select(
+    microsample, section, type, batch,
+    cryosection, buffer, Xcoord, Ycoord,
+    size, collection, collection_attempts,
+    cycles, animal, protocol, collection_method,
+    treatment, day
+  ) %>%
+  # unnest columns that appeared as a list
+  unnest(c(section, Xcoord, Ycoord, size, collection, cycles, collection_method, treatment, day)) %>%
+  # create new column with simplified type by taking first letter 
+  # P = Positive, N = Negative collection/reaction/membrane, C = Control Human
+  mutate(type_simple = substr(type, 1, 1)) %>%
+  mutate(age = factor(day, levels = c(0, 7, 9, 12, 14, 21))) %>%
+  mutate(age_category = case_when(
+    age == 0 ~ "a",
+    age == 7 ~ "b",
+    age %in% c(9, 12, 14) ~ "c",
+    age == 21 ~ "d",
+    TRUE ~ NA_character_  # Handles any unexpected values
+  )) %>%
+  mutate(
+      treatment_expl = case_when(
+        treatment == "TM1" ~ "VaccinatedCloacal&Histomonas",
+        treatment == "TM2" ~ "VaccinatedOral&Histomonas",
+        treatment == "TM3" ~ "OnlyHistomonas",
+        treatment == "TM4" ~ "ControlGroup",
+        treatment == "TM0" ~ "LabControl")
+    )  %>%
+  # order df by microsample
+  arrange(microsample)
+```
+
+## Save working objects
+
+Save micro-sample metadata
+```{r micro_meta_save, eval=FALSE}
+save(
+  sample_metadata,
+  file = "data/micro/sample_metadata.Rdata"
+)
+```
+
+## Validation
+
+Validate micro-sample metadata
+```{r micro_meta_validation, eval=FALSE}
+# Check dimensions
+cat("Sample metadata dimensions:\n")
+print(dim(sample_metadata))
+cat("\nNumber of samples:", nrow(sample_metadata), "\n")
+cat("Number of columns:", ncol(sample_metadata), "\n\n")
+
+# Check column names
+cat("Column names:\n")
+print(colnames(sample_metadata))
+cat("\n")
+
+# Display top 10 rows
+cat("Top 10 rows of sample_metadata:\n")
+knitr::kable(head(sample_metadata, 10))
+cat("\n")
+
+# Summary statistics for each column
+cat("Summary of unique values per column:\n")
+for (col in colnames(sample_metadata)) {
+  if (is.factor(sample_metadata[[col]]) || is.character(sample_metadata[[col]])) {
+    cat("\n", col, ":\n")
+    knitr::kable(table(sample_metadata[[col]], useNA = "ifany"))
+  } else if (is.numeric(sample_metadata[[col]])) {
+    cat("\n", col, ":\n")
+    cat("  Min:", min(sample_metadata[[col]], na.rm = TRUE), "\n")
+    cat("  Max:", max(sample_metadata[[col]], na.rm = TRUE), "\n")
+    cat("  Mean:", mean(sample_metadata[[col]], na.rm = TRUE), "\n")
+    cat("  Unique values:", length(unique(sample_metadata[[col]])), "\n")
+  }
+}
+cat("\n")
+
+# Visualizations
+# Animals per batch
+cat("Animals per batch:\n")
+animals_per_batch <- sample_metadata %>%
+  group_by(batch) %>%
+  summarise(n_animals = n_distinct(animal), .groups = "drop")
+knitr::kable(animals_per_batch)
+cat("\n")
+
+# Animals per treatment
+cat("Animals per treatment:\n")
+animals_per_treatment <- sample_metadata %>%
+  group_by(treatment) %>%
+  summarise(n_animals = n_distinct(animal), .groups = "drop")
+knitr::kable(animals_per_treatment)
+cat("\n")
+
+# Treatment per day
+cat("Samples per treatment and day:\n")
+treatment_per_day <- sample_metadata %>%
+  group_by(treatment, day) %>%
+  summarise(n_samples = n(), .groups = "drop")
+knitr::kable(treatment_per_day)
+cat("\n")
+
+# Type validation: Check that "NegativeCollection" or "NegativeReaction" have NA for Xcoord, Ycoord, collection, and size
+cat("Type validation:\n")
+negative_types <- c("NegativeCollection", "NegativeReaction")
+positive_types <- c("NegativeMembrane", "Positive")
+
+# Check negative types should have NA for coordinates, collection, and size
+negative_samples <- sample_metadata %>%
+  filter(type %in% negative_types)
+
+if (nrow(negative_samples) > 0) {
+  cat("\nChecking negative types (should have NA for Xcoord, Ycoord, collection, size):\n")
+  problems_negative <- negative_samples %>%
+    filter(!is.na(Xcoord) | !is.na(Ycoord) | !is.na(collection) | !is.na(size))
+  
+  if (nrow(problems_negative) > 0) {
+    cat("WARNING: Found", nrow(problems_negative), "negative samples with non-NA values:\n")
+    knitr::kable(problems_negative %>% select(microsample, batch, animal, type, Xcoord, Ycoord, collection, size))
+  } else {
+    cat("OK: All negative types have NA for Xcoord, Ycoord, collection, and size\n")
+  }
+}
+
+# Check positive types should have values for coordinates, collection, and size
+positive_samples <- sample_metadata %>%
+  filter(type %in% positive_types)
+
+if (nrow(positive_samples) > 0) {
+  cat("\nChecking positive types (should have values for Xcoord, Ycoord, collection, size):\n")
+  problems_positive <- positive_samples %>%
+    filter(is.na(Xcoord) | is.na(Ycoord) | is.na(collection) | is.na(size))
+  
+  if (nrow(problems_positive) > 0) {
+    cat("WARNING: Found", nrow(problems_positive), "positive samples with NA values:\n")
+    knitr::kable(problems_positive %>% select(microsample, batch, animal, cryosection, type, Xcoord, Ycoord, collection, size))
+  } else {
+    cat("OK: All positive types have values for Xcoord, Ycoord, collection, and size\n")
+  }
+}
+
+```
+

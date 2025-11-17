@@ -1,0 +1,407 @@
+# Alpha Diversity
+
+```{r load_data_alpha_diversity, eval=FALSE}
+load("data/macro/sample_metadata.Rdata")
+load("data/macro/counts.Rdata")
+load("data/micro/sample_metadata.Rdata")
+load("data/micro/counts.Rdata")
+load("data/MAG_catalogue/data.Rdata")
+load("data/data_colors.Rdata")
+```
+
+## Prepare tidy tables for plotting
+
+### Alpha diversity tidy tables
+
+Create tidy table for alpha diversity (micro)
+```{r tidy_plot_alpha_diversity_genomes_micro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_alpha_diversity_genomes <- plot_data_stats %>%
+  pivot_longer(
+    cols = c(richness, neutral, phylogenetic), 
+    names_to = "metric",                      
+    values_to = "value"                       
+  ) %>%
+      mutate(metric = factor(metric, levels = c("richness", "neutral", "phylogenetic")))
+```
+
+Create tidy table for alpha diversity (macro)
+```{r tidy_plot_alpha_diversity_genomes_macro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_alpha_diversity_genomes_macro <- plot_data_stats_macro %>%
+  pivot_longer(
+    cols = c(richness, neutral, phylogenetic), 
+    names_to = "metric",                      
+    values_to = "value"                       
+  ) %>%
+      mutate(metric = factor(metric, levels = c("richness", "neutral", "phylogenetic")))
+```
+
+### Genome counts tidy tables
+
+Create tidy tables for filtered genome counts (micro)
+```{r tidy_plot_genome_counts_filt_30_closed_micro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_genome_counts_filt_30_closed <-  genome_counts_filt_30 %>%
+    mutate_at(vars(-genome), ~ . / sum(.)) %>% 
+    pivot_longer(-genome, names_to = "microsample", values_to = "count") %>% 
+    left_join(genome_metadata, by = join_by(genome == genome)) %>% 
+    left_join(sample_metadata, by = join_by(microsample == microsample)) %>% 
+    left_join(final_combined_stats, by = join_by(microsample == microsample)) %>%
+    mutate(section = unlist(section)) %>% 
+    filter(count > 0) %>%
+    mutate(phylum = factor(phylum, levels = phylum_level_vector),
+           order = factor(order, levels = order_level_vector))
+```
+
+Create tidy tables for filtered genome counts (macro)
+```{r tidy_plot_genome_counts_filt_30_closed_macro, warning=FALSE, comments="", message=FALSE}
+tidy_plot_genome_counts_filt_30_macro_closed <-  genome_counts_macro_filt_30 %>%
+    mutate_at(vars(-genome), ~ . / sum(.)) %>% 
+    pivot_longer(-genome, names_to = "microsample", values_to = "count") %>% 
+    left_join(genome_metadata, by = join_by(genome == genome)) %>% 
+    left_join(sample_metadata_macro, by = join_by(microsample == sample)) %>% 
+    filter(count > 0) %>%
+    mutate(phylum = factor(phylum, levels = phylum_level_vector),
+           order = factor(order, levels = order_level_vector))
+```
+
+## Macro-samples
+
+### Alpha-div
+```{r plot_alpha_div_macro_main, warning=FALSE, comments="", message=FALSE, fig.height=8, fig.width=10}
+var <- "value"
+summary_stats <- tidy_plot_alpha_diversity_genomes_macro %>%
+  filter(type_simple == "P") %>%
+  # filter(filter_level == 'filtered_30') %>%
+  filter(filter_status == "Retained by filtering") %>% # to remove empty samples
+  group_by(treatment_expl, age_category, metric) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 1)) #format(median, scientific = TRUE, digits = 5))
+knitr::kable(summary_stats)
+
+plot_alpha_div_macro <- tidy_plot_alpha_diversity_genomes_macro %>%
+  filter(type_simple == "P") %>%
+  filter(filter_level == 'filtered_30') %>%
+  filter(filter_status == "Retained by filtering") %>% # to remove empty samples
+  ggplot(aes(x = age_category, y = value, fill = treatment)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.9) +
+  scale_fill_manual(name = "Treatment",
+                     breaks = names(treatment_colours_bright),
+                     values = treatment_colours_bright) +
+  geom_jitter(width = 0.1, alpha = 0.6) +
+  facet_nested(metric ~ treatment_expl, scales = "free", space = "fixed") +
+  # geom_text(aes(label = animal), 
+  #           position = position_jitter(width = 0.2, height = 0), 
+  #           size = 3.0, alpha = 0.7, check_overlap = TRUE, color="#8c1c47") +
+  labs(x = "Days Post Infection", y = "a-div value") +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  geom_text(
+    data = summary_stats,
+    aes(x = age_category, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") +
+  expand_limits(y = 0) +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) +
+  ggtitle("Alpha diversity - 30% coverage filter")
+plot_alpha_div_macro
+```
+
+
+### Alpha-div vs genome size
+```{r plot_alpha_div_macro_genome_size_prep, warning=FALSE, comments="", message=FALSE, fig.height=8, fig.width=10}
+tidy_plot_genome_counts_filt_30_macro_closed_zerosrem <- tidy_plot_genome_counts_filt_30_macro_closed %>%
+  filter(count > 0)
+
+median_lengths <- tidy_plot_genome_counts_filt_30_macro_closed_zerosrem %>%
+  group_by(microsample) %>%
+  summarise(median_genome_length = median(length, na.rm = TRUE), .groups = "drop")
+
+alpha_div_macro_filtered_30_gen_length <- alpha_div_macro_filtered_30 %>%
+  left_join(median_lengths, by = join_by(microsample == microsample)) %>%
+  left_join(sample_metadata_macro, by = join_by(microsample == sample)) %>%
+  filter(treatment != "TM0") 
+
+
+alpha_div_macro_filtered_30_gen_length <- plot_data_stats_macro %>%
+  filter(type_simple == "P") %>%
+  filter(filter_level == "filtered_30") %>%
+  left_join(median_lengths, by = join_by(microsample == microsample)) %>%
+  filter(treatment != "TM0") %>%
+  filter(filter_status == "Retained by filtering")
+
+```
+
+
+```{r plot_alpha_div_macro_genome_size_commented, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+# alpha_div_macro_filtered_30_gen_length %>%
+#   ggplot(aes(x = median_genome_length, y = richness, color = treatment, shape = factor(age_category))) +
+#   geom_point(size = 3, alpha = 0.8) +
+#   geom_smooth(method = "lm", se = TRUE, aes(group = 1), color = "black", linewidth = 1) +
+#   scale_color_manual(values = treatment_colours_bright, name = "Treatment") +
+#   scale_shape_manual(
+#     name = "DPI",
+#     values = c("a" = 16, "b" = 17, "c" = 15, "d" = 4)  # Example shapes
+#   ) +
+#   labs(x = "Median genome length (bp) per sample", y = "Richness") +
+#   ylim(c(-5,300)) +
+#   theme_minimal() +
+#   custom_ggplot_theme 
+```
+
+```{r plot_alpha_div_macro_genome_size_model, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+
+# Fit model
+model_nb <- glm.nb(richness ~ median_genome_length, 
+                   data = alpha_div_macro_filtered_30_gen_length)
+
+# Fit null model (intercept only)
+model_null <- glm.nb(richness ~ 1,
+                     data = alpha_div_macro_filtered_30_gen_length)
+
+# Manual McFadden pseudo-R²
+pseudo_r2 <- 1 - (logLik(model_nb) / logLik(model_null))
+pseudo_r2
+
+
+# Spearman correlation
+cor_test <- cor.test(
+  ~ richness + median_genome_length,
+  data = alpha_div_macro_filtered_30_gen_length,
+  method = "spearman"
+)
+
+rho  <- cor_test$estimate
+pval <- cor_test$p.value
+
+
+# Create new data for prediction
+newdata <- data.frame(
+  median_genome_length = seq(
+    min(alpha_div_macro_filtered_30_gen_length$median_genome_length, na.rm = TRUE),
+    max(alpha_div_macro_filtered_30_gen_length$median_genome_length, na.rm = TRUE),
+    length.out = 200
+  )
+)
+# Get predictions + SE on link scale
+pred <- predict(model_nb, newdata, type = "link", se.fit = TRUE)
+
+# Add predicted values to newdata (back-transform with exp)
+newdata$fit <- exp(pred$fit)
+newdata$lwr <- exp(pred$fit - 1.96 * pred$se.fit)   # 95% CI lower
+newdata$upr <- exp(pred$fit + 1.96 * pred$se.fit)   # 95% CI upper
+
+x_pos <- max(alpha_div_macro_filtered_30_gen_length$median_genome_length, na.rm = TRUE) * 0.98
+y_pos <- max(alpha_div_macro_filtered_30_gen_length$richness, na.rm = TRUE) * 0.95
+
+
+# Plot with fitted NB curve
+ggplot(alpha_div_macro_filtered_30_gen_length, 
+       aes(x = median_genome_length, y = richness)) +
+  # NB fit + CI
+  geom_ribbon(data = newdata, 
+              aes(x = median_genome_length, ymin = lwr, ymax = upr),
+              fill = "grey70", alpha = 0.4, inherit.aes = FALSE) +
+  geom_line(data = newdata, 
+            aes(x = median_genome_length, y = fit),
+            color = "black", linewidth = 1.2, inherit.aes = FALSE) +
+  geom_point(aes(color = treatment, shape = factor(age_category)), 
+             size = 3, alpha = 0.8) +
+  # ➊ Spearman rho + p-value
+  annotate("text",
+           x = x_pos, y = y_pos,
+           label = paste0("Spearman ρ = ", round(rho, 2),
+                          "\np = ", signif(pval, 2)),
+           hjust = 1, vjust = 1, size = 3) +
+  
+  # ➋ Pseudo-R²
+  annotate("text",
+           x = x_pos, y = y_pos * 0.85,
+           label = paste0("\nPseudo–R² = ", round(pseudo_r2, 3)),
+           hjust = 1, vjust = 1, size = 3) +
+
+    scale_color_manual(values = treatment_colours_bright, name = "Treatment") +
+  scale_shape_manual(name = "DPI",
+                     values = c("a" = 16, "b" = 17, "c" = 15, "d" = 4)) +
+  labs(x = "Median genome length (bp) per sample", y = "Richness") +
+  theme_minimal() +
+  custom_ggplot_theme
+```
+
+
+## Micro-samples
+
+### Alpha diversity
+
+```{r plot_alpha_div_micro_main, warning=FALSE, comments="", message=FALSE, fig.height=8, fig.width=10}
+var <- "value"
+summary_stats <- tidy_plot_alpha_diversity_genomes %>%
+  filter(type_simple == "P") %>%
+  # filter(filter_level == 'filtered_30') %>%
+  filter(filter_status == "Retained by filtering") %>% # to remove empty samples
+  group_by(treatment_expl, age_category, metric, animal) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 1)) #format(median, scientific = TRUE, digits = 5))
+knitr::kable(summary_stats)
+
+plot_alpha_div_micro <- tidy_plot_alpha_diversity_genomes %>%
+  filter(type_simple == "P") %>%
+  filter(filter_level == 'filtered_30') %>%
+  filter(filter_status == "Retained by filtering") %>% # to remove empty samples
+  ggplot(aes(x = animal, y = value, fill = treatment)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.9) +
+  scale_fill_manual(name = "Treatment",
+                     breaks = names(treatment_colours_bright),
+                     values = treatment_colours_bright) +
+  geom_jitter(width = 0.1, alpha = 0.4) +
+  facet_nested(metric ~ treatment_expl + age_category, scales = "free", space = "fixed") +
+  # geom_text(aes(label = animal), 
+  #           position = position_jitter(width = 0.2, height = 0), 
+  #           size = 3.0, alpha = 0.7, check_overlap = TRUE, color="#8c1c47") +
+  labs(x = "Days Post Infection", y = "a-div value") +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  geom_text(
+    data = summary_stats,
+    aes(x = animal, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -5.0,
+    size = 3, alpha = 1, color = "black") +
+  expand_limits(y = 0) +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) +
+  ggtitle("Alpha diversity - 30% coverage filter")
+plot_alpha_div_micro
+```
+
+
+### Alpha-div vs genome size
+```{r plot_alpha_div_micro_genome_size_prep, warning=FALSE, comments="", message=FALSE, fig.height=8, fig.width=10}
+tidy_plot_genome_counts_filt_30_closed_zerosrem <- tidy_plot_genome_counts_filt_30_closed %>%
+  filter(count > 0)
+
+median_lengths <- tidy_plot_genome_counts_filt_30_closed_zerosrem %>%
+  group_by(microsample) %>%
+  summarise(median_genome_length = median(length, na.rm = TRUE), .groups = "drop")
+
+alpha_div_filtered_30_gen_length <- plot_data_stats %>%
+  filter(type_simple == "P") %>%
+  filter(filter_level == "filtered_30") %>%
+  left_join(median_lengths, by = join_by(microsample == microsample)) %>%
+  filter(treatment != "TM0") %>%
+  filter(filter_status == "Retained by filtering") #%>%
+  #filter(richness >10)
+```
+
+
+```{r plot_alpha_div_micro_genome_size_plot, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+alpha_div_filtered_30_gen_length %>%
+  ggplot(aes(x = median_genome_length, y = richness, color = treatment, shape = factor(age_category))) +
+  geom_point(size = 3, alpha = 0.8) +
+  # geom_smooth(method = "lm", se = TRUE, aes(group = 1), color = "black", linewidth = 1) +
+  scale_color_manual(values = treatment_colours_bright, name = "Treatment") +
+  scale_shape_manual(
+    name = "DPI",
+    values = c("a" = 16, "b" = 17, "c" = 15, "d" = 4)  # Example shapes
+  ) +
+  labs(x = "Median genome length (bp) per sample", y = "Richness") +
+  # ylim(c(-5,300)) +
+  theme_minimal() +
+  custom_ggplot_theme 
+```
+
+
+
+```{r plot_alpha_div_micro_genome_size_commented, warning=FALSE, comments="", message=FALSE, fig.height=4, fig.width=7}
+# 
+# # Fit model
+# model_nb <- glm.nb(richness ~ median_genome_length, 
+#                    data = alpha_div_filtered_30_gen_length)
+# 
+# # Fit null model (intercept only)
+# model_null <- glm.nb(richness ~ 1,
+#                      data = alpha_div_filtered_30_gen_length)
+# 
+# # Manual McFadden pseudo-R²
+# pseudo_r2 <- 1 - (logLik(model_nb) / logLik(model_null))
+# pseudo_r2
+# 
+# 
+# # Spearman correlation
+# cor_test <- cor.test(
+#   ~ richness + median_genome_length,
+#   data = alpha_div_filtered_30_gen_length,
+#   method = "spearman"
+# )
+# 
+# rho  <- cor_test$estimate
+# pval <- cor_test$p.value
+# 
+# 
+# # Create new data for prediction
+# newdata <- data.frame(
+#   median_genome_length = seq(
+#     min(alpha_div_filtered_30_gen_length$median_genome_length, na.rm = TRUE),
+#     max(alpha_div_filtered_30_gen_length$median_genome_length, na.rm = TRUE),
+#     length.out = 200
+#   )
+# )
+# # Get predictions + SE on link scale
+# pred <- predict(model_nb, newdata, type = "link", se.fit = TRUE)
+# 
+# # Add predicted values to newdata (back-transform with exp)
+# newdata$fit <- exp(pred$fit)
+# newdata$lwr <- exp(pred$fit - 1.96 * pred$se.fit)   # 95% CI lower
+# newdata$upr <- exp(pred$fit + 1.96 * pred$se.fit)   # 95% CI upper
+# 
+# x_pos <- max(alpha_div_filtered_30_gen_length$median_genome_length, na.rm = TRUE) * 0.98
+# y_pos <- max(alpha_div_filtered_30_gen_length$richness, na.rm = TRUE) * 0.95
+# 
+# 
+# # Plot with fitted NB curve
+# ggplot(alpha_div_filtered_30_gen_length, 
+#        aes(x = median_genome_length, y = richness)) +
+#   # NB fit + CI
+#   geom_ribbon(data = newdata, 
+#               aes(x = median_genome_length, ymin = lwr, ymax = upr),
+#               fill = "grey70", alpha = 0.4, inherit.aes = FALSE) +
+#   geom_line(data = newdata, 
+#             aes(x = median_genome_length, y = fit),
+#             color = "black", linewidth = 1.2, inherit.aes = FALSE) +
+#   geom_point(aes(color = treatment, shape = factor(age_category)), 
+#              size = 3, alpha = 0.8) +
+#   # ➊ Spearman rho + p-value
+#   annotate("text",
+#            x = x_pos, y = y_pos,
+#            label = paste0("Spearman ρ = ", round(rho, 2),
+#                           "\np = ", signif(pval, 2)),
+#            hjust = 1, vjust = 1, size = 3) +
+#   
+#   # ➋ Pseudo-R²
+#   annotate("text",
+#            x = x_pos, y = y_pos * 0.85,
+#            label = paste0("\nPseudo–R² = ", round(pseudo_r2, 3)),
+#            hjust = 1, vjust = 1, size = 3) +
+# 
+#     scale_color_manual(values = treatment_colours_bright, name = "Treatment") +
+#   scale_shape_manual(name = "DPI",
+#                      values = c("a" = 16, "b" = 17, "c" = 15, "d" = 4)) +
+#   labs(x = "Median genome length (bp) per sample", y = "Richness") +
+#   theme_minimal() +
+#   custom_ggplot_theme
+```
+
+
+

@@ -1,0 +1,242 @@
+# Macro-sample Counts
+
+This document contains the number of sequencing reads from each sample that have been mapped to each MAG. Note that these are raw data that need to be further processed before running any statistics on them.
+
+Location on ERDA:
+m_mg_quant
+ID: XXX
+Path: 3D-omics/processed_data/m_mg_quant/results/
+Access: read
+Find in coverm: genome.count.REF0029-m_mg_hybrid-drep.0.95.tsv.gz and genome.covered_bases.REF0029-m_mg_hybrid-drep.0.95.tsv.gz
+
+## Load required data
+
+Load genome metadata and sample metadata
+```{r macro_counts_load_data, message=FALSE, eval=FALSE}
+load("data/MAG_catalogue/data.Rdata")
+load("data/macro/sample_metadata.Rdata")
+```
+
+## Bacterial reads (counts)
+
+Load read counts from mapping results
+```{r macro_counts_load, message=FALSE, eval=FALSE}
+read_counts_macro <- read_tsv("data/macro/genome.count.REF0029-m_mg_hybrid-drep.0.95.tsv.gz") %>%
+  #simplify column names
+  rename_all(~ str_remove_all(., ".lib1")) %>% 
+  # rename first column to 'genome'
+  rename(genome = 1) %>%
+  select(all_of(c("genome",sample_metadata_macro$sample))) %>% # sort samples
+  # sort genomes based on the order of the genome metadata df
+  arrange(match(genome,genome_metadata$genome)) # sort genomes
+
+
+read_counts_macro <- read_counts_macro %>%
+  filter(genome != "MPB:bin_000147")
+```
+
+
+## Genome covered bases
+
+This is the document containing the number of nucleotide bases that have been covered by at least one read in each sample and MAG. This information is used to calculate MAG coverage values.
+
+Load genome covered bases data
+```{r macro_counts_load_hits, message=FALSE, eval=FALSE}
+genome_covered_bases_macro <- read_tsv("data/macro/genome.covered_bases.REF0029-m_mg_hybrid-drep.0.95.tsv.gz") %>%
+  #simplify column names
+  rename_all(~ str_remove_all(., ".lib1")) %>% 
+  rename(genome = 1) %>%
+  # sort samples
+  select(all_of(c("genome",sample_metadata_macro$sample))) %>% 
+  # sort genomes
+  arrange(match(genome,genome_metadata$genome))
+
+
+genome_covered_bases_macro <- genome_covered_bases_macro %>%
+  filter(genome != "MPB:bin_000147")
+```
+
+
+## Filter and normalise data
+
+Raw data needs to be filtered and normalised to make it useful for downstream analyses. 
+
+### Generate coverage table
+
+By dividing the number of base hits by the length of each genome, coverage values can be calculated.
+
+Calculate genome coverage by dividing covered bases by genome length
+```{r macro_counts_calc_coverage, eval=FALSE}
+genome_coverage_macro <- genome_covered_bases_macro %>%
+  mutate(across(where(is.numeric), ~ . / genome_metadata$length))
+```
+
+### Coverage filtering
+
+Genomes that have less than 30% of their length covered by reads are turned into zeros to account for the random allocation of reads across genomes due to mapping heuristics. 
+
+Apply 30% coverage filter to remove low-coverage genomes
+```{r macro_counts_filter_coverage, eval=FALSE}
+min_coverage <- 0.3
+read_counts_macro_filt_30 <- genome_coverage_macro %>%
+  mutate(across(where(is.numeric), ~ ifelse(. > min_coverage, 1, 0))) %>% 
+  mutate(across(-1, ~ . * read_counts_macro[[cur_column()]])) 
+```
+
+### Generate genome count table
+
+Read counts are transformed into genome counts using genome-length and read-length information.
+
+Explanation:
+Read counts are influenced by sequencing depth and genome size. Larger genomes will naturally attract more reads than smaller ones, even if their actual abundance is the same. By normalizing read counts to genome size, genome counts provide a size-independent estimate of how many genome copies (or organisms carrying that genome) are present in a sample.
+
+Convert read counts to genome counts by normalizing for genome length
+```{r macro_counts_calc_genometable, eval=FALSE}
+readlength <- 150 # change if sequencing read length is different
+
+# Reads without low-coverage filtering:
+genome_counts_macro <- read_counts_macro %>%
+  mutate(across(where(is.numeric), ~ . / (genome_metadata$length / readlength)))
+
+#Reads after filtering the low-coverage reads:
+genome_counts_macro_filt_30 <- read_counts_macro_filt_30 %>%
+  mutate(across(where(is.numeric), ~ . / (genome_metadata$length / readlength)))
+```
+
+Identify samples retained vs excluded by the 30% coverage filtering
+```{r macro_counts_identify_retained, eval=FALSE}
+# Find which samples are retained vs excluded by the 30% coverage filtering
+
+genome_counts_macro_filt_30_zerosrem <- genome_counts_macro_filt_30 %>%
+  # select columns that are not all zeros
+  select(where(~ any(. != 0)) | where(is.character) | where(is.factor))  %>%
+  filter(rowSums(select(., where(is.numeric)) != 0) > 0)
+
+# Vector of retained sample names
+retained_samples_macro_filt_30 <- colnames(genome_counts_macro_filt_30_zerosrem)[-1]
+```
+
+### Generate length-corrected read count tables
+
+```{r macro_counts_calc_read_counts, eval=FALSE}
+c_read_counts_macro <- read_counts_macro %>%
+  mutate(across(where(is.numeric), ~ round(. / genome_metadata$length_ratio)))
+
+c_read_counts_macro_filt_30 <- read_counts_macro_filt_30 %>%
+  mutate(across(where(is.numeric), ~ round(. / genome_metadata$length_ratio)))
+```
+
+## Alpha diversity calculations
+
+Estimate the alpha diversity on the unfiltered and the coverage-filtered counts.
+
+```{r macro_counts_alpha_diversity, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+# Genome tree should already be loaded from MAG_catalogue/data.Rdata
+
+# Calculate alpha diversity for unfiltered data
+alpha_div_macro_unfiltered <- calculate_alpha_diversity(
+  input_data = genome_counts_macro,
+  dataset_name = "unfiltered") %>%
+  mutate(filter_level = "unfiltered")
+
+# Calculate alpha diversity for filtered data
+alpha_div_macro_filtered_30 <- calculate_alpha_diversity(
+  input_data = genome_counts_macro_filt_30,
+  dataset_name = "filtered")  %>% 
+  mutate(filter_level = "filtered_30")
+```
+
+Combine alpha diversity metrics with metadata
+```{r macro_counts_alpha_diversity_combined, warning=FALSE, comments="", message=FALSE, eval=FALSE}
+# Load sample metadata for joining (already loaded in load_data chunk)
+
+# Combine unfiltered and filtered alpha diversity
+# Note: final_combined_stats_macro will be joined later in 01Cc when creating plot_data_stats_macro
+alpha_diversity_macro <- bind_rows(
+  alpha_div_macro_unfiltered,
+  alpha_div_macro_filtered_30) %>%
+  left_join(sample_metadata_macro, by = join_by(microsample == sample)) %>%
+  mutate(filter_level = factor(filter_level, levels = c("unfiltered", 
+                                                        "filtered_30")))
+```
+
+## Save working objects
+
+Save macro-sample count data
+```{r macro_counts_save, eval=FALSE}
+# Save counts-related objects to separate file
+save(
+  read_counts_macro,
+  read_counts_macro_filt_30,
+  genome_coverage_macro,
+  genome_counts_macro,
+  genome_counts_macro_filt_30,
+  genome_counts_macro_filt_30_zerosrem,
+  retained_samples_macro_filt_30,
+  c_read_counts_macro,
+  c_read_counts_macro_filt_30,
+  alpha_div_macro_unfiltered,
+  alpha_div_macro_filtered_30,
+  alpha_diversity_macro,
+  file = "data/macro/counts.Rdata"
+)
+```
+
+## Validation
+
+Validate macro-sample counts data
+```{r macro_counts_validation, eval=FALSE}
+# Check dimensions match between read_counts and sample_metadata
+cat("Read counts dimensions:\n")
+print(dim(read_counts_macro))
+cat("\nSample metadata dimensions:\n")
+print(dim(sample_metadata_macro))
+cat("\n")
+
+# Check that sample columns in read_counts match sample_metadata
+cat("Checking sample alignment:\n")
+samples_in_counts <- colnames(read_counts_macro)[-1]  # exclude 'genome' column
+samples_in_metadata <- sample_metadata_macro$sample
+
+missing_in_counts <- setdiff(samples_in_metadata, samples_in_counts)
+missing_in_metadata <- setdiff(samples_in_counts, samples_in_metadata)
+
+if (length(missing_in_counts) > 0) {
+  cat("WARNING: Samples in metadata but not in counts:", length(missing_in_counts), "\n")
+  knitr::kable(data.frame(missing_samples = head(missing_in_counts, 10)))
+} else {
+  cat("OK: All metadata samples present in counts\n")
+}
+
+if (length(missing_in_metadata) > 0) {
+  cat("WARNING: Samples in counts but not in metadata:", length(missing_in_metadata), "\n")
+  knitr::kable(data.frame(missing_samples = head(missing_in_metadata, 10)))
+} else {
+  cat("OK: All count samples present in metadata\n")
+}
+cat("\n")
+
+# Check filtering results
+cat("Filtering statistics:\n")
+cat("Number of samples before filtering:", ncol(read_counts_macro) - 1, "\n")
+cat("Number of samples after filtering (retained):", length(retained_samples_macro_filt_30), "\n")
+cat("Number of samples excluded by filtering:", (ncol(read_counts_macro) - 1) - length(retained_samples_macro_filt_30), "\n\n")
+
+# Coverage statistics
+cat("Coverage statistics:\n")
+coverage_values <- as.vector(as.matrix(genome_coverage_macro[, -1]))
+coverage_values <- coverage_values[!is.na(coverage_values) & coverage_values > 0]
+cat("  Mean coverage:", mean(coverage_values), "\n")
+cat("  Median coverage:", median(coverage_values), "\n")
+cat("  Min coverage:", min(coverage_values), "\n")
+cat("  Max coverage:", max(coverage_values), "\n")
+cat("  Number of genome-sample pairs with >30% coverage:", sum(coverage_values > 0.3), "\n")
+cat("  Number of genome-sample pairs with <=30% coverage:", sum(coverage_values <= 0.3 & coverage_values > 0), "\n\n")
+
+# Check genome counts
+cat("Genome counts summary:\n")
+cat("  Number of genomes:", nrow(genome_counts_macro), "\n")
+cat("  Mean genomes per sample (unfiltered):", mean(colSums(genome_counts_macro[, -1] > 0, na.rm = TRUE)), "\n")
+cat("  Mean genomes per sample (filtered):", mean(colSums(genome_counts_macro_filt_30[, -1] > 0, na.rm = TRUE)), "\n")
+```
+

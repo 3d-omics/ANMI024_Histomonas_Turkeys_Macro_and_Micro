@@ -1,0 +1,200 @@
+# Bacterial Load
+
+```{r load_data_bacterial_load, eval=FALSE}
+load("data/macro/sample_metadata.Rdata")
+load("data/macro/seq_stats.Rdata")
+load("data/micro/sample_metadata.Rdata")
+load("data/micro/seq_stats.Rdata")
+load("data/data_colors.Rdata")
+```
+## Macro-samples
+```{r plot_bacterial_load_macro, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+var <- "bacteria_over_turkey"
+summary_stats <- plot_data_stats_macro %>%
+  filter(treatment != "TM0") %>%
+  group_by(treatment_expl, age_category) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 2)) 
+knitr::kable(summary_stats)
+
+bacterial_load_macro_plot_log <- plot_data_stats_macro %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = age_category, y = bacteria_over_turkey, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl , scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "Bacterial-to-host read ratio (log scale)") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  scale_y_log10(labels = scales::comma) +
+  annotation_logticks(sides = "l")  + # adds log ticks on y-axis
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  # scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = age_category, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+
+bacterial_load_macro_plot_log
+
+
+bacterial_load_macro_plot <- plot_data_stats_macro %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = age_category, y = bacteria_over_turkey, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl , scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "bacteria/host reads") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  scale_y_log10() +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = age_category, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+
+bacterial_load_macro_plot
+
+
+```
+
+
+## Micro-samples
+
+```{r plot_bacterial_load_micro, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+var <- "bacteria_over_turkey"
+summary_stats <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  group_by(treatment_expl, age) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 2)) 
+knitr::kable(summary_stats)
+
+bacterial_load_plot_log <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = age, y = bacteria_over_turkey, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl , scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "Bacterial-to-host read ratio (log scale)") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  scale_y_log10(labels = scales::comma) +
+  annotation_logticks(sides = "l")  + # adds log ticks on y-axis
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  # scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = age, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+  #ggtitle("Layers")
+
+bacterial_load_plot_log
+
+
+bacterial_load_plot <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = age, y = bacteria_over_turkey, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl , scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "bacteria/host reads") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  scale_y_log10() +
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = age, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+  #ggtitle("Layers")
+
+bacterial_load_plot
+
+```
+
+
+
+
+```{r plot_bacterial_load_micro_section, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+var <- "bacteria_over_turkey"
+summary_stats <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  group_by(treatment_expl, animal, age, section) %>%
+  summarise(
+    median = median(.data[[var]], na.rm = TRUE),
+    IQR    = IQR(.data[[var]], na.rm = TRUE),
+    Q1     = quantile(.data[[var]], 0.25, na.rm = TRUE),
+    Q3     = quantile(.data[[var]], 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(label_txt = formatC(median, format = "f", digits = 2)) 
+knitr::kable(summary_stats)
+
+bacterial_load_plot_log_animal <- plot_data_stats %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = section, y = bacteria_over_turkey, color = treatment)) +
+  geom_boxplot(outlier.shape = NA, color = "black") +
+  geom_jitter(width = 0.05, alpha = 0.5) +
+  scale_color_manual(values = treatment_colours_bright) +
+  facet_nested( . ~ treatment_expl + age + animal, scales = "fixed", space = "fixed", switch = "y") +
+  labs(x = "Days post infection", y = "Bacterial-to-host read ratio (log scale)") +
+  guides(color = "none") +  # Remove legend
+  theme_minimal() +
+  custom_ggplot_theme +
+  scale_y_log10(labels = scales::comma) +
+  annotation_logticks(sides = "l")  + # adds log ticks on y-axis
+  theme(panel.spacing = unit(0.3, "lines"),
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) + 
+  # scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+    # median + IQR text (placed a bit above the median line)
+  geom_text(
+    data = summary_stats,
+    aes(x = section, y = median, label = label_txt),
+    inherit.aes = FALSE,
+    vjust = -3.0,
+    size = 3, alpha = 1, color = "black") #+
+  #ggtitle("Layers")
+
+bacterial_load_plot_log_animal
+
+```
+
+
+
