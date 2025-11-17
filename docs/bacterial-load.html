@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>13 Bacterial Load | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="13 Bacterial Load | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13 Bacterial Load | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sequencing-statistics.html"/>
+<link rel="next" href="alpha-diversity.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bacterial-load" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> Bacterial Load<a href="bacterial-load.html#bacterial-load" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb185-1"><a href="bacterial-load.html#cb185-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/macro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb185-2"><a href="bacterial-load.html#cb185-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/macro/seq_stats.Rdata&quot;</span>)</span>
+<span id="cb185-3"><a href="bacterial-load.html#cb185-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb185-4"><a href="bacterial-load.html#cb185-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/seq_stats.Rdata&quot;</span>)</span>
+<span id="cb185-5"><a href="bacterial-load.html#cb185-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/data_colors.Rdata&quot;</span>)</span></code></pre></div>
+<div id="macro-samples-1" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Macro-samples<a href="bacterial-load.html#macro-samples-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb186-1"><a href="bacterial-load.html#cb186-1" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="st">&quot;bacteria_over_turkey&quot;</span></span>
+<span id="cb186-2"><a href="bacterial-load.html#cb186-2" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> plot_data_stats_macro <span class="sc">%&gt;%</span></span>
+<span id="cb186-3"><a href="bacterial-load.html#cb186-3" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb186-4"><a href="bacterial-load.html#cb186-4" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment_expl, age_category) <span class="sc">%&gt;%</span></span>
+<span id="cb186-5"><a href="bacterial-load.html#cb186-5" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb186-6"><a href="bacterial-load.html#cb186-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb186-7"><a href="bacterial-load.html#cb186-7" tabindex="-1"></a>    <span class="at">IQR    =</span> <span class="fu">IQR</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb186-8"><a href="bacterial-load.html#cb186-8" tabindex="-1"></a>    <span class="at">Q1     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb186-9"><a href="bacterial-load.html#cb186-9" tabindex="-1"></a>    <span class="at">Q3     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb186-10"><a href="bacterial-load.html#cb186-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb186-11"><a href="bacterial-load.html#cb186-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label_txt =</span> <span class="fu">formatC</span>(median, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
+<span id="cb186-12"><a href="bacterial-load.html#cb186-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_stats)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="30%" />
+<col width="13%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">treatment_expl</th>
+<th align="left">age_category</th>
+<th align="right">median</th>
+<th align="right">IQR</th>
+<th align="right">Q1</th>
+<th align="right">Q3</th>
+<th align="left">label_txt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ControlGroup</td>
+<td align="left">a</td>
+<td align="right">5.7473492</td>
+<td align="right">11.0850644</td>
+<td align="right">0.7148612</td>
+<td align="right">11.7999256</td>
+<td align="left">5.75</td>
+</tr>
+<tr class="even">
+<td align="left">ControlGroup</td>
+<td align="left">b</td>
+<td align="right">1.8912451</td>
+<td align="right">78.5331746</td>
+<td align="right">0.5213194</td>
+<td align="right">79.0544940</td>
+<td align="left">1.89</td>
+</tr>
+<tr class="odd">
+<td align="left">ControlGroup</td>
+<td align="left">c</td>
+<td align="right">8.1873234</td>
+<td align="right">26.5122028</td>
+<td align="right">5.8685884</td>
+<td align="right">32.3807912</td>
+<td align="left">8.19</td>
+</tr>
+<tr class="even">
+<td align="left">ControlGroup</td>
+<td align="left">d</td>
+<td align="right">3.7814958</td>
+<td align="right">4.0717890</td>
+<td align="right">3.5822751</td>
+<td align="right">7.6540641</td>
+<td align="left">3.78</td>
+</tr>
+<tr class="odd">
+<td align="left">OnlyHistomonas</td>
+<td align="left">a</td>
+<td align="right">2.4124964</td>
+<td align="right">18.1485893</td>
+<td align="right">0.6893635</td>
+<td align="right">18.8379528</td>
+<td align="left">2.41</td>
+</tr>
+<tr class="even">
+<td align="left">OnlyHistomonas</td>
+<td align="left">b</td>
+<td align="right">0.0301109</td>
+<td align="right">0.0350869</td>
+<td align="right">0.0171992</td>
+<td align="right">0.0522861</td>
+<td align="left">0.03</td>
+</tr>
+<tr class="odd">
+<td align="left">OnlyHistomonas</td>
+<td align="left">c</td>
+<td align="right">0.2325433</td>
+<td align="right">0.6159796</td>
+<td align="right">0.1112350</td>
+<td align="right">0.7272146</td>
+<td align="left">0.23</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">a</td>
+<td align="right">24.8459738</td>
+<td align="right">14.5859665</td>
+<td align="right">18.5128959</td>
+<td align="right">33.0988624</td>
+<td align="left">24.85</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">b</td>
+<td align="right">0.0721774</td>
+<td align="right">0.0723341</td>
+<td align="right">0.0336796</td>
+<td align="right">0.1060137</td>
+<td align="left">0.07</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">c</td>
+<td align="right">0.4610444</td>
+<td align="right">6.0564843</td>
+<td align="right">0.1613420</td>
+<td align="right">6.2178262</td>
+<td align="left">0.46</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">d</td>
+<td align="right">16.2542842</td>
+<td align="right">26.5992858</td>
+<td align="right">4.5857692</td>
+<td align="right">31.1850550</td>
+<td align="left">16.25</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">a</td>
+<td align="right">28.4852724</td>
+<td align="right">30.2036219</td>
+<td align="right">13.5387787</td>
+<td align="right">43.7424007</td>
+<td align="left">28.49</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">b</td>
+<td align="right">0.0664999</td>
+<td align="right">0.1712118</td>
+<td align="right">0.0486245</td>
+<td align="right">0.2198364</td>
+<td align="left">0.07</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">c</td>
+<td align="right">5.0136431</td>
+<td align="right">13.8623042</td>
+<td align="right">0.3665152</td>
+<td align="right">14.2288194</td>
+<td align="left">5.01</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">d</td>
+<td align="right">1.0409784</td>
+<td align="right">5.2712878</td>
+<td align="right">0.8418797</td>
+<td align="right">6.1131675</td>
+<td align="left">1.04</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb187-1"><a href="bacterial-load.html#cb187-1" tabindex="-1"></a>bacterial_load_macro_plot_log <span class="ot">&lt;-</span> plot_data_stats_macro <span class="sc">%&gt;%</span></span>
+<span id="cb187-2"><a href="bacterial-load.html#cb187-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb187-3"><a href="bacterial-load.html#cb187-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age_category, <span class="at">y =</span> bacteria_over_turkey, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb187-4"><a href="bacterial-load.html#cb187-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb187-5"><a href="bacterial-load.html#cb187-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb187-6"><a href="bacterial-load.html#cb187-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> treatment_colours_bright) <span class="sc">+</span></span>
+<span id="cb187-7"><a href="bacterial-load.html#cb187-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>( . <span class="sc">~</span> treatment_expl , <span class="at">scales =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">space =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb187-8"><a href="bacterial-load.html#cb187-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Days post infection&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bacterial-to-host read ratio (log scale)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb187-9"><a href="bacterial-load.html#cb187-9" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span>  <span class="co"># Remove legend</span></span>
+<span id="cb187-10"><a href="bacterial-load.html#cb187-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb187-11"><a href="bacterial-load.html#cb187-11" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb187-12"><a href="bacterial-load.html#cb187-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb187-13"><a href="bacterial-load.html#cb187-13" tabindex="-1"></a>  <span class="fu">annotation_logticks</span>(<span class="at">sides =</span> <span class="st">&quot;l&quot;</span>)  <span class="sc">+</span> <span class="co"># adds log ticks on y-axis</span></span>
+<span id="cb187-14"><a href="bacterial-load.html#cb187-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb187-15"><a href="bacterial-load.html#cb187-15" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">+</span> </span>
+<span id="cb187-16"><a href="bacterial-load.html#cb187-16" tabindex="-1"></a>  <span class="co"># scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +</span></span>
+<span id="cb187-17"><a href="bacterial-load.html#cb187-17" tabindex="-1"></a>    <span class="co"># median + IQR text (placed a bit above the median line)</span></span>
+<span id="cb187-18"><a href="bacterial-load.html#cb187-18" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb187-19"><a href="bacterial-load.html#cb187-19" tabindex="-1"></a>    <span class="at">data =</span> summary_stats,</span>
+<span id="cb187-20"><a href="bacterial-load.html#cb187-20" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> age_category, <span class="at">y =</span> median, <span class="at">label =</span> label_txt),</span>
+<span id="cb187-21"><a href="bacterial-load.html#cb187-21" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb187-22"><a href="bacterial-load.html#cb187-22" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">3.0</span>,</span>
+<span id="cb187-23"><a href="bacterial-load.html#cb187-23" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="co">#+</span></span>
+<span id="cb187-24"><a href="bacterial-load.html#cb187-24" tabindex="-1"></a></span>
+<span id="cb187-25"><a href="bacterial-load.html#cb187-25" tabindex="-1"></a>bacterial_load_macro_plot_log</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_bacterial_load_macro-1.png" width="960" /></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb188-1"><a href="bacterial-load.html#cb188-1" tabindex="-1"></a>bacterial_load_macro_plot <span class="ot">&lt;-</span> plot_data_stats_macro <span class="sc">%&gt;%</span></span>
+<span id="cb188-2"><a href="bacterial-load.html#cb188-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb188-3"><a href="bacterial-load.html#cb188-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age_category, <span class="at">y =</span> bacteria_over_turkey, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb188-4"><a href="bacterial-load.html#cb188-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb188-5"><a href="bacterial-load.html#cb188-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb188-6"><a href="bacterial-load.html#cb188-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> treatment_colours_bright) <span class="sc">+</span></span>
+<span id="cb188-7"><a href="bacterial-load.html#cb188-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>( . <span class="sc">~</span> treatment_expl , <span class="at">scales =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">space =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb188-8"><a href="bacterial-load.html#cb188-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Days post infection&quot;</span>, <span class="at">y =</span> <span class="st">&quot;bacteria/host reads&quot;</span>) <span class="sc">+</span></span>
+<span id="cb188-9"><a href="bacterial-load.html#cb188-9" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span>  <span class="co"># Remove legend</span></span>
+<span id="cb188-10"><a href="bacterial-load.html#cb188-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb188-11"><a href="bacterial-load.html#cb188-11" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb188-12"><a href="bacterial-load.html#cb188-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb188-13"><a href="bacterial-load.html#cb188-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb188-14"><a href="bacterial-load.html#cb188-14" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">+</span> </span>
+<span id="cb188-15"><a href="bacterial-load.html#cb188-15" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb188-16"><a href="bacterial-load.html#cb188-16" tabindex="-1"></a>    <span class="co"># median + IQR text (placed a bit above the median line)</span></span>
+<span id="cb188-17"><a href="bacterial-load.html#cb188-17" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb188-18"><a href="bacterial-load.html#cb188-18" tabindex="-1"></a>    <span class="at">data =</span> summary_stats,</span>
+<span id="cb188-19"><a href="bacterial-load.html#cb188-19" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> age_category, <span class="at">y =</span> median, <span class="at">label =</span> label_txt),</span>
+<span id="cb188-20"><a href="bacterial-load.html#cb188-20" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb188-21"><a href="bacterial-load.html#cb188-21" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">3.0</span>,</span>
+<span id="cb188-22"><a href="bacterial-load.html#cb188-22" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="co">#+</span></span>
+<span id="cb188-23"><a href="bacterial-load.html#cb188-23" tabindex="-1"></a></span>
+<span id="cb188-24"><a href="bacterial-load.html#cb188-24" tabindex="-1"></a>bacterial_load_macro_plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_bacterial_load_macro-2.png" width="960" /></p>
+</div>
+<div id="micro-samples-1" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Micro-samples<a href="bacterial-load.html#micro-samples-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb189-1"><a href="bacterial-load.html#cb189-1" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="st">&quot;bacteria_over_turkey&quot;</span></span>
+<span id="cb189-2"><a href="bacterial-load.html#cb189-2" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb189-3"><a href="bacterial-load.html#cb189-3" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb189-4"><a href="bacterial-load.html#cb189-4" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment_expl, age) <span class="sc">%&gt;%</span></span>
+<span id="cb189-5"><a href="bacterial-load.html#cb189-5" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb189-6"><a href="bacterial-load.html#cb189-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb189-7"><a href="bacterial-load.html#cb189-7" tabindex="-1"></a>    <span class="at">IQR    =</span> <span class="fu">IQR</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb189-8"><a href="bacterial-load.html#cb189-8" tabindex="-1"></a>    <span class="at">Q1     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb189-9"><a href="bacterial-load.html#cb189-9" tabindex="-1"></a>    <span class="at">Q3     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb189-10"><a href="bacterial-load.html#cb189-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb189-11"><a href="bacterial-load.html#cb189-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label_txt =</span> <span class="fu">formatC</span>(median, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
+<span id="cb189-12"><a href="bacterial-load.html#cb189-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_stats)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="4%" />
+<col width="12%" />
+<col width="11%" />
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">treatment_expl</th>
+<th align="left">age</th>
+<th align="right">median</th>
+<th align="right">IQR</th>
+<th align="right">Q1</th>
+<th align="right">Q3</th>
+<th align="left">label_txt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ControlGroup</td>
+<td align="left">0</td>
+<td align="right">2152.39500</td>
+<td align="right">3514.4705</td>
+<td align="right">401.906755</td>
+<td align="right">3916.3772</td>
+<td align="left">2152.40</td>
+</tr>
+<tr class="even">
+<td align="left">ControlGroup</td>
+<td align="left">21</td>
+<td align="right">3252.42804</td>
+<td align="right">6107.4893</td>
+<td align="right">279.577827</td>
+<td align="right">6387.0671</td>
+<td align="left">3252.43</td>
+</tr>
+<tr class="odd">
+<td align="left">OnlyHistomonas</td>
+<td align="left">0</td>
+<td align="right">382.72757</td>
+<td align="right">4081.5403</td>
+<td align="right">10.725914</td>
+<td align="right">4092.2662</td>
+<td align="left">382.73</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">0</td>
+<td align="right">744.55294</td>
+<td align="right">5288.8319</td>
+<td align="right">32.601802</td>
+<td align="right">5321.4338</td>
+<td align="left">744.55</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">21</td>
+<td align="right">297.57231</td>
+<td align="right">2514.0012</td>
+<td align="right">10.890785</td>
+<td align="right">2524.8920</td>
+<td align="left">297.57</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">0</td>
+<td align="right">49.62122</td>
+<td align="right">395.5746</td>
+<td align="right">1.736523</td>
+<td align="right">397.3111</td>
+<td align="left">49.62</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">21</td>
+<td align="right">116.31067</td>
+<td align="right">1170.2565</td>
+<td align="right">12.370369</td>
+<td align="right">1182.6269</td>
+<td align="left">116.31</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb190-1"><a href="bacterial-load.html#cb190-1" tabindex="-1"></a>bacterial_load_plot_log <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb190-2"><a href="bacterial-load.html#cb190-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb190-3"><a href="bacterial-load.html#cb190-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bacteria_over_turkey, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb190-4"><a href="bacterial-load.html#cb190-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb190-5"><a href="bacterial-load.html#cb190-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb190-6"><a href="bacterial-load.html#cb190-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> treatment_colours_bright) <span class="sc">+</span></span>
+<span id="cb190-7"><a href="bacterial-load.html#cb190-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>( . <span class="sc">~</span> treatment_expl , <span class="at">scales =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">space =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb190-8"><a href="bacterial-load.html#cb190-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Days post infection&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bacterial-to-host read ratio (log scale)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb190-9"><a href="bacterial-load.html#cb190-9" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span>  <span class="co"># Remove legend</span></span>
+<span id="cb190-10"><a href="bacterial-load.html#cb190-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb190-11"><a href="bacterial-load.html#cb190-11" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb190-12"><a href="bacterial-load.html#cb190-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb190-13"><a href="bacterial-load.html#cb190-13" tabindex="-1"></a>  <span class="fu">annotation_logticks</span>(<span class="at">sides =</span> <span class="st">&quot;l&quot;</span>)  <span class="sc">+</span> <span class="co"># adds log ticks on y-axis</span></span>
+<span id="cb190-14"><a href="bacterial-load.html#cb190-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb190-15"><a href="bacterial-load.html#cb190-15" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">+</span> </span>
+<span id="cb190-16"><a href="bacterial-load.html#cb190-16" tabindex="-1"></a>  <span class="co"># scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +</span></span>
+<span id="cb190-17"><a href="bacterial-load.html#cb190-17" tabindex="-1"></a>    <span class="co"># median + IQR text (placed a bit above the median line)</span></span>
+<span id="cb190-18"><a href="bacterial-load.html#cb190-18" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb190-19"><a href="bacterial-load.html#cb190-19" tabindex="-1"></a>    <span class="at">data =</span> summary_stats,</span>
+<span id="cb190-20"><a href="bacterial-load.html#cb190-20" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> median, <span class="at">label =</span> label_txt),</span>
+<span id="cb190-21"><a href="bacterial-load.html#cb190-21" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb190-22"><a href="bacterial-load.html#cb190-22" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">3.0</span>,</span>
+<span id="cb190-23"><a href="bacterial-load.html#cb190-23" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="co">#+</span></span>
+<span id="cb190-24"><a href="bacterial-load.html#cb190-24" tabindex="-1"></a>  <span class="co">#ggtitle(&quot;Layers&quot;)</span></span>
+<span id="cb190-25"><a href="bacterial-load.html#cb190-25" tabindex="-1"></a></span>
+<span id="cb190-26"><a href="bacterial-load.html#cb190-26" tabindex="-1"></a>bacterial_load_plot_log</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_bacterial_load_micro-1.png" width="960" /></p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb191-1"><a href="bacterial-load.html#cb191-1" tabindex="-1"></a>bacterial_load_plot <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb191-2"><a href="bacterial-load.html#cb191-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb191-3"><a href="bacterial-load.html#cb191-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bacteria_over_turkey, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb191-4"><a href="bacterial-load.html#cb191-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb191-5"><a href="bacterial-load.html#cb191-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb191-6"><a href="bacterial-load.html#cb191-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> treatment_colours_bright) <span class="sc">+</span></span>
+<span id="cb191-7"><a href="bacterial-load.html#cb191-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>( . <span class="sc">~</span> treatment_expl , <span class="at">scales =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">space =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb191-8"><a href="bacterial-load.html#cb191-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Days post infection&quot;</span>, <span class="at">y =</span> <span class="st">&quot;bacteria/host reads&quot;</span>) <span class="sc">+</span></span>
+<span id="cb191-9"><a href="bacterial-load.html#cb191-9" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span>  <span class="co"># Remove legend</span></span>
+<span id="cb191-10"><a href="bacterial-load.html#cb191-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb191-11"><a href="bacterial-load.html#cb191-11" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb191-12"><a href="bacterial-load.html#cb191-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb191-13"><a href="bacterial-load.html#cb191-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb191-14"><a href="bacterial-load.html#cb191-14" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">+</span> </span>
+<span id="cb191-15"><a href="bacterial-load.html#cb191-15" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb191-16"><a href="bacterial-load.html#cb191-16" tabindex="-1"></a>    <span class="co"># median + IQR text (placed a bit above the median line)</span></span>
+<span id="cb191-17"><a href="bacterial-load.html#cb191-17" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb191-18"><a href="bacterial-load.html#cb191-18" tabindex="-1"></a>    <span class="at">data =</span> summary_stats,</span>
+<span id="cb191-19"><a href="bacterial-load.html#cb191-19" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> median, <span class="at">label =</span> label_txt),</span>
+<span id="cb191-20"><a href="bacterial-load.html#cb191-20" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb191-21"><a href="bacterial-load.html#cb191-21" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">3.0</span>,</span>
+<span id="cb191-22"><a href="bacterial-load.html#cb191-22" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="co">#+</span></span>
+<span id="cb191-23"><a href="bacterial-load.html#cb191-23" tabindex="-1"></a>  <span class="co">#ggtitle(&quot;Layers&quot;)</span></span>
+<span id="cb191-24"><a href="bacterial-load.html#cb191-24" tabindex="-1"></a></span>
+<span id="cb191-25"><a href="bacterial-load.html#cb191-25" tabindex="-1"></a>bacterial_load_plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_bacterial_load_micro-2.png" width="960" /></p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb192-1"><a href="bacterial-load.html#cb192-1" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="st">&quot;bacteria_over_turkey&quot;</span></span>
+<span id="cb192-2"><a href="bacterial-load.html#cb192-2" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb192-3"><a href="bacterial-load.html#cb192-3" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb192-4"><a href="bacterial-load.html#cb192-4" tabindex="-1"></a>  <span class="fu">group_by</span>(treatment_expl, animal, age, section) <span class="sc">%&gt;%</span></span>
+<span id="cb192-5"><a href="bacterial-load.html#cb192-5" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb192-6"><a href="bacterial-load.html#cb192-6" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb192-7"><a href="bacterial-load.html#cb192-7" tabindex="-1"></a>    <span class="at">IQR    =</span> <span class="fu">IQR</span>(.data[[var]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb192-8"><a href="bacterial-load.html#cb192-8" tabindex="-1"></a>    <span class="at">Q1     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb192-9"><a href="bacterial-load.html#cb192-9" tabindex="-1"></a>    <span class="at">Q3     =</span> <span class="fu">quantile</span>(.data[[var]], <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb192-10"><a href="bacterial-load.html#cb192-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb192-11"><a href="bacterial-load.html#cb192-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label_txt =</span> <span class="fu">formatC</span>(median, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
+<span id="cb192-12"><a href="bacterial-load.html#cb192-12" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_stats)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="6%" />
+<col width="3%" />
+<col width="11%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="10%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">treatment_expl</th>
+<th align="left">animal</th>
+<th align="left">age</th>
+<th align="left">section</th>
+<th align="right">median</th>
+<th align="right">IQR</th>
+<th align="right">Q1</th>
+<th align="right">Q3</th>
+<th align="left">label_txt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ControlGroup</td>
+<td align="left">M061a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">1232.461010</td>
+<td align="right">2659.1002</td>
+<td align="right">165.7165136</td>
+<td align="right">2824.8167</td>
+<td align="left">1232.46</td>
+</tr>
+<tr class="even">
+<td align="left">ControlGroup</td>
+<td align="left">M065a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">2349.540365</td>
+<td align="right">2292.2271</td>
+<td align="right">1867.6655620</td>
+<td align="right">4159.8927</td>
+<td align="left">2349.54</td>
+</tr>
+<tr class="odd">
+<td align="left">ControlGroup</td>
+<td align="left">M078d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">5265.028520</td>
+<td align="right">8109.5958</td>
+<td align="right">1291.2844977</td>
+<td align="right">9400.8803</td>
+<td align="left">5265.03</td>
+</tr>
+<tr class="even">
+<td align="left">ControlGroup</td>
+<td align="left">M080d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">1645.332817</td>
+<td align="right">3562.0022</td>
+<td align="right">110.4828677</td>
+<td align="right">3672.4850</td>
+<td align="left">1645.33</td>
+</tr>
+<tr class="odd">
+<td align="left">OnlyHistomonas</td>
+<td align="left">M041a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">19.885748</td>
+<td align="right">118.3556</td>
+<td align="right">1.1190290</td>
+<td align="right">119.4746</td>
+<td align="left">19.89</td>
+</tr>
+<tr class="even">
+<td align="left">OnlyHistomonas</td>
+<td align="left">M042a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">4105.214523</td>
+<td align="right">5095.0308</td>
+<td align="right">999.2916919</td>
+<td align="right">6094.3225</td>
+<td align="left">4105.21</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">M002a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">60.852846</td>
+<td align="right">545.5267</td>
+<td align="right">9.7662442</td>
+<td align="right">555.2929</td>
+<td align="left">60.85</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">M003a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">5485.634057</td>
+<td align="right">11722.0986</td>
+<td align="right">1325.1362404</td>
+<td align="right">13047.2349</td>
+<td align="left">5485.63</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">M017d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">26.092771</td>
+<td align="right">207.6554</td>
+<td align="right">2.8509702</td>
+<td align="right">210.5064</td>
+<td align="left">26.09</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedCloacal&amp;Histomonas</td>
+<td align="left">M018d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">2269.858746</td>
+<td align="right">3683.4998</td>
+<td align="right">594.3299752</td>
+<td align="right">4277.8298</td>
+<td align="left">2269.86</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">M021a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">92.250702</td>
+<td align="right">411.4121</td>
+<td align="right">6.2387842</td>
+<td align="right">417.6509</td>
+<td align="left">92.25</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">M022a</td>
+<td align="left">0</td>
+<td align="left">Caecum right</td>
+<td align="right">7.511314</td>
+<td align="right">296.3594</td>
+<td align="right">0.8502298</td>
+<td align="right">297.2097</td>
+<td align="left">7.51</td>
+</tr>
+<tr class="odd">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">M038d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">41.495329</td>
+<td align="right">349.2195</td>
+<td align="right">5.5225025</td>
+<td align="right">354.7420</td>
+<td align="left">41.50</td>
+</tr>
+<tr class="even">
+<td align="left">VaccinatedOral&amp;Histomonas</td>
+<td align="left">M039d</td>
+<td align="left">21</td>
+<td align="left">Caecum right</td>
+<td align="right">472.148744</td>
+<td align="right">2479.8437</td>
+<td align="right">24.5894334</td>
+<td align="right">2504.4332</td>
+<td align="left">472.15</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb193-1"><a href="bacterial-load.html#cb193-1" tabindex="-1"></a>bacterial_load_plot_log_animal <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb193-2"><a href="bacterial-load.html#cb193-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb193-3"><a href="bacterial-load.html#cb193-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> section, <span class="at">y =</span> bacteria_over_turkey, <span class="at">color =</span> treatment)) <span class="sc">+</span></span>
+<span id="cb193-4"><a href="bacterial-load.html#cb193-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb193-5"><a href="bacterial-load.html#cb193-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb193-6"><a href="bacterial-load.html#cb193-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> treatment_colours_bright) <span class="sc">+</span></span>
+<span id="cb193-7"><a href="bacterial-load.html#cb193-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>( . <span class="sc">~</span> treatment_expl <span class="sc">+</span> age <span class="sc">+</span> animal, <span class="at">scales =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">space =</span> <span class="st">&quot;fixed&quot;</span>, <span class="at">switch =</span> <span class="st">&quot;y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb193-8"><a href="bacterial-load.html#cb193-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Days post infection&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bacterial-to-host read ratio (log scale)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb193-9"><a href="bacterial-load.html#cb193-9" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span>  <span class="co"># Remove legend</span></span>
+<span id="cb193-10"><a href="bacterial-load.html#cb193-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb193-11"><a href="bacterial-load.html#cb193-11" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb193-12"><a href="bacterial-load.html#cb193-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb193-13"><a href="bacterial-load.html#cb193-13" tabindex="-1"></a>  <span class="fu">annotation_logticks</span>(<span class="at">sides =</span> <span class="st">&quot;l&quot;</span>)  <span class="sc">+</span> <span class="co"># adds log ticks on y-axis</span></span>
+<span id="cb193-14"><a href="bacterial-load.html#cb193-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb193-15"><a href="bacterial-load.html#cb193-15" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">+</span> </span>
+<span id="cb193-16"><a href="bacterial-load.html#cb193-16" tabindex="-1"></a>  <span class="co"># scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +</span></span>
+<span id="cb193-17"><a href="bacterial-load.html#cb193-17" tabindex="-1"></a>    <span class="co"># median + IQR text (placed a bit above the median line)</span></span>
+<span id="cb193-18"><a href="bacterial-load.html#cb193-18" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb193-19"><a href="bacterial-load.html#cb193-19" tabindex="-1"></a>    <span class="at">data =</span> summary_stats,</span>
+<span id="cb193-20"><a href="bacterial-load.html#cb193-20" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> section, <span class="at">y =</span> median, <span class="at">label =</span> label_txt),</span>
+<span id="cb193-21"><a href="bacterial-load.html#cb193-21" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb193-22"><a href="bacterial-load.html#cb193-22" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">3.0</span>,</span>
+<span id="cb193-23"><a href="bacterial-load.html#cb193-23" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="co">#+</span></span>
+<span id="cb193-24"><a href="bacterial-load.html#cb193-24" tabindex="-1"></a>  <span class="co">#ggtitle(&quot;Layers&quot;)</span></span>
+<span id="cb193-25"><a href="bacterial-load.html#cb193-25" tabindex="-1"></a></span>
+<span id="cb193-26"><a href="bacterial-load.html#cb193-26" tabindex="-1"></a>bacterial_load_plot_log_animal</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_bacterial_load_micro_section-1.png" width="960" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sequencing-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="alpha-diversity.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

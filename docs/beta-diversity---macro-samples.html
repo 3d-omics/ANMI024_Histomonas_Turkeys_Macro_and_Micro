@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>15 Beta Diversity - Macro Samples | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="15 Beta Diversity - Macro Samples | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="15 Beta Diversity - Macro Samples | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="alpha-diversity.html"/>
+<link rel="next" href="beta-diversity---micro-samples.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="beta-diversity---macro-samples" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">15</span> Beta Diversity - Macro Samples<a href="beta-diversity---macro-samples.html#beta-diversity---macro-samples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb211-1"><a href="beta-diversity---macro-samples.html#cb211-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/macro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb211-2"><a href="beta-diversity---macro-samples.html#cb211-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/macro/counts.Rdata&quot;</span>)</span>
+<span id="cb211-3"><a href="beta-diversity---macro-samples.html#cb211-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb211-4"><a href="beta-diversity---macro-samples.html#cb211-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/MAG_catalogue/data.Rdata&quot;</span>)</span>
+<span id="cb211-5"><a href="beta-diversity---macro-samples.html#cb211-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/data_colors.Rdata&quot;</span>)</span></code></pre></div>
+<div id="prepare-tidy-tables-for-plotting-2" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Prepare tidy tables for plotting<a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Create tidy tables for filtered genome counts (macro)</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb212-1"><a href="beta-diversity---macro-samples.html#cb212-1" tabindex="-1"></a>tidy_plot_genome_counts_filt_30_macro <span class="ot">&lt;-</span>  genome_counts_macro_filt_30 <span class="sc">%&gt;%</span></span>
+<span id="cb212-2"><a href="beta-diversity---macro-samples.html#cb212-2" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>genome, <span class="at">names_to =</span> <span class="st">&quot;microsample&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;count&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-3"><a href="beta-diversity---macro-samples.html#cb212-3" tabindex="-1"></a>    <span class="fu">left_join</span>(genome_metadata, <span class="at">by =</span> <span class="fu">join_by</span>(genome <span class="sc">==</span> genome)) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-4"><a href="beta-diversity---macro-samples.html#cb212-4" tabindex="-1"></a>    <span class="fu">left_join</span>(sample_metadata_macro, <span class="at">by =</span> <span class="fu">join_by</span>(microsample <span class="sc">==</span> sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-5"><a href="beta-diversity---macro-samples.html#cb212-5" tabindex="-1"></a>    <span class="fu">filter</span>(count <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb212-6"><a href="beta-diversity---macro-samples.html#cb212-6" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phylum =</span> <span class="fu">factor</span>(phylum, <span class="at">levels =</span> phylum_level_vector),</span>
+<span id="cb212-7"><a href="beta-diversity---macro-samples.html#cb212-7" tabindex="-1"></a>           <span class="at">order =</span> <span class="fu">factor</span>(order, <span class="at">levels =</span> order_level_vector))</span>
+<span id="cb212-8"><a href="beta-diversity---macro-samples.html#cb212-8" tabindex="-1"></a></span>
+<span id="cb212-9"><a href="beta-diversity---macro-samples.html#cb212-9" tabindex="-1"></a>tidy_plot_genome_counts_filt_30_macro_closed <span class="ot">&lt;-</span>  genome_counts_macro_filt_30 <span class="sc">%&gt;%</span></span>
+<span id="cb212-10"><a href="beta-diversity---macro-samples.html#cb212-10" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="sc">-</span>genome), <span class="sc">~</span> . <span class="sc">/</span> <span class="fu">sum</span>(.)) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-11"><a href="beta-diversity---macro-samples.html#cb212-11" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>genome, <span class="at">names_to =</span> <span class="st">&quot;microsample&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;count&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-12"><a href="beta-diversity---macro-samples.html#cb212-12" tabindex="-1"></a>    <span class="fu">left_join</span>(genome_metadata, <span class="at">by =</span> <span class="fu">join_by</span>(genome <span class="sc">==</span> genome)) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-13"><a href="beta-diversity---macro-samples.html#cb212-13" tabindex="-1"></a>    <span class="fu">left_join</span>(sample_metadata_macro, <span class="at">by =</span> <span class="fu">join_by</span>(microsample <span class="sc">==</span> sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb212-14"><a href="beta-diversity---macro-samples.html#cb212-14" tabindex="-1"></a>    <span class="fu">filter</span>(count <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb212-15"><a href="beta-diversity---macro-samples.html#cb212-15" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phylum =</span> <span class="fu">factor</span>(phylum, <span class="at">levels =</span> phylum_level_vector),</span>
+<span id="cb212-16"><a href="beta-diversity---macro-samples.html#cb212-16" tabindex="-1"></a>           <span class="at">order =</span> <span class="fu">factor</span>(order, <span class="at">levels =</span> order_level_vector))</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb213-1"><a href="beta-diversity---macro-samples.html#cb213-1" tabindex="-1"></a>tidy_plot_genome_counts_filt_30_macro <span class="sc">%&gt;%</span></span>
+<span id="cb213-2"><a href="beta-diversity---macro-samples.html#cb213-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb213-3"><a href="beta-diversity---macro-samples.html#cb213-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> animal , <span class="at">y =</span> count, <span class="at">fill =</span> order)) <span class="sc">+</span></span>
+<span id="cb213-4"><a href="beta-diversity---macro-samples.html#cb213-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">colour=</span><span class="st">&quot;white&quot;</span>, <span class="at">linewidth=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="co">#plot stacked bars with white borders</span></span>
+<span id="cb213-5"><a href="beta-diversity---macro-samples.html#cb213-5" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors[<span class="sc">-</span><span class="dv">4</span>], <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb213-6"><a href="beta-diversity---macro-samples.html#cb213-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Metagenomic Samples&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Order composition&quot;</span>,<span class="at">fill =</span> <span class="st">&quot;Read type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb213-7"><a href="beta-diversity---macro-samples.html#cb213-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>(. <span class="sc">~</span> treatment_expl <span class="sc">+</span> age_category, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb213-8"><a href="beta-diversity---macro-samples.html#cb213-8" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb213-9"><a href="beta-diversity---macro-samples.html#cb213-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb213-10"><a href="beta-diversity---macro-samples.html#cb213-10" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb213-11"><a href="beta-diversity---macro-samples.html#cb213-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb213-12"><a href="beta-diversity---macro-samples.html#cb213-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Composition of bacterial orders at 30% coverage filtered data&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_order_composition-1.png" width="1152" /></p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb214-1"><a href="beta-diversity---macro-samples.html#cb214-1" tabindex="-1"></a>tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb214-2"><a href="beta-diversity---macro-samples.html#cb214-2" tabindex="-1"></a>  <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">&quot;TM0&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb214-3"><a href="beta-diversity---macro-samples.html#cb214-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> animal , <span class="at">y =</span> count, <span class="at">fill =</span> order)) <span class="sc">+</span></span>
+<span id="cb214-4"><a href="beta-diversity---macro-samples.html#cb214-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">colour=</span><span class="st">&quot;white&quot;</span>, <span class="at">linewidth=</span><span class="fl">0.1</span>) <span class="sc">+</span> <span class="co">#plot stacked bars with white borders</span></span>
+<span id="cb214-5"><a href="beta-diversity---macro-samples.html#cb214-5" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors[<span class="sc">-</span><span class="dv">4</span>], <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb214-6"><a href="beta-diversity---macro-samples.html#cb214-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Metagenomic Samples&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Order composition&quot;</span>,<span class="at">fill =</span> <span class="st">&quot;Read type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-7"><a href="beta-diversity---macro-samples.html#cb214-7" tabindex="-1"></a>  <span class="fu">facet_nested</span>(. <span class="sc">~</span> treatment_expl <span class="sc">+</span> age_category, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">space =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-8"><a href="beta-diversity---macro-samples.html#cb214-8" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb214-9"><a href="beta-diversity---macro-samples.html#cb214-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb214-10"><a href="beta-diversity---macro-samples.html#cb214-10" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb214-11"><a href="beta-diversity---macro-samples.html#cb214-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-12"><a href="beta-diversity---macro-samples.html#cb214-12" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Composition of bacterial orders at 30% coverage filtered data&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_order_composition-2.png" width="1152" /></p>
+</div>
+<div id="species-level" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Species level<a href="beta-diversity---macro-samples.html#species-level" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The problem here is that at species level there are too many zeros and then we need to drop almost all samples from Histomonas treatment after day a.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb215-1"><a href="beta-diversity---macro-samples.html#cb215-1" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb215-2"><a href="beta-diversity---macro-samples.html#cb215-2" tabindex="-1"></a>  <span class="co"># Remove metadata</span></span>
+<span id="cb215-3"><a href="beta-diversity---macro-samples.html#cb215-3" tabindex="-1"></a>  <span class="fu">select</span>(genome, microsample, count) <span class="sc">%&gt;%</span></span>
+<span id="cb215-4"><a href="beta-diversity---macro-samples.html#cb215-4" tabindex="-1"></a>  <span class="co"># Make tidy df into wide df</span></span>
+<span id="cb215-5"><a href="beta-diversity---macro-samples.html#cb215-5" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb215-6"><a href="beta-diversity---macro-samples.html#cb215-6" tabindex="-1"></a>    <span class="at">names_from =</span> genome,   </span>
+<span id="cb215-7"><a href="beta-diversity---macro-samples.html#cb215-7" tabindex="-1"></a>    <span class="at">values_from =</span> count,   </span>
+<span id="cb215-8"><a href="beta-diversity---macro-samples.html#cb215-8" tabindex="-1"></a>    <span class="co"># Fill missing values with 0</span></span>
+<span id="cb215-9"><a href="beta-diversity---macro-samples.html#cb215-9" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb215-10"><a href="beta-diversity---macro-samples.html#cb215-10" tabindex="-1"></a>  <span class="co"># Remove taxa (columns) that are zero for all leftover samples (rows)</span></span>
+<span id="cb215-11"><a href="beta-diversity---macro-samples.html#cb215-11" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">any</span>(. <span class="sc">!=</span> <span class="dv">0</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb215-12"><a href="beta-diversity---macro-samples.html#cb215-12" tabindex="-1"></a>  <span class="co"># scale each sample to 100 (= closure to 100, not required, but common)</span></span>
+<span id="cb215-13"><a href="beta-diversity---macro-samples.html#cb215-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>microsample, <span class="sc">~</span> . <span class="sc">/</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))) <span class="sc">*</span> <span class="dv">100</span> )) <span class="sc">%&gt;%</span></span>
+<span id="cb215-14"><a href="beta-diversity---macro-samples.html#cb215-14" tabindex="-1"></a>  <span class="co"># turn the column &#39;microsample&#39;into the name of the rows of the df</span></span>
+<span id="cb215-15"><a href="beta-diversity---macro-samples.html#cb215-15" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>)</span>
+<span id="cb215-16"><a href="beta-diversity---macro-samples.html#cb215-16" tabindex="-1"></a></span>
+<span id="cb215-17"><a href="beta-diversity---macro-samples.html#cb215-17" tabindex="-1"></a></span>
+<span id="cb215-18"><a href="beta-diversity---macro-samples.html#cb215-18" tabindex="-1"></a><span class="co"># Remove taxa in few samples, and samples with few taxa</span></span>
+<span id="cb215-19"><a href="beta-diversity---macro-samples.html#cb215-19" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> <span class="fu">remove_samples_or_taxa</span>(<span class="at">df =</span> df_wide,</span>
+<span id="cb215-20"><a href="beta-diversity---macro-samples.html#cb215-20" tabindex="-1"></a>                                     <span class="at">min_samples_per_taxon =</span> <span class="dv">15</span>,</span>
+<span id="cb215-21"><a href="beta-diversity---macro-samples.html#cb215-21" tabindex="-1"></a>                                     <span class="at">min_taxa_per_sample =</span> <span class="dv">20</span>)</span></code></pre></div>
+<pre class="script-output"><code>Initial df: Rows (samples): 74 , Columns (taxa): 523 
+Removed: Rows (samples): 16 , Columns (taxa): 265 
+Resulting df: Rows (samples): 58 , Columns (taxa): 258 </code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb217-1"><a href="beta-diversity---macro-samples.html#cb217-1" tabindex="-1"></a>MACRO_sample_metadata <span class="ot">&lt;-</span> sample_metadata_macro <span class="sc">%&gt;%</span></span>
+<span id="cb217-2"><a href="beta-diversity---macro-samples.html#cb217-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">microsample =</span> sample) <span class="sc">%&gt;%</span></span>
+<span id="cb217-3"><a href="beta-diversity---macro-samples.html#cb217-3" tabindex="-1"></a>  <span class="fu">select</span>(microsample, animal, age_category, treatment, treatment_expl) <span class="sc">%&gt;%</span></span>
+<span id="cb217-4"><a href="beta-diversity---macro-samples.html#cb217-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample_type =</span> <span class="st">&quot;MACRO&quot;</span>) </span>
+<span id="cb217-5"><a href="beta-diversity---macro-samples.html#cb217-5" tabindex="-1"></a></span>
+<span id="cb217-6"><a href="beta-diversity---macro-samples.html#cb217-6" tabindex="-1"></a></span>
+<span id="cb217-7"><a href="beta-diversity---macro-samples.html#cb217-7" tabindex="-1"></a></span>
+<span id="cb217-8"><a href="beta-diversity---macro-samples.html#cb217-8" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">perform_pca</span>(df_wide, <span class="at">z_delete =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre class="script-output"><code>[1] &quot;Zeros found&quot;</code></pre>
+<pre class="script-output"><code>No. adjusted imputations:  4109 
+Rows (samples) removed after zero replacement: 11 
+Columns (taxa) removed after zero replacement: 0 </code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb220-1"><a href="beta-diversity---macro-samples.html#cb220-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_pca</span>(pca_result<span class="sc">$</span>pca_result,</span>
+<span id="cb220-2"><a href="beta-diversity---macro-samples.html#cb220-2" tabindex="-1"></a>         <span class="at">samples_color_metadata =</span> <span class="st">&quot;treatment&quot;</span> , </span>
+<span id="cb220-3"><a href="beta-diversity---macro-samples.html#cb220-3" tabindex="-1"></a>         <span class="at">samples_shape_metadata =</span> <span class="st">&quot;age_category&quot;</span>,</span>
+<span id="cb220-4"><a href="beta-diversity---macro-samples.html#cb220-4" tabindex="-1"></a>         <span class="at">samples_color_value =</span> treatment_colours_bright, </span>
+<span id="cb220-5"><a href="beta-diversity---macro-samples.html#cb220-5" tabindex="-1"></a>         <span class="at">loadings_color_metadata =</span> <span class="st">&quot;order&quot;</span>, </span>
+<span id="cb220-6"><a href="beta-diversity---macro-samples.html#cb220-6" tabindex="-1"></a>         <span class="at">loadings_color_value =</span> order_colors, </span>
+<span id="cb220-7"><a href="beta-diversity---macro-samples.html#cb220-7" tabindex="-1"></a>         <span class="at">loadings_taxon_level =</span> <span class="st">&quot;species&quot;</span>,</span>
+<span id="cb220-8"><a href="beta-diversity---macro-samples.html#cb220-8" tabindex="-1"></a>         MACRO_sample_metadata, genome_metadata, order_colors, </span>
+<span id="cb220-9"><a href="beta-diversity---macro-samples.html#cb220-9" tabindex="-1"></a>         custom_ggplot_theme)</span>
+<span id="cb220-10"><a href="beta-diversity---macro-samples.html#cb220-10" tabindex="-1"></a></span>
+<span id="cb220-11"><a href="beta-diversity---macro-samples.html#cb220-11" tabindex="-1"></a>p2 <span class="ot">=</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;XX&quot;</span>)</span>
+<span id="cb220-12"><a href="beta-diversity---macro-samples.html#cb220-12" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_species_pca_prep-1.png" width="960" /></p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb221-1"><a href="beta-diversity---macro-samples.html#cb221-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_pca</span>(pca_result<span class="sc">$</span>pca_result,</span>
+<span id="cb221-2"><a href="beta-diversity---macro-samples.html#cb221-2" tabindex="-1"></a>         <span class="at">samples_color_metadata =</span> <span class="st">&quot;treatment&quot;</span> , </span>
+<span id="cb221-3"><a href="beta-diversity---macro-samples.html#cb221-3" tabindex="-1"></a>         <span class="at">samples_shape_metadata =</span> <span class="st">&quot;age_category&quot;</span>,</span>
+<span id="cb221-4"><a href="beta-diversity---macro-samples.html#cb221-4" tabindex="-1"></a>         <span class="at">samples_color_value =</span> treatment_colours_bright, </span>
+<span id="cb221-5"><a href="beta-diversity---macro-samples.html#cb221-5" tabindex="-1"></a>         <span class="at">loadings_color_metadata =</span> <span class="st">&quot;order&quot;</span>, </span>
+<span id="cb221-6"><a href="beta-diversity---macro-samples.html#cb221-6" tabindex="-1"></a>         <span class="at">loadings_color_value =</span> order_colors, </span>
+<span id="cb221-7"><a href="beta-diversity---macro-samples.html#cb221-7" tabindex="-1"></a>         <span class="at">loadings_taxon_level =</span> <span class="st">&quot;species&quot;</span>,</span>
+<span id="cb221-8"><a href="beta-diversity---macro-samples.html#cb221-8" tabindex="-1"></a>         <span class="at">scaling_factor_value =</span> <span class="fl">1.0</span>, </span>
+<span id="cb221-9"><a href="beta-diversity---macro-samples.html#cb221-9" tabindex="-1"></a>          <span class="at">loadings_number =</span> <span class="dv">10</span>,</span>
+<span id="cb221-10"><a href="beta-diversity---macro-samples.html#cb221-10" tabindex="-1"></a>         MACRO_sample_metadata, genome_metadata, order_colors, </span>
+<span id="cb221-11"><a href="beta-diversity---macro-samples.html#cb221-11" tabindex="-1"></a>         custom_ggplot_theme,</span>
+<span id="cb221-12"><a href="beta-diversity---macro-samples.html#cb221-12" tabindex="-1"></a>         <span class="at">add_centroids =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb221-13"><a href="beta-diversity---macro-samples.html#cb221-13" tabindex="-1"></a></span>
+<span id="cb221-14"><a href="beta-diversity---macro-samples.html#cb221-14" tabindex="-1"></a>p2 <span class="ot">=</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;XX&quot;</span>)</span>
+<span id="cb221-15"><a href="beta-diversity---macro-samples.html#cb221-15" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_species_pca_centroids-1.png" width="960" /></p>
+</div>
+<div id="genus-level" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> Genus level<a href="beta-diversity---macro-samples.html#genus-level" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Even here, the zero replacement needs to drop the samples with too few taxa.</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb222-1"><a href="beta-diversity---macro-samples.html#cb222-1" tabindex="-1"></a>genus_metadata <span class="ot">&lt;-</span>  genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb222-2"><a href="beta-diversity---macro-samples.html#cb222-2" tabindex="-1"></a>  <span class="fu">select</span>(domain, phylum, class, order, family, genus) <span class="sc">%&gt;%</span></span>
+<span id="cb222-3"><a href="beta-diversity---macro-samples.html#cb222-3" tabindex="-1"></a>  <span class="fu">distinct</span>(genus, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb222-4"><a href="beta-diversity---macro-samples.html#cb222-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genome =</span> genus)</span>
+<span id="cb222-5"><a href="beta-diversity---macro-samples.html#cb222-5" tabindex="-1"></a></span>
+<span id="cb222-6"><a href="beta-diversity---macro-samples.html#cb222-6" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb222-7"><a href="beta-diversity---macro-samples.html#cb222-7" tabindex="-1"></a>  <span class="co"># Remove metadata</span></span>
+<span id="cb222-8"><a href="beta-diversity---macro-samples.html#cb222-8" tabindex="-1"></a>  <span class="fu">select</span>(domain, phylum, class, order, family, genus, genome, microsample, count) <span class="sc">%&gt;%</span></span>
+<span id="cb222-9"><a href="beta-diversity---macro-samples.html#cb222-9" tabindex="-1"></a>  <span class="fu">group_by</span>(microsample, genus) <span class="sc">%&gt;%</span></span>
+<span id="cb222-10"><a href="beta-diversity---macro-samples.html#cb222-10" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">genus_count =</span> <span class="fu">sum</span>(count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb222-11"><a href="beta-diversity---macro-samples.html#cb222-11" tabindex="-1"></a>  <span class="fu">filter</span>(genus <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb222-12"><a href="beta-diversity---macro-samples.html#cb222-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count=</span>genus_count) <span class="sc">%&gt;%</span></span>
+<span id="cb222-13"><a href="beta-diversity---macro-samples.html#cb222-13" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus_count) <span class="sc">%&gt;%</span></span>
+<span id="cb222-14"><a href="beta-diversity---macro-samples.html#cb222-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> genus,<span class="at">values_from =</span> count,<span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb222-15"><a href="beta-diversity---macro-samples.html#cb222-15" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">any</span>(. <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">|</span> <span class="fu">where</span>(is.character) <span class="sc">|</span> <span class="fu">where</span>(is.factor)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb222-16"><a href="beta-diversity---macro-samples.html#cb222-16" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb222-17"><a href="beta-diversity---macro-samples.html#cb222-17" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> . <span class="sc">/</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))) <span class="sc">*</span> <span class="dv">100</span>))</span>
+<span id="cb222-18"><a href="beta-diversity---macro-samples.html#cb222-18" tabindex="-1"></a></span>
+<span id="cb222-19"><a href="beta-diversity---macro-samples.html#cb222-19" tabindex="-1"></a></span>
+<span id="cb222-20"><a href="beta-diversity---macro-samples.html#cb222-20" tabindex="-1"></a><span class="co"># Remove taxa in few samples, and samples with few taxa</span></span>
+<span id="cb222-21"><a href="beta-diversity---macro-samples.html#cb222-21" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> <span class="fu">remove_samples_or_taxa</span>(<span class="at">df =</span> df_wide,</span>
+<span id="cb222-22"><a href="beta-diversity---macro-samples.html#cb222-22" tabindex="-1"></a>                                     <span class="at">min_samples_per_taxon =</span> <span class="dv">5</span>,</span>
+<span id="cb222-23"><a href="beta-diversity---macro-samples.html#cb222-23" tabindex="-1"></a>                                     <span class="at">min_taxa_per_sample =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre class="script-output"><code>Initial df: Rows (samples): 74 , Columns (taxa): 219 
+Removed: Rows (samples): 7 , Columns (taxa): 18 
+Resulting df: Rows (samples): 67 , Columns (taxa): 201 </code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb224-1"><a href="beta-diversity---macro-samples.html#cb224-1" tabindex="-1"></a>MACRO_sample_metadata <span class="ot">&lt;-</span> sample_metadata_macro <span class="sc">%&gt;%</span></span>
+<span id="cb224-2"><a href="beta-diversity---macro-samples.html#cb224-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">microsample =</span> sample) <span class="sc">%&gt;%</span></span>
+<span id="cb224-3"><a href="beta-diversity---macro-samples.html#cb224-3" tabindex="-1"></a>  <span class="fu">select</span>(microsample, animal, age_category, treatment, treatment_expl) <span class="sc">%&gt;%</span></span>
+<span id="cb224-4"><a href="beta-diversity---macro-samples.html#cb224-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample_type =</span> <span class="st">&quot;MACRO&quot;</span>) </span>
+<span id="cb224-5"><a href="beta-diversity---macro-samples.html#cb224-5" tabindex="-1"></a></span>
+<span id="cb224-6"><a href="beta-diversity---macro-samples.html#cb224-6" tabindex="-1"></a></span>
+<span id="cb224-7"><a href="beta-diversity---macro-samples.html#cb224-7" tabindex="-1"></a></span>
+<span id="cb224-8"><a href="beta-diversity---macro-samples.html#cb224-8" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">perform_pca</span>(df_wide, <span class="at">z_delete =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre class="script-output"><code>[1] &quot;Zeros found&quot;</code></pre>
+<pre class="script-output"><code>No. adjusted imputations:  2183 
+Rows (samples) removed after zero replacement: 16 
+Columns (taxa) removed after zero replacement: 49 </code></pre>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb227-1"><a href="beta-diversity---macro-samples.html#cb227-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_pca</span>(pca_result<span class="sc">$</span>pca_result,</span>
+<span id="cb227-2"><a href="beta-diversity---macro-samples.html#cb227-2" tabindex="-1"></a>         <span class="at">samples_color_metadata =</span> <span class="st">&quot;treatment&quot;</span> , </span>
+<span id="cb227-3"><a href="beta-diversity---macro-samples.html#cb227-3" tabindex="-1"></a>         <span class="at">samples_shape_metadata =</span> <span class="st">&quot;age_category&quot;</span>,</span>
+<span id="cb227-4"><a href="beta-diversity---macro-samples.html#cb227-4" tabindex="-1"></a>         <span class="at">samples_color_value =</span> treatment_colours_bright, </span>
+<span id="cb227-5"><a href="beta-diversity---macro-samples.html#cb227-5" tabindex="-1"></a>         <span class="at">loadings_color_metadata =</span> <span class="st">&quot;order&quot;</span>, </span>
+<span id="cb227-6"><a href="beta-diversity---macro-samples.html#cb227-6" tabindex="-1"></a>         <span class="at">loadings_color_value =</span> order_colors, </span>
+<span id="cb227-7"><a href="beta-diversity---macro-samples.html#cb227-7" tabindex="-1"></a>         <span class="at">loadings_taxon_level =</span> <span class="st">&quot;genus&quot;</span>,</span>
+<span id="cb227-8"><a href="beta-diversity---macro-samples.html#cb227-8" tabindex="-1"></a>         <span class="at">sample_metadata =</span> MACRO_sample_metadata, </span>
+<span id="cb227-9"><a href="beta-diversity---macro-samples.html#cb227-9" tabindex="-1"></a>         <span class="at">genome_metadata =</span> genus_metadata, </span>
+<span id="cb227-10"><a href="beta-diversity---macro-samples.html#cb227-10" tabindex="-1"></a>         <span class="at">order_colors =</span> order_colors, </span>
+<span id="cb227-11"><a href="beta-diversity---macro-samples.html#cb227-11" tabindex="-1"></a>         custom_ggplot_theme)</span>
+<span id="cb227-12"><a href="beta-diversity---macro-samples.html#cb227-12" tabindex="-1"></a></span>
+<span id="cb227-13"><a href="beta-diversity---macro-samples.html#cb227-13" tabindex="-1"></a>p2 <span class="ot">=</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;XX&quot;</span>)</span>
+<span id="cb227-14"><a href="beta-diversity---macro-samples.html#cb227-14" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_genus_pca_prep-1.png" width="960" /></p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb228-1"><a href="beta-diversity---macro-samples.html#cb228-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_pca</span>(pca_result<span class="sc">$</span>pca_result,</span>
+<span id="cb228-2"><a href="beta-diversity---macro-samples.html#cb228-2" tabindex="-1"></a>         <span class="at">samples_color_metadata =</span> <span class="st">&quot;treatment&quot;</span> , </span>
+<span id="cb228-3"><a href="beta-diversity---macro-samples.html#cb228-3" tabindex="-1"></a>         <span class="at">samples_shape_metadata =</span> <span class="st">&quot;age_category&quot;</span>,</span>
+<span id="cb228-4"><a href="beta-diversity---macro-samples.html#cb228-4" tabindex="-1"></a>         <span class="at">samples_color_value =</span> treatment_colours_bright, </span>
+<span id="cb228-5"><a href="beta-diversity---macro-samples.html#cb228-5" tabindex="-1"></a>         <span class="at">loadings_color_metadata =</span> <span class="st">&quot;order&quot;</span>, </span>
+<span id="cb228-6"><a href="beta-diversity---macro-samples.html#cb228-6" tabindex="-1"></a>         <span class="at">loadings_color_value =</span> order_colors, </span>
+<span id="cb228-7"><a href="beta-diversity---macro-samples.html#cb228-7" tabindex="-1"></a>         <span class="at">loadings_taxon_level =</span> <span class="st">&quot;genus&quot;</span>,</span>
+<span id="cb228-8"><a href="beta-diversity---macro-samples.html#cb228-8" tabindex="-1"></a>         <span class="at">sample_metadata =</span> MACRO_sample_metadata, </span>
+<span id="cb228-9"><a href="beta-diversity---macro-samples.html#cb228-9" tabindex="-1"></a>         <span class="at">genome_metadata =</span> genus_metadata, </span>
+<span id="cb228-10"><a href="beta-diversity---macro-samples.html#cb228-10" tabindex="-1"></a>         <span class="at">order_colors =</span> order_colors, </span>
+<span id="cb228-11"><a href="beta-diversity---macro-samples.html#cb228-11" tabindex="-1"></a>         <span class="at">scaling_factor_value =</span> <span class="fl">1.5</span>, </span>
+<span id="cb228-12"><a href="beta-diversity---macro-samples.html#cb228-12" tabindex="-1"></a>          <span class="at">loadings_number =</span> <span class="dv">10</span>,</span>
+<span id="cb228-13"><a href="beta-diversity---macro-samples.html#cb228-13" tabindex="-1"></a>         custom_ggplot_theme,</span>
+<span id="cb228-14"><a href="beta-diversity---macro-samples.html#cb228-14" tabindex="-1"></a>         <span class="at">add_centroids =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb228-15"><a href="beta-diversity---macro-samples.html#cb228-15" tabindex="-1"></a></span>
+<span id="cb228-16"><a href="beta-diversity---macro-samples.html#cb228-16" tabindex="-1"></a>p2 <span class="ot">=</span> p <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;PCA at genus level&quot;</span>)</span>
+<span id="cb228-17"><a href="beta-diversity---macro-samples.html#cb228-17" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_genus_pca_centroids-1.png" width="864" /></p>
+<div id="permanova" class="section level3 hasAnchor" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> PERMANOVA<a href="beta-diversity---macro-samples.html#permanova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb229-1"><a href="beta-diversity---macro-samples.html#cb229-1" tabindex="-1"></a><span class="co"># Calculate Euclidean distance on CLR data</span></span>
+<span id="cb229-2"><a href="beta-diversity---macro-samples.html#cb229-2" tabindex="-1"></a>pca_animals_dist_matrix <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(pca_result<span class="sc">$</span>df_clr_dist, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>)</span>
+<span id="cb229-3"><a href="beta-diversity---macro-samples.html#cb229-3" tabindex="-1"></a></span>
+<span id="cb229-4"><a href="beta-diversity---macro-samples.html#cb229-4" tabindex="-1"></a><span class="co"># Make sure that filtered df and metadata have the same number &amp; order of rows</span></span>
+<span id="cb229-5"><a href="beta-diversity---macro-samples.html#cb229-5" tabindex="-1"></a>pca_animals_metadata_adonis <span class="ot">&lt;-</span> plot_data_stats_macro <span class="sc">%&gt;%</span></span>
+<span id="cb229-6"><a href="beta-diversity---macro-samples.html#cb229-6" tabindex="-1"></a>  <span class="fu">filter</span>(microsample <span class="sc">%in%</span> <span class="fu">rownames</span>(pca_result<span class="sc">$</span>df_clr_dist)) <span class="sc">%&gt;%</span></span>
+<span id="cb229-7"><a href="beta-diversity---macro-samples.html#cb229-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">match</span>(microsample, <span class="fu">rownames</span>(pca_result<span class="sc">$</span>df_clr_dist))) <span class="sc">%&gt;%</span></span>
+<span id="cb229-8"><a href="beta-diversity---macro-samples.html#cb229-8" tabindex="-1"></a>  <span class="fu">select</span>(microsample, animal, treatment, age_category)</span>
+<span id="cb229-9"><a href="beta-diversity---macro-samples.html#cb229-9" tabindex="-1"></a><span class="fu">all</span>(pca_animals_metadata_adonis<span class="sc">$</span>microsample <span class="sc">==</span> <span class="fu">rownames</span>(pca_result<span class="sc">$</span>df_clr_dist))</span></code></pre></div>
+<pre class="script-output"><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb231-1"><a href="beta-diversity---macro-samples.html#cb231-1" tabindex="-1"></a><span class="co"># Run PERMANOVA</span></span>
+<span id="cb231-2"><a href="beta-diversity---macro-samples.html#cb231-2" tabindex="-1"></a>adonis2_result <span class="ot">&lt;-</span> <span class="fu">adonis2</span>(</span>
+<span id="cb231-3"><a href="beta-diversity---macro-samples.html#cb231-3" tabindex="-1"></a>  pca_animals_dist_matrix <span class="sc">~</span> treatment <span class="sc">+</span> age_category,</span>
+<span id="cb231-4"><a href="beta-diversity---macro-samples.html#cb231-4" tabindex="-1"></a>  <span class="at">data =</span> pca_animals_metadata_adonis,</span>
+<span id="cb231-5"><a href="beta-diversity---macro-samples.html#cb231-5" tabindex="-1"></a>  <span class="at">permutations =</span> <span class="dv">999</span>,</span>
+<span id="cb231-6"><a href="beta-diversity---macro-samples.html#cb231-6" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">&quot;terms&quot;</span></span>
+<span id="cb231-7"><a href="beta-diversity---macro-samples.html#cb231-7" tabindex="-1"></a>)</span>
+<span id="cb231-8"><a href="beta-diversity---macro-samples.html#cb231-8" tabindex="-1"></a></span>
+<span id="cb231-9"><a href="beta-diversity---macro-samples.html#cb231-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(adonis2_result)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Df</th>
+<th align="right">SumOfSqs</th>
+<th align="right">R2</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">treatment</td>
+<td align="right">3</td>
+<td align="right">1386.531</td>
+<td align="right">0.1605485</td>
+<td align="right">3.672666</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">age_category</td>
+<td align="right">3</td>
+<td align="right">1712.619</td>
+<td align="right">0.1983067</td>
+<td align="right">4.536414</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">Residual</td>
+<td align="right">44</td>
+<td align="right">5537.063</td>
+<td align="right">0.6411448</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="right">50</td>
+<td align="right">8636.212</td>
+<td align="right">1.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb232-1"><a href="beta-diversity---macro-samples.html#cb232-1" tabindex="-1"></a><span class="co"># LOOP</span></span>
+<span id="cb232-2"><a href="beta-diversity---macro-samples.html#cb232-2" tabindex="-1"></a>treatments <span class="ot">&lt;-</span> <span class="fu">unique</span>(pca_animals_metadata_adonis<span class="sc">$</span>treatment)</span>
+<span id="cb232-3"><a href="beta-diversity---macro-samples.html#cb232-3" tabindex="-1"></a></span>
+<span id="cb232-4"><a href="beta-diversity---macro-samples.html#cb232-4" tabindex="-1"></a>results_age <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(treatments, <span class="cf">function</span>(trt) {</span>
+<span id="cb232-5"><a href="beta-diversity---macro-samples.html#cb232-5" tabindex="-1"></a>  </span>
+<span id="cb232-6"><a href="beta-diversity---macro-samples.html#cb232-6" tabindex="-1"></a>  <span class="co"># Subset metadata and restore proper sample IDs</span></span>
+<span id="cb232-7"><a href="beta-diversity---macro-samples.html#cb232-7" tabindex="-1"></a>  subset_meta <span class="ot">&lt;-</span> pca_animals_metadata_adonis[</span>
+<span id="cb232-8"><a href="beta-diversity---macro-samples.html#cb232-8" tabindex="-1"></a>    pca_animals_metadata_adonis<span class="sc">$</span>treatment <span class="sc">==</span> trt, ,</span>
+<span id="cb232-9"><a href="beta-diversity---macro-samples.html#cb232-9" tabindex="-1"></a>    drop <span class="ot">=</span> <span class="cn">FALSE</span></span>
+<span id="cb232-10"><a href="beta-diversity---macro-samples.html#cb232-10" tabindex="-1"></a>  ]</span>
+<span id="cb232-11"><a href="beta-diversity---macro-samples.html#cb232-11" tabindex="-1"></a>  <span class="fu">rownames</span>(subset_meta) <span class="ot">&lt;-</span> subset_meta<span class="sc">$</span>microsample</span>
+<span id="cb232-12"><a href="beta-diversity---macro-samples.html#cb232-12" tabindex="-1"></a>  </span>
+<span id="cb232-13"><a href="beta-diversity---macro-samples.html#cb232-13" tabindex="-1"></a>  <span class="co"># Subset the distance matrix to those samples</span></span>
+<span id="cb232-14"><a href="beta-diversity---macro-samples.html#cb232-14" tabindex="-1"></a>  subset_dist <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(pca_animals_dist_matrix)[</span>
+<span id="cb232-15"><a href="beta-diversity---macro-samples.html#cb232-15" tabindex="-1"></a>    <span class="fu">rownames</span>(subset_meta),</span>
+<span id="cb232-16"><a href="beta-diversity---macro-samples.html#cb232-16" tabindex="-1"></a>    <span class="fu">rownames</span>(subset_meta)</span>
+<span id="cb232-17"><a href="beta-diversity---macro-samples.html#cb232-17" tabindex="-1"></a>  ])</span>
+<span id="cb232-18"><a href="beta-diversity---macro-samples.html#cb232-18" tabindex="-1"></a>  </span>
+<span id="cb232-19"><a href="beta-diversity---macro-samples.html#cb232-19" tabindex="-1"></a>  <span class="co"># Run PERMANOVA for age within this treatment</span></span>
+<span id="cb232-20"><a href="beta-diversity---macro-samples.html#cb232-20" tabindex="-1"></a>  adonis_res <span class="ot">&lt;-</span> <span class="fu">adonis2</span>(subset_dist <span class="sc">~</span> age_category, <span class="at">data =</span> subset_meta, <span class="at">permutations =</span> <span class="dv">999</span>)</span>
+<span id="cb232-21"><a href="beta-diversity---macro-samples.html#cb232-21" tabindex="-1"></a>  </span>
+<span id="cb232-22"><a href="beta-diversity---macro-samples.html#cb232-22" tabindex="-1"></a>  <span class="co"># Extract R² and p-value</span></span>
+<span id="cb232-23"><a href="beta-diversity---macro-samples.html#cb232-23" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb232-24"><a href="beta-diversity---macro-samples.html#cb232-24" tabindex="-1"></a>    <span class="at">Treatment =</span> trt,</span>
+<span id="cb232-25"><a href="beta-diversity---macro-samples.html#cb232-25" tabindex="-1"></a>    <span class="at">R2 =</span> adonis_res<span class="sc">$</span>R2[<span class="dv">1</span>],</span>
+<span id="cb232-26"><a href="beta-diversity---macro-samples.html#cb232-26" tabindex="-1"></a>    <span class="at">p_value =</span> adonis_res<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">1</span>]</span>
+<span id="cb232-27"><a href="beta-diversity---macro-samples.html#cb232-27" tabindex="-1"></a>  )</span>
+<span id="cb232-28"><a href="beta-diversity---macro-samples.html#cb232-28" tabindex="-1"></a>})</span>
+<span id="cb232-29"><a href="beta-diversity---macro-samples.html#cb232-29" tabindex="-1"></a></span>
+<span id="cb232-30"><a href="beta-diversity---macro-samples.html#cb232-30" tabindex="-1"></a>results_age</span></code></pre></div>
+<pre class="script-output"><code>  Treatment        R2    p_value
+1       TM1 0.5374383 0.00100000
+2       TM2 0.4986288 0.00100000
+3       TM3 0.5858182 0.06666667
+4       TM4 0.2827991 0.00100000</code></pre>
+</div>
+<div id="species-representative-genomes-overlap" class="section level3 hasAnchor" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> Species representative genomes overlap<a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb234-1"><a href="beta-diversity---macro-samples.html#cb234-1" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb234-2"><a href="beta-diversity---macro-samples.html#cb234-2" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, treatment <span class="sc">==</span> <span class="st">&quot;TM1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb234-3"><a href="beta-diversity---macro-samples.html#cb234-3" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb234-4"><a href="beta-diversity---macro-samples.html#cb234-4" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb234-5"><a href="beta-diversity---macro-samples.html#cb234-5" tabindex="-1"></a></span>
+<span id="cb234-6"><a href="beta-diversity---macro-samples.html#cb234-6" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb234-7"><a href="beta-diversity---macro-samples.html#cb234-7" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, treatment <span class="sc">==</span> <span class="st">&quot;TM2&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb234-8"><a href="beta-diversity---macro-samples.html#cb234-8" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb234-9"><a href="beta-diversity---macro-samples.html#cb234-9" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb234-10"><a href="beta-diversity---macro-samples.html#cb234-10" tabindex="-1"></a></span>
+<span id="cb234-11"><a href="beta-diversity---macro-samples.html#cb234-11" tabindex="-1"></a>group3 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb234-12"><a href="beta-diversity---macro-samples.html#cb234-12" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, treatment <span class="sc">==</span> <span class="st">&quot;TM3&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb234-13"><a href="beta-diversity---macro-samples.html#cb234-13" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb234-14"><a href="beta-diversity---macro-samples.html#cb234-14" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb234-15"><a href="beta-diversity---macro-samples.html#cb234-15" tabindex="-1"></a></span>
+<span id="cb234-16"><a href="beta-diversity---macro-samples.html#cb234-16" tabindex="-1"></a>group4 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb234-17"><a href="beta-diversity---macro-samples.html#cb234-17" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, treatment <span class="sc">==</span> <span class="st">&quot;TM4&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb234-18"><a href="beta-diversity---macro-samples.html#cb234-18" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb234-19"><a href="beta-diversity---macro-samples.html#cb234-19" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb234-20"><a href="beta-diversity---macro-samples.html#cb234-20" tabindex="-1"></a></span>
+<span id="cb234-21"><a href="beta-diversity---macro-samples.html#cb234-21" tabindex="-1"></a>venn_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb234-22"><a href="beta-diversity---macro-samples.html#cb234-22" tabindex="-1"></a>  <span class="at">TM1 =</span> group1,</span>
+<span id="cb234-23"><a href="beta-diversity---macro-samples.html#cb234-23" tabindex="-1"></a>  <span class="at">TM2 =</span> group2,</span>
+<span id="cb234-24"><a href="beta-diversity---macro-samples.html#cb234-24" tabindex="-1"></a>  <span class="at">TM3 =</span> group3,</span>
+<span id="cb234-25"><a href="beta-diversity---macro-samples.html#cb234-25" tabindex="-1"></a>  <span class="at">TM4 =</span> group4</span>
+<span id="cb234-26"><a href="beta-diversity---macro-samples.html#cb234-26" tabindex="-1"></a>)</span>
+<span id="cb234-27"><a href="beta-diversity---macro-samples.html#cb234-27" tabindex="-1"></a></span>
+<span id="cb234-28"><a href="beta-diversity---macro-samples.html#cb234-28" tabindex="-1"></a><span class="co"># # Taxa unique to group1 only</span></span>
+<span id="cb234-29"><a href="beta-diversity---macro-samples.html#cb234-29" tabindex="-1"></a><span class="co"># unique_group1 &lt;- setdiff(group1, group2) # layer</span></span>
+<span id="cb234-30"><a href="beta-diversity---macro-samples.html#cb234-30" tabindex="-1"></a><span class="co"># # Taxa unique to group2 only</span></span>
+<span id="cb234-31"><a href="beta-diversity---macro-samples.html#cb234-31" tabindex="-1"></a><span class="co"># unique_group2 &lt;- setdiff(group2, group1) # broiler</span></span>
+<span id="cb234-32"><a href="beta-diversity---macro-samples.html#cb234-32" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb234-33"><a href="beta-diversity---macro-samples.html#cb234-33" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb234-34"><a href="beta-diversity---macro-samples.html#cb234-34" tabindex="-1"></a><span class="co"># # Filter once (layer/broiler + genomes of interest)</span></span>
+<span id="cb234-35"><a href="beta-diversity---macro-samples.html#cb234-35" tabindex="-1"></a><span class="co"># filtered_group1 &lt;- tidy_plot_genome_counts_filt_30_macro_closed %&gt;%</span></span>
+<span id="cb234-36"><a href="beta-diversity---macro-samples.html#cb234-36" tabindex="-1"></a><span class="co">#   filter(type_simple == &quot;P&quot;, animal_breed == &quot;layer&quot;, genome %in% unique_group1)</span></span>
+<span id="cb234-37"><a href="beta-diversity---macro-samples.html#cb234-37" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb234-38"><a href="beta-diversity---macro-samples.html#cb234-38" tabindex="-1"></a><span class="co"># filtered_group2 &lt;- tidy_plot_genome_counts_filt_30_macro_closed %&gt;%</span></span>
+<span id="cb234-39"><a href="beta-diversity---macro-samples.html#cb234-39" tabindex="-1"></a><span class="co">#   filter(type_simple == &quot;P&quot;, animal_breed == &quot;broiler&quot;, genome %in% unique_group2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb235-1"><a href="beta-diversity---macro-samples.html#cb235-1" tabindex="-1"></a><span class="fu">ggVennDiagram</span>(</span>
+<span id="cb235-2"><a href="beta-diversity---macro-samples.html#cb235-2" tabindex="-1"></a>  venn_data,</span>
+<span id="cb235-3"><a href="beta-diversity---macro-samples.html#cb235-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">&quot;count&quot;</span>,       </span>
+<span id="cb235-4"><a href="beta-diversity---macro-samples.html#cb235-4" tabindex="-1"></a>  <span class="at">set_color =</span> <span class="fu">c</span>(<span class="at">TM1 =</span> <span class="st">&quot;#4059AE&quot;</span>,</span>
+<span id="cb235-5"><a href="beta-diversity---macro-samples.html#cb235-5" tabindex="-1"></a>  <span class="at">TM2 =</span> <span class="st">&quot;#6A9AC3&quot;</span>,</span>
+<span id="cb235-6"><a href="beta-diversity---macro-samples.html#cb235-6" tabindex="-1"></a>  <span class="at">TM3 =</span> <span class="st">&quot;#97D8C4&quot;</span>,</span>
+<span id="cb235-7"><a href="beta-diversity---macro-samples.html#cb235-7" tabindex="-1"></a>  <span class="at">TM4 =</span> <span class="st">&quot;#F3B942&quot;</span>) ) <span class="sc">+</span></span>
+<span id="cb235-8"><a href="beta-diversity---macro-samples.html#cb235-8" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;grey&quot;</span>) <span class="co">#+</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_venn_treatment-1.png" width="960" /></p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb236-1"><a href="beta-diversity---macro-samples.html#cb236-1" tabindex="-1"></a>  <span class="co">#ggtitle(&quot;Samples:&quot;) +</span></span>
+<span id="cb236-2"><a href="beta-diversity---macro-samples.html#cb236-2" tabindex="-1"></a>  <span class="co">#coord_flip()</span></span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb237-1"><a href="beta-diversity---macro-samples.html#cb237-1" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb237-2"><a href="beta-diversity---macro-samples.html#cb237-2" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, age_category <span class="sc">==</span> <span class="st">&quot;a&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-3"><a href="beta-diversity---macro-samples.html#cb237-3" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb237-4"><a href="beta-diversity---macro-samples.html#cb237-4" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb237-5"><a href="beta-diversity---macro-samples.html#cb237-5" tabindex="-1"></a></span>
+<span id="cb237-6"><a href="beta-diversity---macro-samples.html#cb237-6" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb237-7"><a href="beta-diversity---macro-samples.html#cb237-7" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, age_category <span class="sc">==</span> <span class="st">&quot;b&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-8"><a href="beta-diversity---macro-samples.html#cb237-8" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb237-9"><a href="beta-diversity---macro-samples.html#cb237-9" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb237-10"><a href="beta-diversity---macro-samples.html#cb237-10" tabindex="-1"></a></span>
+<span id="cb237-11"><a href="beta-diversity---macro-samples.html#cb237-11" tabindex="-1"></a>group3 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb237-12"><a href="beta-diversity---macro-samples.html#cb237-12" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, age_category <span class="sc">==</span> <span class="st">&quot;c&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-13"><a href="beta-diversity---macro-samples.html#cb237-13" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb237-14"><a href="beta-diversity---macro-samples.html#cb237-14" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb237-15"><a href="beta-diversity---macro-samples.html#cb237-15" tabindex="-1"></a></span>
+<span id="cb237-16"><a href="beta-diversity---macro-samples.html#cb237-16" tabindex="-1"></a>group4 <span class="ot">&lt;-</span> tidy_plot_genome_counts_filt_30_macro_closed <span class="sc">%&gt;%</span></span>
+<span id="cb237-17"><a href="beta-diversity---macro-samples.html#cb237-17" tabindex="-1"></a>  <span class="fu">filter</span>(type_simple <span class="sc">==</span> <span class="st">&quot;P&quot;</span>, age_category <span class="sc">==</span> <span class="st">&quot;d&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb237-18"><a href="beta-diversity---macro-samples.html#cb237-18" tabindex="-1"></a>  <span class="fu">pull</span>(genome) <span class="sc">%&gt;%</span></span>
+<span id="cb237-19"><a href="beta-diversity---macro-samples.html#cb237-19" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb237-20"><a href="beta-diversity---macro-samples.html#cb237-20" tabindex="-1"></a></span>
+<span id="cb237-21"><a href="beta-diversity---macro-samples.html#cb237-21" tabindex="-1"></a>venn_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb237-22"><a href="beta-diversity---macro-samples.html#cb237-22" tabindex="-1"></a>  <span class="at">day_a =</span> group1,</span>
+<span id="cb237-23"><a href="beta-diversity---macro-samples.html#cb237-23" tabindex="-1"></a>  <span class="at">day_b =</span> group2,</span>
+<span id="cb237-24"><a href="beta-diversity---macro-samples.html#cb237-24" tabindex="-1"></a>  <span class="at">day_c =</span> group3,</span>
+<span id="cb237-25"><a href="beta-diversity---macro-samples.html#cb237-25" tabindex="-1"></a>  <span class="at">day_d =</span> group4</span>
+<span id="cb237-26"><a href="beta-diversity---macro-samples.html#cb237-26" tabindex="-1"></a>)</span>
+<span id="cb237-27"><a href="beta-diversity---macro-samples.html#cb237-27" tabindex="-1"></a></span>
+<span id="cb237-28"><a href="beta-diversity---macro-samples.html#cb237-28" tabindex="-1"></a><span class="co"># # Taxa unique to group1 only</span></span>
+<span id="cb237-29"><a href="beta-diversity---macro-samples.html#cb237-29" tabindex="-1"></a><span class="co"># unique_group1 &lt;- setdiff(group1, group2) # layer</span></span>
+<span id="cb237-30"><a href="beta-diversity---macro-samples.html#cb237-30" tabindex="-1"></a><span class="co"># # Taxa unique to group2 only</span></span>
+<span id="cb237-31"><a href="beta-diversity---macro-samples.html#cb237-31" tabindex="-1"></a><span class="co"># unique_group2 &lt;- setdiff(group2, group1) # broiler</span></span>
+<span id="cb237-32"><a href="beta-diversity---macro-samples.html#cb237-32" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb237-33"><a href="beta-diversity---macro-samples.html#cb237-33" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb237-34"><a href="beta-diversity---macro-samples.html#cb237-34" tabindex="-1"></a><span class="co"># # Filter once (layer/broiler + genomes of interest)</span></span>
+<span id="cb237-35"><a href="beta-diversity---macro-samples.html#cb237-35" tabindex="-1"></a><span class="co"># filtered_group1 &lt;- tidy_plot_genome_counts_filt_30_macro_closed %&gt;%</span></span>
+<span id="cb237-36"><a href="beta-diversity---macro-samples.html#cb237-36" tabindex="-1"></a><span class="co">#   filter(type_simple == &quot;P&quot;, animal_breed == &quot;layer&quot;, genome %in% unique_group1)</span></span>
+<span id="cb237-37"><a href="beta-diversity---macro-samples.html#cb237-37" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb237-38"><a href="beta-diversity---macro-samples.html#cb237-38" tabindex="-1"></a><span class="co"># filtered_group2 &lt;- tidy_plot_genome_counts_filt_30_macro_closed %&gt;%</span></span>
+<span id="cb237-39"><a href="beta-diversity---macro-samples.html#cb237-39" tabindex="-1"></a><span class="co">#   filter(type_simple == &quot;P&quot;, animal_breed == &quot;broiler&quot;, genome %in% unique_group2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb238-1"><a href="beta-diversity---macro-samples.html#cb238-1" tabindex="-1"></a><span class="fu">ggVennDiagram</span>(</span>
+<span id="cb238-2"><a href="beta-diversity---macro-samples.html#cb238-2" tabindex="-1"></a>  venn_data,</span>
+<span id="cb238-3"><a href="beta-diversity---macro-samples.html#cb238-3" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">&quot;count&quot;</span>,       </span>
+<span id="cb238-4"><a href="beta-diversity---macro-samples.html#cb238-4" tabindex="-1"></a>  <span class="at">set_color =</span> <span class="fu">c</span>(<span class="at">day_a =</span> <span class="st">&quot;#498a77&quot;</span>,</span>
+<span id="cb238-5"><a href="beta-diversity---macro-samples.html#cb238-5" tabindex="-1"></a>  <span class="at">day_b =</span> <span class="st">&quot;#cc0100&quot;</span>,</span>
+<span id="cb238-6"><a href="beta-diversity---macro-samples.html#cb238-6" tabindex="-1"></a>  <span class="at">day_c =</span> <span class="st">&quot;#cf4a82&quot;</span>,</span>
+<span id="cb238-7"><a href="beta-diversity---macro-samples.html#cb238-7" tabindex="-1"></a>  <span class="at">day_d =</span> <span class="st">&quot;#b4a7d6&quot;</span>) ) <span class="sc">+</span></span>
+<span id="cb238-8"><a href="beta-diversity---macro-samples.html#cb238-8" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;grey&quot;</span>) <span class="co">#+</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_beta_macro_venn_age-1.png" width="960" /></p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb239-1"><a href="beta-diversity---macro-samples.html#cb239-1" tabindex="-1"></a>  <span class="co">#ggtitle(&quot;Samples:&quot;) +</span></span>
+<span id="cb239-2"><a href="beta-diversity---macro-samples.html#cb239-2" tabindex="-1"></a>  <span class="co">#coord_flip()</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="alpha-diversity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="beta-diversity---micro-samples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

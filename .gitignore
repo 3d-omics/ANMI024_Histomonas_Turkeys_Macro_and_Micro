@@ -19,6 +19,8 @@
 # Bookdown build files
 _book/
 *.html
+# But allow HTML files in docs/ folder for GitHub Pages
+!docs/**/*.html
 
 # OS files
 .DS_Store

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 MAG catalogue | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 MAG catalogue | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 MAG catalogue | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="metabolomics-data-preparation.html"/>
+<link rel="next" href="histomonas-presence.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mag-catalogue-1" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> MAG catalogue<a href="mag-catalogue-1.html#mag-catalogue-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb84-1"><a href="mag-catalogue-1.html#cb84-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/MAG_catalogue/data.Rdata&quot;</span>)</span>
+<span id="cb84-2"><a href="mag-catalogue-1.html#cb84-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/data_colors.Rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb85-1"><a href="mag-catalogue-1.html#cb85-1" tabindex="-1"></a>print_median_iqr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, name) {</span>
+<span id="cb85-2"><a href="mag-catalogue-1.html#cb85-2" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">median</span>(x), <span class="dv">2</span>)</span>
+<span id="cb85-3"><a href="mag-catalogue-1.html#cb85-3" tabindex="-1"></a>  iqr_vals <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">quantile</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)), <span class="dv">2</span>)</span>
+<span id="cb85-4"><a href="mag-catalogue-1.html#cb85-4" tabindex="-1"></a>  <span class="fu">cat</span>(name, <span class="st">&quot;median =&quot;</span>, med, <span class="st">&quot;IQR =&quot;</span>, iqr_vals[<span class="dv">1</span>], <span class="st">&quot;-&quot;</span>, iqr_vals[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb85-5"><a href="mag-catalogue-1.html#cb85-5" tabindex="-1"></a>}</span></code></pre></div>
+<div id="genome-quality" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Genome quality<a href="mag-catalogue-1.html#genome-quality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb86-1"><a href="mag-catalogue-1.html#cb86-1" tabindex="-1"></a><span class="fu">print_median_iqr</span>(genome_metadata<span class="sc">$</span>completeness, <span class="st">&quot;Completeness:&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Completeness: median = 97.9 IQR = 90.73 - 100 </code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb88-1"><a href="mag-catalogue-1.html#cb88-1" tabindex="-1"></a><span class="fu">print_median_iqr</span>(genome_metadata<span class="sc">$</span>contamination, <span class="st">&quot;Contamination:&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Contamination: median = 0.46 IQR = 0 - 2.03 </code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb90-1"><a href="mag-catalogue-1.html#cb90-1" tabindex="-1"></a>genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb90-2"><a href="mag-catalogue-1.html#cb90-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb90-3"><a href="mag-catalogue-1.html#cb90-3" tabindex="-1"></a>    <span class="at">circular_count =</span> <span class="fu">sum</span>(circularity <span class="sc">==</span> <span class="st">&quot;1&quot;</span>),</span>
+<span id="cb90-4"><a href="mag-catalogue-1.html#cb90-4" tabindex="-1"></a>    <span class="at">total_count =</span> <span class="fu">n</span>(),</span>
+<span id="cb90-5"><a href="mag-catalogue-1.html#cb90-5" tabindex="-1"></a>    <span class="at">circular_percent =</span> <span class="dv">100</span> <span class="sc">*</span> circular_count <span class="sc">/</span> total_count</span>
+<span id="cb90-6"><a href="mag-catalogue-1.html#cb90-6" tabindex="-1"></a>  )</span></code></pre></div>
+<pre class="script-output"><code># A tibble: 1 × 3
+  circular_count total_count circular_percent
+           &lt;int&gt;       &lt;int&gt;            &lt;dbl&gt;
+1            162         526             30.8</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb92-1"><a href="mag-catalogue-1.html#cb92-1" tabindex="-1"></a>order_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb92-2"><a href="mag-catalogue-1.html#cb92-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb92-3"><a href="mag-catalogue-1.html#cb92-3" tabindex="-1"></a>    <span class="at">genera_count =</span> <span class="fu">sum</span>(number_of_genera),</span>
+<span id="cb92-4"><a href="mag-catalogue-1.html#cb92-4" tabindex="-1"></a>    <span class="at">lachnospirales_count =</span> <span class="fu">sum</span>(number_of_genera[order <span class="sc">==</span> <span class="st">&quot;Lachnospirales&quot;</span>]),</span>
+<span id="cb92-5"><a href="mag-catalogue-1.html#cb92-5" tabindex="-1"></a>    <span class="at">lachnospirales_perc =</span> <span class="dv">100</span> <span class="sc">*</span> lachnospirales_count <span class="sc">/</span> genera_count,</span>
+<span id="cb92-6"><a href="mag-catalogue-1.html#cb92-6" tabindex="-1"></a>    ο<span class="at">scillospirales_count =</span> <span class="fu">sum</span>(number_of_genera[order <span class="sc">==</span> <span class="st">&quot;Oscillospirales&quot;</span>]),</span>
+<span id="cb92-7"><a href="mag-catalogue-1.html#cb92-7" tabindex="-1"></a>    ο<span class="at">scillospirales_perc =</span> <span class="dv">100</span> <span class="sc">*</span> οscillospirales_count <span class="sc">/</span> genera_count</span>
+<span id="cb92-8"><a href="mag-catalogue-1.html#cb92-8" tabindex="-1"></a>  )</span></code></pre></div>
+<pre class="script-output"><code># A tibble: 1 × 5
+  genera_count lachnospirales_count lachnospirales_perc οscillospirales_count οscillospirales_perc
+         &lt;int&gt;                &lt;int&gt;               &lt;dbl&gt;                 &lt;int&gt;                &lt;dbl&gt;
+1          222                   56                25.2                    73                 32.9</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb94-1"><a href="mag-catalogue-1.html#cb94-1" tabindex="-1"></a><span class="co">#Generate quality biplot</span></span>
+<span id="cb94-2"><a href="mag-catalogue-1.html#cb94-2" tabindex="-1"></a>genome_biplot <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb94-3"><a href="mag-catalogue-1.html#cb94-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(genome,domain,order,completeness,contamination,length)) <span class="sc">%&gt;%</span></span>
+<span id="cb94-4"><a href="mag-catalogue-1.html#cb94-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">match</span>(genome, <span class="fu">rev</span>(genome_tree<span class="sc">$</span>tip.label))) <span class="sc">%&gt;%</span> <span class="co">#sort MAGs according to phylogenetic tree</span></span>
+<span id="cb94-5"><a href="mag-catalogue-1.html#cb94-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>completeness,<span class="at">y=</span>contamination,<span class="at">size=</span>length,<span class="at">color=</span>order)) <span class="sc">+</span></span>
+<span id="cb94-6"><a href="mag-catalogue-1.html#cb94-6" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb94-7"><a href="mag-catalogue-1.html#cb94-7" tabindex="-1"></a>                    <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">70</span>,<span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb94-8"><a href="mag-catalogue-1.html#cb94-8" tabindex="-1"></a>                    <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb94-9"><a href="mag-catalogue-1.html#cb94-9" tabindex="-1"></a>                    <span class="fu">scale_color_manual</span>(<span class="at">values=</span>order_colors) <span class="sc">+</span></span>
+<span id="cb94-10"><a href="mag-catalogue-1.html#cb94-10" tabindex="-1"></a>                    <span class="fu">labs</span>(<span class="at">y=</span> <span class="st">&quot;Contamination&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Completeness&quot;</span>) <span class="sc">+</span></span>
+<span id="cb94-11"><a href="mag-catalogue-1.html#cb94-11" tabindex="-1"></a>                    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb94-12"><a href="mag-catalogue-1.html#cb94-12" tabindex="-1"></a>                    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb94-13"><a href="mag-catalogue-1.html#cb94-13" tabindex="-1"></a></span>
+<span id="cb94-14"><a href="mag-catalogue-1.html#cb94-14" tabindex="-1"></a><span class="co">#Generate contamination boxplot</span></span>
+<span id="cb94-15"><a href="mag-catalogue-1.html#cb94-15" tabindex="-1"></a>genome_contamination <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb94-16"><a href="mag-catalogue-1.html#cb94-16" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>contamination)) <span class="sc">+</span></span>
+<span id="cb94-17"><a href="mag-catalogue-1.html#cb94-17" tabindex="-1"></a>                    <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb94-18"><a href="mag-catalogue-1.html#cb94-18" tabindex="-1"></a>                    <span class="fu">geom_boxplot</span>(<span class="at">colour =</span> <span class="st">&quot;#999999&quot;</span>, <span class="at">fill=</span><span class="st">&quot;#cccccc&quot;</span>) <span class="sc">+</span></span>
+<span id="cb94-19"><a href="mag-catalogue-1.html#cb94-19" tabindex="-1"></a>                    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb94-20"><a href="mag-catalogue-1.html#cb94-20" tabindex="-1"></a>                    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb94-21"><a href="mag-catalogue-1.html#cb94-21" tabindex="-1"></a>                        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb94-22"><a href="mag-catalogue-1.html#cb94-22" tabindex="-1"></a>                        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb94-23"><a href="mag-catalogue-1.html#cb94-23" tabindex="-1"></a>                        <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-24"><a href="mag-catalogue-1.html#cb94-24" tabindex="-1"></a>                        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-25"><a href="mag-catalogue-1.html#cb94-25" tabindex="-1"></a>                        <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-26"><a href="mag-catalogue-1.html#cb94-26" tabindex="-1"></a>                        <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-27"><a href="mag-catalogue-1.html#cb94-27" tabindex="-1"></a>                        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.40</span>, <span class="dv">0</span>),<span class="st">&quot;inches&quot;</span>)) <span class="co">#add bottom-margin (top, right, bottom, left)</span></span>
+<span id="cb94-28"><a href="mag-catalogue-1.html#cb94-28" tabindex="-1"></a></span>
+<span id="cb94-29"><a href="mag-catalogue-1.html#cb94-29" tabindex="-1"></a><span class="co">#Generate completeness boxplot</span></span>
+<span id="cb94-30"><a href="mag-catalogue-1.html#cb94-30" tabindex="-1"></a>genome_completeness <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb94-31"><a href="mag-catalogue-1.html#cb94-31" tabindex="-1"></a>        <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>completeness)) <span class="sc">+</span></span>
+<span id="cb94-32"><a href="mag-catalogue-1.html#cb94-32" tabindex="-1"></a>                <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">70</span>,<span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb94-33"><a href="mag-catalogue-1.html#cb94-33" tabindex="-1"></a>                <span class="fu">geom_boxplot</span>(<span class="at">colour =</span> <span class="st">&quot;#999999&quot;</span>, <span class="at">fill=</span><span class="st">&quot;#cccccc&quot;</span>) <span class="sc">+</span></span>
+<span id="cb94-34"><a href="mag-catalogue-1.html#cb94-34" tabindex="-1"></a>                <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb94-35"><a href="mag-catalogue-1.html#cb94-35" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb94-36"><a href="mag-catalogue-1.html#cb94-36" tabindex="-1"></a>                    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb94-37"><a href="mag-catalogue-1.html#cb94-37" tabindex="-1"></a>                    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb94-38"><a href="mag-catalogue-1.html#cb94-38" tabindex="-1"></a>                    <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-39"><a href="mag-catalogue-1.html#cb94-39" tabindex="-1"></a>                    <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-40"><a href="mag-catalogue-1.html#cb94-40" tabindex="-1"></a>                    <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-41"><a href="mag-catalogue-1.html#cb94-41" tabindex="-1"></a>                    <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb94-42"><a href="mag-catalogue-1.html#cb94-42" tabindex="-1"></a>                    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.50</span>),<span class="st">&quot;inches&quot;</span>)) <span class="co">#add left-margin (top, right, bottom, left)</span></span>
+<span id="cb94-43"><a href="mag-catalogue-1.html#cb94-43" tabindex="-1"></a></span>
+<span id="cb94-44"><a href="mag-catalogue-1.html#cb94-44" tabindex="-1"></a><span class="co"># Align margins</span></span>
+<span id="cb94-45"><a href="mag-catalogue-1.html#cb94-45" tabindex="-1"></a>genome_biplot <span class="ot">&lt;-</span> genome_biplot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb94-46"><a href="mag-catalogue-1.html#cb94-46" tabindex="-1"></a>genome_completeness <span class="ot">&lt;-</span> genome_completeness <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb94-47"><a href="mag-catalogue-1.html#cb94-47" tabindex="-1"></a>genome_contamination <span class="ot">&lt;-</span> genome_contamination <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">0</span>))</span>
+<span id="cb94-48"><a href="mag-catalogue-1.html#cb94-48" tabindex="-1"></a></span>
+<span id="cb94-49"><a href="mag-catalogue-1.html#cb94-49" tabindex="-1"></a><span class="co"># Compose layout</span></span>
+<span id="cb94-50"><a href="mag-catalogue-1.html#cb94-50" tabindex="-1"></a>top_row <span class="ot">&lt;-</span> genome_completeness <span class="sc">+</span> <span class="fu">plot_spacer</span>() <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">1</span>))</span>
+<span id="cb94-51"><a href="mag-catalogue-1.html#cb94-51" tabindex="-1"></a>bottom_row <span class="ot">&lt;-</span> genome_biplot <span class="sc">+</span> genome_contamination <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">1</span>))</span>
+<span id="cb94-52"><a href="mag-catalogue-1.html#cb94-52" tabindex="-1"></a></span>
+<span id="cb94-53"><a href="mag-catalogue-1.html#cb94-53" tabindex="-1"></a><span class="co"># Stack rows</span></span>
+<span id="cb94-54"><a href="mag-catalogue-1.html#cb94-54" tabindex="-1"></a>MAG_plot <span class="ot">&lt;-</span> (top_row <span class="sc">/</span> bottom_row <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">15</span>))) <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>) <span class="sc">&amp;</span></span>
+<span id="cb94-55"><a href="mag-catalogue-1.html#cb94-55" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;vertical&quot;</span>) </span>
+<span id="cb94-56"><a href="mag-catalogue-1.html#cb94-56" tabindex="-1"></a></span>
+<span id="cb94-57"><a href="mag-catalogue-1.html#cb94-57" tabindex="-1"></a>MAG_plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/genome_quality_plot_order_level-1.png" width="768" /></p>
+</div>
+<div id="mag-catalogue-phyla-and-order-colours" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> MAG catalogue phyla and order colours<a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb95-1"><a href="mag-catalogue-1.html#cb95-1" tabindex="-1"></a>MAG_tax_df <span class="ot">&lt;-</span> order_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb95-2"><a href="mag-catalogue-1.html#cb95-2" tabindex="-1"></a>  <span class="fu">select</span>(order, phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb95-3"><a href="mag-catalogue-1.html#cb95-3" tabindex="-1"></a>  <span class="fu">distinct</span>()  <span class="co"># ensure no duplicates</span></span>
+<span id="cb95-4"><a href="mag-catalogue-1.html#cb95-4" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="mag-catalogue-1.html#cb95-5" tabindex="-1"></a><span class="co"># get the phylum order that facet_grid2 will use (alphabetical by default)</span></span>
+<span id="cb95-6"><a href="mag-catalogue-1.html#cb95-6" tabindex="-1"></a>phylum_order <span class="ot">&lt;-</span> MAG_tax_df <span class="sc">%&gt;%</span></span>
+<span id="cb95-7"><a href="mag-catalogue-1.html#cb95-7" tabindex="-1"></a>  <span class="fu">distinct</span>(phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb95-8"><a href="mag-catalogue-1.html#cb95-8" tabindex="-1"></a>  <span class="fu">arrange</span>(phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb95-9"><a href="mag-catalogue-1.html#cb95-9" tabindex="-1"></a>  <span class="fu">pull</span>(phylum)</span>
+<span id="cb95-10"><a href="mag-catalogue-1.html#cb95-10" tabindex="-1"></a></span>
+<span id="cb95-11"><a href="mag-catalogue-1.html#cb95-11" tabindex="-1"></a><span class="co"># phylum strip colors in correct order</span></span>
+<span id="cb95-12"><a href="mag-catalogue-1.html#cb95-12" tabindex="-1"></a>strip_colors <span class="ot">&lt;-</span> phylum_colors[phylum_order]</span>
+<span id="cb95-13"><a href="mag-catalogue-1.html#cb95-13" tabindex="-1"></a></span>
+<span id="cb95-14"><a href="mag-catalogue-1.html#cb95-14" tabindex="-1"></a><span class="co"># plot: use y = 1 directly</span></span>
+<span id="cb95-15"><a href="mag-catalogue-1.html#cb95-15" tabindex="-1"></a><span class="fu">ggplot</span>(MAG_tax_df, <span class="fu">aes</span>(<span class="at">x =</span> order, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">fill =</span> order)) <span class="sc">+</span></span>
+<span id="cb95-16"><a href="mag-catalogue-1.html#cb95-16" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.9</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb95-17"><a href="mag-catalogue-1.html#cb95-17" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> order),</span>
+<span id="cb95-18"><a href="mag-catalogue-1.html#cb95-18" tabindex="-1"></a>            <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb95-19"><a href="mag-catalogue-1.html#cb95-19" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb95-20"><a href="mag-catalogue-1.html#cb95-20" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors) <span class="sc">+</span></span>
+<span id="cb95-21"><a href="mag-catalogue-1.html#cb95-21" tabindex="-1"></a>  <span class="fu">facet_grid2</span>(</span>
+<span id="cb95-22"><a href="mag-catalogue-1.html#cb95-22" tabindex="-1"></a>    . <span class="sc">~</span> phylum,</span>
+<span id="cb95-23"><a href="mag-catalogue-1.html#cb95-23" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>,</span>
+<span id="cb95-24"><a href="mag-catalogue-1.html#cb95-24" tabindex="-1"></a>    <span class="at">space =</span> <span class="st">&quot;free&quot;</span>,</span>
+<span id="cb95-25"><a href="mag-catalogue-1.html#cb95-25" tabindex="-1"></a>    <span class="at">strip =</span> <span class="fu">strip_themed</span>(</span>
+<span id="cb95-26"><a href="mag-catalogue-1.html#cb95-26" tabindex="-1"></a>      <span class="at">background_x =</span> <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> strip_colors),</span>
+<span id="cb95-27"><a href="mag-catalogue-1.html#cb95-27" tabindex="-1"></a>      <span class="at">text_x =</span> <span class="fu">elem_list_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb95-28"><a href="mag-catalogue-1.html#cb95-28" tabindex="-1"></a>    )</span>
+<span id="cb95-29"><a href="mag-catalogue-1.html#cb95-29" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb95-30"><a href="mag-catalogue-1.html#cb95-30" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb95-31"><a href="mag-catalogue-1.html#cb95-31" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb95-32"><a href="mag-catalogue-1.html#cb95-32" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb95-33"><a href="mag-catalogue-1.html#cb95-33" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb95-34"><a href="mag-catalogue-1.html#cb95-34" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb95-35"><a href="mag-catalogue-1.html#cb95-35" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb95-36"><a href="mag-catalogue-1.html#cb95-36" tabindex="-1"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;lines&quot;</span>)</span>
+<span id="cb95-37"><a href="mag-catalogue-1.html#cb95-37" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_mag_phyla_order_colors-1.png" width="576" /></p>
+</div>
+<div id="mag-catalogue-phyla-and-order-colours-and-genera-number" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> MAG catalogue phyla and order colours, and genera number<a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb96-1"><a href="mag-catalogue-1.html#cb96-1" tabindex="-1"></a>MAG_tax_df <span class="ot">&lt;-</span> order_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb96-2"><a href="mag-catalogue-1.html#cb96-2" tabindex="-1"></a>  <span class="fu">select</span>(phylum, order, number_of_genera) <span class="sc">%&gt;%</span></span>
+<span id="cb96-3"><a href="mag-catalogue-1.html#cb96-3" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb96-4"><a href="mag-catalogue-1.html#cb96-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb96-5"><a href="mag-catalogue-1.html#cb96-5" tabindex="-1"></a>    <span class="at">order_color =</span> order_colors[order],</span>
+<span id="cb96-6"><a href="mag-catalogue-1.html#cb96-6" tabindex="-1"></a>    <span class="at">phylum_color =</span> phylum_colors[phylum]</span>
+<span id="cb96-7"><a href="mag-catalogue-1.html#cb96-7" tabindex="-1"></a>  )</span>
+<span id="cb96-8"><a href="mag-catalogue-1.html#cb96-8" tabindex="-1"></a></span>
+<span id="cb96-9"><a href="mag-catalogue-1.html#cb96-9" tabindex="-1"></a><span class="co"># 2. Get facet strip colors in correct order</span></span>
+<span id="cb96-10"><a href="mag-catalogue-1.html#cb96-10" tabindex="-1"></a>phylum_order <span class="ot">&lt;-</span> MAG_tax_df <span class="sc">%&gt;%</span></span>
+<span id="cb96-11"><a href="mag-catalogue-1.html#cb96-11" tabindex="-1"></a>  <span class="fu">distinct</span>(phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb96-12"><a href="mag-catalogue-1.html#cb96-12" tabindex="-1"></a>  <span class="fu">arrange</span>(phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb96-13"><a href="mag-catalogue-1.html#cb96-13" tabindex="-1"></a>  <span class="fu">pull</span>(phylum)</span>
+<span id="cb96-14"><a href="mag-catalogue-1.html#cb96-14" tabindex="-1"></a></span>
+<span id="cb96-15"><a href="mag-catalogue-1.html#cb96-15" tabindex="-1"></a>strip_colors <span class="ot">&lt;-</span> <span class="fu">unname</span>(phylum_colors[phylum_order])</span>
+<span id="cb96-16"><a href="mag-catalogue-1.html#cb96-16" tabindex="-1"></a></span>
+<span id="cb96-17"><a href="mag-catalogue-1.html#cb96-17" tabindex="-1"></a><span class="co"># 3. Plot</span></span>
+<span id="cb96-18"><a href="mag-catalogue-1.html#cb96-18" tabindex="-1"></a><span class="fu">ggplot</span>(MAG_tax_df, <span class="fu">aes</span>(<span class="at">x =</span> order, <span class="at">y =</span> number_of_genera, <span class="at">fill =</span> order)) <span class="sc">+</span></span>
+<span id="cb96-19"><a href="mag-catalogue-1.html#cb96-19" tabindex="-1"></a>  <span class="co"># Bars</span></span>
+<span id="cb96-20"><a href="mag-catalogue-1.html#cb96-20" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.9</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb96-21"><a href="mag-catalogue-1.html#cb96-21" tabindex="-1"></a>  </span>
+<span id="cb96-22"><a href="mag-catalogue-1.html#cb96-22" tabindex="-1"></a>  <span class="co"># Color scale</span></span>
+<span id="cb96-23"><a href="mag-catalogue-1.html#cb96-23" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors) <span class="sc">+</span></span>
+<span id="cb96-24"><a href="mag-catalogue-1.html#cb96-24" tabindex="-1"></a>  </span>
+<span id="cb96-25"><a href="mag-catalogue-1.html#cb96-25" tabindex="-1"></a>  <span class="co"># Facet by phylum (strip on bottom)</span></span>
+<span id="cb96-26"><a href="mag-catalogue-1.html#cb96-26" tabindex="-1"></a>  <span class="fu">facet_grid2</span>(</span>
+<span id="cb96-27"><a href="mag-catalogue-1.html#cb96-27" tabindex="-1"></a>    . <span class="sc">~</span> phylum,</span>
+<span id="cb96-28"><a href="mag-catalogue-1.html#cb96-28" tabindex="-1"></a>    <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>,</span>
+<span id="cb96-29"><a href="mag-catalogue-1.html#cb96-29" tabindex="-1"></a>    <span class="at">space =</span> <span class="st">&quot;free_x&quot;</span>,</span>
+<span id="cb96-30"><a href="mag-catalogue-1.html#cb96-30" tabindex="-1"></a>    <span class="at">switch =</span> <span class="st">&quot;x&quot;</span>, </span>
+<span id="cb96-31"><a href="mag-catalogue-1.html#cb96-31" tabindex="-1"></a>    <span class="at">strip =</span> <span class="fu">strip_themed</span>(</span>
+<span id="cb96-32"><a href="mag-catalogue-1.html#cb96-32" tabindex="-1"></a>      <span class="at">background_x =</span> <span class="fu">elem_list_rect</span>(<span class="at">fill =</span> strip_colors),</span>
+<span id="cb96-33"><a href="mag-catalogue-1.html#cb96-33" tabindex="-1"></a>      <span class="at">text_x =</span> <span class="fu">elem_list_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb96-34"><a href="mag-catalogue-1.html#cb96-34" tabindex="-1"></a>    )</span>
+<span id="cb96-35"><a href="mag-catalogue-1.html#cb96-35" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb96-36"><a href="mag-catalogue-1.html#cb96-36" tabindex="-1"></a></span>
+<span id="cb96-37"><a href="mag-catalogue-1.html#cb96-37" tabindex="-1"></a>  <span class="co"># Flip x-axis title and text to top</span></span>
+<span id="cb96-38"><a href="mag-catalogue-1.html#cb96-38" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">position =</span> <span class="st">&quot;top&quot;</span>) <span class="sc">+</span></span>
+<span id="cb96-39"><a href="mag-catalogue-1.html#cb96-39" tabindex="-1"></a></span>
+<span id="cb96-40"><a href="mag-catalogue-1.html#cb96-40" tabindex="-1"></a>  <span class="co"># Theme</span></span>
+<span id="cb96-41"><a href="mag-catalogue-1.html#cb96-41" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb96-42"><a href="mag-catalogue-1.html#cb96-42" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb96-43"><a href="mag-catalogue-1.html#cb96-43" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb96-44"><a href="mag-catalogue-1.html#cb96-44" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb96-45"><a href="mag-catalogue-1.html#cb96-45" tabindex="-1"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb96-46"><a href="mag-catalogue-1.html#cb96-46" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb96-47"><a href="mag-catalogue-1.html#cb96-47" tabindex="-1"></a>    <span class="at">strip.placement =</span> <span class="st">&quot;outside&quot;</span></span>
+<span id="cb96-48"><a href="mag-catalogue-1.html#cb96-48" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_mag_phyla_order_genera-1.png" width="768" /></p>
+</div>
+<div id="genome-phylogeny-plot" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Genome phylogeny plot<a href="mag-catalogue-1.html#genome-phylogeny-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb97-1"><a href="mag-catalogue-1.html#cb97-1" tabindex="-1"></a><span class="co"># Generate the phylum color heatmap</span></span>
+<span id="cb97-2"><a href="mag-catalogue-1.html#cb97-2" tabindex="-1"></a>phylum_heatmap <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb97-3"><a href="mag-catalogue-1.html#cb97-3" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">match</span>(genome, genome_tree<span class="sc">$</span>tip.label)) <span class="sc">%&gt;%</span></span>
+<span id="cb97-4"><a href="mag-catalogue-1.html#cb97-4" tabindex="-1"></a>    <span class="fu">select</span>(genome,phylum) <span class="sc">%&gt;%</span></span>
+<span id="cb97-5"><a href="mag-catalogue-1.html#cb97-5" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phylum =</span> <span class="fu">factor</span>(phylum, <span class="at">levels =</span> <span class="fu">unique</span>(phylum))) <span class="sc">%&gt;%</span></span>
+<span id="cb97-6"><a href="mag-catalogue-1.html#cb97-6" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;genome&quot;</span>)</span>
+<span id="cb97-7"><a href="mag-catalogue-1.html#cb97-7" tabindex="-1"></a></span>
+<span id="cb97-8"><a href="mag-catalogue-1.html#cb97-8" tabindex="-1"></a><span class="co"># Generate the order color heatmap</span></span>
+<span id="cb97-9"><a href="mag-catalogue-1.html#cb97-9" tabindex="-1"></a>order_heatmap <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb97-10"><a href="mag-catalogue-1.html#cb97-10" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">match</span>(genome, genome_tree<span class="sc">$</span>tip.label)) <span class="sc">%&gt;%</span></span>
+<span id="cb97-11"><a href="mag-catalogue-1.html#cb97-11" tabindex="-1"></a>    <span class="fu">select</span>(genome, order) <span class="sc">%&gt;%</span></span>
+<span id="cb97-12"><a href="mag-catalogue-1.html#cb97-12" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">order =</span> <span class="fu">factor</span>(order, <span class="at">levels =</span> <span class="fu">unique</span>(order))) <span class="sc">%&gt;%</span></span>
+<span id="cb97-13"><a href="mag-catalogue-1.html#cb97-13" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;genome&quot;</span>)</span>
+<span id="cb97-14"><a href="mag-catalogue-1.html#cb97-14" tabindex="-1"></a></span>
+<span id="cb97-15"><a href="mag-catalogue-1.html#cb97-15" tabindex="-1"></a><span class="co"># Generate the basal tree</span></span>
+<span id="cb97-16"><a href="mag-catalogue-1.html#cb97-16" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> <span class="fu">force.ultrametric</span>(genome_tree, <span class="at">method=</span><span class="st">&quot;extend&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># extend to ultrametric for the sake of visualisation</span></span>
+<span id="cb97-17"><a href="mag-catalogue-1.html#cb97-17" tabindex="-1"></a>    <span class="fu">ggtree</span>(., <span class="at">layout=</span><span class="st">&quot;fan&quot;</span>, <span class="at">open.angle=</span><span class="dv">10</span>, <span class="at">size=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<pre class="script-output"><code>***************************************************************
+*                          Note:                              *
+*    force.ultrametric does not include a formal method to    *
+*    ultrametricize a tree &amp; should only be used to coerce    *
+*   a phylogeny that fails is.ultrametric due to rounding --  *
+*    not as a substitute for formal rate-smoothing methods.   *
+***************************************************************</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb99-1"><a href="mag-catalogue-1.html#cb99-1" tabindex="-1"></a><span class="co"># Add the phylum ring</span></span>
+<span id="cb99-2"><a href="mag-catalogue-1.html#cb99-2" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> <span class="fu">gheatmap</span>(circular_tree, </span>
+<span id="cb99-3"><a href="mag-catalogue-1.html#cb99-3" tabindex="-1"></a>                          phylum_heatmap, </span>
+<span id="cb99-4"><a href="mag-catalogue-1.html#cb99-4" tabindex="-1"></a>                          <span class="at">offset =</span> <span class="fl">1.3</span>, <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">colnames =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb99-5"><a href="mag-catalogue-1.html#cb99-5" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> phylum_colors, <span class="at">name =</span> <span class="st">&quot;Phylum&quot;</span>) <span class="sc">+</span></span>
+<span id="cb99-6"><a href="mag-catalogue-1.html#cb99-6" tabindex="-1"></a>    <span class="fu">geom_tiplab2</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb99-7"><a href="mag-catalogue-1.html#cb99-7" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb99-8"><a href="mag-catalogue-1.html#cb99-8" tabindex="-1"></a>          <span class="at">panel.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb99-9"><a href="mag-catalogue-1.html#cb99-9" tabindex="-1"></a></span>
+<span id="cb99-10"><a href="mag-catalogue-1.html#cb99-10" tabindex="-1"></a><span class="co"># Flush color scale for the next ring</span></span>
+<span id="cb99-11"><a href="mag-catalogue-1.html#cb99-11" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> circular_tree <span class="sc">+</span> <span class="fu">new_scale_fill</span>()</span>
+<span id="cb99-12"><a href="mag-catalogue-1.html#cb99-12" tabindex="-1"></a></span>
+<span id="cb99-13"><a href="mag-catalogue-1.html#cb99-13" tabindex="-1"></a><span class="co"># Add order ring</span></span>
+<span id="cb99-14"><a href="mag-catalogue-1.html#cb99-14" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> <span class="fu">gheatmap</span>(circular_tree, </span>
+<span id="cb99-15"><a href="mag-catalogue-1.html#cb99-15" tabindex="-1"></a>                          order_heatmap, </span>
+<span id="cb99-16"><a href="mag-catalogue-1.html#cb99-16" tabindex="-1"></a>                          <span class="at">offset =</span> <span class="fl">0.55</span>, <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">colnames =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb99-17"><a href="mag-catalogue-1.html#cb99-17" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors, <span class="at">name =</span> <span class="st">&quot;Order&quot;</span>) <span class="sc">+</span></span>
+<span id="cb99-18"><a href="mag-catalogue-1.html#cb99-18" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span>
+<span id="cb99-19"><a href="mag-catalogue-1.html#cb99-19" tabindex="-1"></a></span>
+<span id="cb99-20"><a href="mag-catalogue-1.html#cb99-20" tabindex="-1"></a><span class="co"># Flush color scale to enable a new color scheme in the next ring</span></span>
+<span id="cb99-21"><a href="mag-catalogue-1.html#cb99-21" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> circular_tree <span class="sc">+</span> <span class="fu">new_scale_fill</span>()</span>
+<span id="cb99-22"><a href="mag-catalogue-1.html#cb99-22" tabindex="-1"></a></span>
+<span id="cb99-23"><a href="mag-catalogue-1.html#cb99-23" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span> circular_tree <span class="sc">+</span></span>
+<span id="cb99-24"><a href="mag-catalogue-1.html#cb99-24" tabindex="-1"></a>    <span class="fu">new_scale_fill</span>() <span class="sc">+</span></span>
+<span id="cb99-25"><a href="mag-catalogue-1.html#cb99-25" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span> <span class="ot">=</span> <span class="st">&quot;#fcbb6d&quot;</span>, <span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;#465c7a&quot;</span>), </span>
+<span id="cb99-26"><a href="mag-catalogue-1.html#cb99-26" tabindex="-1"></a>                      <span class="at">name =</span> <span class="st">&#39;Circularized genomes&#39;</span>) <span class="sc">+</span></span>
+<span id="cb99-27"><a href="mag-catalogue-1.html#cb99-27" tabindex="-1"></a>    <span class="fu">geom_fruit</span>(</span>
+<span id="cb99-28"><a href="mag-catalogue-1.html#cb99-28" tabindex="-1"></a>        <span class="at">data =</span> genome_metadata,</span>
+<span id="cb99-29"><a href="mag-catalogue-1.html#cb99-29" tabindex="-1"></a>        <span class="at">geom =</span> geom_bar,</span>
+<span id="cb99-30"><a href="mag-catalogue-1.html#cb99-30" tabindex="-1"></a>        <span class="co"># Use as.factor to map circularity</span></span>
+<span id="cb99-31"><a href="mag-catalogue-1.html#cb99-31" tabindex="-1"></a>        <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> genome, <span class="at">fill =</span> circularity),  </span>
+<span id="cb99-32"><a href="mag-catalogue-1.html#cb99-32" tabindex="-1"></a>        <span class="at">offset =</span> <span class="fl">1.0</span>,</span>
+<span id="cb99-33"><a href="mag-catalogue-1.html#cb99-33" tabindex="-1"></a>        <span class="at">orientation =</span> <span class="st">&quot;y&quot;</span>,</span>
+<span id="cb99-34"><a href="mag-catalogue-1.html#cb99-34" tabindex="-1"></a>        <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span>
+<span id="cb99-35"><a href="mag-catalogue-1.html#cb99-35" tabindex="-1"></a></span>
+<span id="cb99-36"><a href="mag-catalogue-1.html#cb99-36" tabindex="-1"></a></span>
+<span id="cb99-37"><a href="mag-catalogue-1.html#cb99-37" tabindex="-1"></a><span class="co"># Add text</span></span>
+<span id="cb99-38"><a href="mag-catalogue-1.html#cb99-38" tabindex="-1"></a>circular_tree <span class="ot">&lt;-</span>  circular_tree <span class="sc">+</span></span>
+<span id="cb99-39"><a href="mag-catalogue-1.html#cb99-39" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&#39;text&#39;</span>, <span class="at">x=</span><span class="fl">3.2</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">label=</span><span class="st">&#39;           Order&#39;</span>, <span class="at">size=</span><span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb99-40"><a href="mag-catalogue-1.html#cb99-40" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&#39;text&#39;</span>, <span class="at">x=</span><span class="fl">3.6</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">label=</span><span class="st">&#39;              Phylum&#39;</span>, <span class="at">size=</span><span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb99-41"><a href="mag-catalogue-1.html#cb99-41" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&#39;text&#39;</span>, <span class="at">x=</span><span class="fl">4.2</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">label=</span><span class="st">&#39;                      Circularised&#39;</span>, <span class="at">size=</span><span class="fl">3.5</span>)</span>
+<span id="cb99-42"><a href="mag-catalogue-1.html#cb99-42" tabindex="-1"></a></span>
+<span id="cb99-43"><a href="mag-catalogue-1.html#cb99-43" tabindex="-1"></a><span class="co">#Plot circular tree</span></span>
+<span id="cb99-44"><a href="mag-catalogue-1.html#cb99-44" tabindex="-1"></a>p <span class="ot">&lt;-</span>circular_tree <span class="sc">%&gt;%</span> <span class="fu">open_tree</span>(<span class="dv">45</span>) <span class="sc">%&gt;%</span> <span class="fu">rotate_tree</span>(<span class="dv">90</span>) <span class="sc">+</span></span>
+<span id="cb99-45"><a href="mag-catalogue-1.html#cb99-45" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.box =</span> <span class="st">&quot;vertical&quot;</span>)</span>
+<span id="cb99-46"><a href="mag-catalogue-1.html#cb99-46" tabindex="-1"></a><span class="co"># print(p)</span></span>
+<span id="cb99-47"><a href="mag-catalogue-1.html#cb99-47" tabindex="-1"></a><span class="co"># ggsave(filename = &quot;results/figures/MAG_macro_tree.pdf&quot;, plot = p,</span></span>
+<span id="cb99-48"><a href="mag-catalogue-1.html#cb99-48" tabindex="-1"></a><span class="co">#       units = &quot;cm&quot;, width = 29, height = 40)</span></span></code></pre></div>
+</div>
+<div id="genome-phylogeny-plot-without-legend" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Genome phylogeny plot without legend<a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb100-1"><a href="mag-catalogue-1.html#cb100-1" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb100-2"><a href="mag-catalogue-1.html#cb100-2" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>) <span class="sc">&amp;</span></span>
+<span id="cb100-3"><a href="mag-catalogue-1.html#cb100-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_genome_phylogeny_no_legend-1.png" width="672" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb101-1"><a href="mag-catalogue-1.html#cb101-1" tabindex="-1"></a><span class="co">#Aggregate bundle-level GIFTs into the compound level</span></span>
+<span id="cb101-2"><a href="mag-catalogue-1.html#cb101-2" tabindex="-1"></a>GIFTs_elements <span class="ot">&lt;-</span> <span class="fu">to.elements</span>(genome_gifts,GIFT_db)</span>
+<span id="cb101-3"><a href="mag-catalogue-1.html#cb101-3" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="mag-catalogue-1.html#cb101-4" tabindex="-1"></a><span class="co">#Aggregate element-level GIFTs into the function level</span></span>
+<span id="cb101-5"><a href="mag-catalogue-1.html#cb101-5" tabindex="-1"></a>GIFTs_functions <span class="ot">&lt;-</span> <span class="fu">to.functions</span>(GIFTs_elements,GIFT_db)</span>
+<span id="cb101-6"><a href="mag-catalogue-1.html#cb101-6" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="mag-catalogue-1.html#cb101-7" tabindex="-1"></a><span class="co">#Aggregate function-level GIFTs into overall Biosynthesis, Degradation and Structural GIFTs</span></span>
+<span id="cb101-8"><a href="mag-catalogue-1.html#cb101-8" tabindex="-1"></a>GIFTs_domains <span class="ot">&lt;-</span> <span class="fu">to.domains</span>(GIFTs_functions,GIFT_db)</span></code></pre></div>
+</div>
+<div id="functional-overview" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Functional overview<a href="mag-catalogue-1.html#functional-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb102-1"><a href="mag-catalogue-1.html#cb102-1" tabindex="-1"></a>function_group_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb102-2"><a href="mag-catalogue-1.html#cb102-2" tabindex="-1"></a>  <span class="at">B01 =</span> <span class="st">&quot;#f7941d&quot;</span>,  <span class="co"># topmost color (orange)</span></span>
+<span id="cb102-3"><a href="mag-catalogue-1.html#cb102-3" tabindex="-1"></a>  <span class="at">B02 =</span> <span class="st">&quot;#f26c1f&quot;</span>,  <span class="co"># apricot-orange</span></span>
+<span id="cb102-4"><a href="mag-catalogue-1.html#cb102-4" tabindex="-1"></a>  <span class="at">B03 =</span> <span class="st">&quot;#e63e26&quot;</span>,  <span class="co"># red-orange</span></span>
+<span id="cb102-5"><a href="mag-catalogue-1.html#cb102-5" tabindex="-1"></a>  <span class="at">B04 =</span> <span class="st">&quot;#e6004c&quot;</span>,  <span class="co"># deep pink</span></span>
+<span id="cb102-6"><a href="mag-catalogue-1.html#cb102-6" tabindex="-1"></a>  <span class="at">B06 =</span> <span class="st">&quot;#a1246b&quot;</span>,  <span class="co"># magenta</span></span>
+<span id="cb102-7"><a href="mag-catalogue-1.html#cb102-7" tabindex="-1"></a>  <span class="at">B07 =</span> <span class="st">&quot;#ed559f&quot;</span>,  <span class="co"># pink</span></span>
+<span id="cb102-8"><a href="mag-catalogue-1.html#cb102-8" tabindex="-1"></a>  <span class="at">B08 =</span> <span class="st">&quot;#f99388&quot;</span>,  <span class="co"># peach</span></span>
+<span id="cb102-9"><a href="mag-catalogue-1.html#cb102-9" tabindex="-1"></a>  <span class="at">B09 =</span> <span class="st">&quot;#1a3c85&quot;</span>,  <span class="co"># dark blue</span></span>
+<span id="cb102-10"><a href="mag-catalogue-1.html#cb102-10" tabindex="-1"></a>  <span class="at">B10 =</span> <span class="st">&quot;#2b8ac4&quot;</span>,  <span class="co"># blue</span></span>
+<span id="cb102-11"><a href="mag-catalogue-1.html#cb102-11" tabindex="-1"></a></span>
+<span id="cb102-12"><a href="mag-catalogue-1.html#cb102-12" tabindex="-1"></a>  <span class="at">D01 =</span> <span class="st">&quot;#5ec4ed&quot;</span>,  <span class="co"># sky blue</span></span>
+<span id="cb102-13"><a href="mag-catalogue-1.html#cb102-13" tabindex="-1"></a>  <span class="at">D02 =</span> <span class="st">&quot;#89d2ef&quot;</span>,  <span class="co"># pale blue</span></span>
+<span id="cb102-14"><a href="mag-catalogue-1.html#cb102-14" tabindex="-1"></a>  <span class="at">D03 =</span> <span class="st">&quot;#d9efe9&quot;</span>,  <span class="co"># pale mint</span></span>
+<span id="cb102-15"><a href="mag-catalogue-1.html#cb102-15" tabindex="-1"></a>  <span class="at">D04 =</span> <span class="st">&quot;#9ed7b4&quot;</span>,  <span class="co"># light green</span></span>
+<span id="cb102-16"><a href="mag-catalogue-1.html#cb102-16" tabindex="-1"></a>  <span class="at">D05 =</span> <span class="st">&quot;#4fb18f&quot;</span>,  <span class="co"># mint green</span></span>
+<span id="cb102-17"><a href="mag-catalogue-1.html#cb102-17" tabindex="-1"></a>  <span class="at">D06 =</span> <span class="st">&quot;#3b946d&quot;</span>,  <span class="co"># dark teal</span></span>
+<span id="cb102-18"><a href="mag-catalogue-1.html#cb102-18" tabindex="-1"></a>  <span class="at">D07 =</span> <span class="st">&quot;#2a7854&quot;</span>,  <span class="co"># deeper teal</span></span>
+<span id="cb102-19"><a href="mag-catalogue-1.html#cb102-19" tabindex="-1"></a>  <span class="at">D08 =</span> <span class="st">&quot;#295b47&quot;</span>,  <span class="co"># forest green</span></span>
+<span id="cb102-20"><a href="mag-catalogue-1.html#cb102-20" tabindex="-1"></a>  <span class="at">D09 =</span> <span class="st">&quot;#234c3f&quot;</span>,  <span class="co"># deep green</span></span>
+<span id="cb102-21"><a href="mag-catalogue-1.html#cb102-21" tabindex="-1"></a></span>
+<span id="cb102-22"><a href="mag-catalogue-1.html#cb102-22" tabindex="-1"></a>  <span class="at">S01 =</span> <span class="st">&quot;#1b3e34&quot;</span>,  <span class="co"># nearly black-green</span></span>
+<span id="cb102-23"><a href="mag-catalogue-1.html#cb102-23" tabindex="-1"></a>  <span class="at">S02 =</span> <span class="st">&quot;#aaaaaa&quot;</span>,  <span class="co"># light grey</span></span>
+<span id="cb102-24"><a href="mag-catalogue-1.html#cb102-24" tabindex="-1"></a>  <span class="at">S03 =</span> <span class="st">&quot;#666666&quot;</span>   <span class="co"># dark grey</span></span>
+<span id="cb102-25"><a href="mag-catalogue-1.html#cb102-25" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb103-1"><a href="mag-catalogue-1.html#cb103-1" tabindex="-1"></a>order_heatmap <span class="ot">&lt;-</span> genome_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb103-2"><a href="mag-catalogue-1.html#cb103-2" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">match</span>(genome, genome_tree<span class="sc">$</span>tip.label)) <span class="sc">%&gt;%</span></span>
+<span id="cb103-3"><a href="mag-catalogue-1.html#cb103-3" tabindex="-1"></a>    <span class="fu">select</span>(genome,order) <span class="sc">%&gt;%</span></span>
+<span id="cb103-4"><a href="mag-catalogue-1.html#cb103-4" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;genome&quot;</span>)</span>
+<span id="cb103-5"><a href="mag-catalogue-1.html#cb103-5" tabindex="-1"></a></span>
+<span id="cb103-6"><a href="mag-catalogue-1.html#cb103-6" tabindex="-1"></a><span class="co"># Aggregate basal GIFT into elements</span></span>
+<span id="cb103-7"><a href="mag-catalogue-1.html#cb103-7" tabindex="-1"></a>function_table <span class="ot">&lt;-</span> genome_gifts <span class="sc">%&gt;%</span></span>
+<span id="cb103-8"><a href="mag-catalogue-1.html#cb103-8" tabindex="-1"></a>    <span class="fu">to.elements</span>(., GIFT_db)</span>
+<span id="cb103-9"><a href="mag-catalogue-1.html#cb103-9" tabindex="-1"></a></span>
+<span id="cb103-10"><a href="mag-catalogue-1.html#cb103-10" tabindex="-1"></a><span class="co"># 1. Base tree</span></span>
+<span id="cb103-11"><a href="mag-catalogue-1.html#cb103-11" tabindex="-1"></a>function_tree <span class="ot">&lt;-</span> <span class="fu">force.ultrametric</span>(genome_tree, <span class="at">method=</span><span class="st">&quot;extend&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb103-12"><a href="mag-catalogue-1.html#cb103-12" tabindex="-1"></a>                <span class="fu">ggtree</span>(<span class="at">size =</span> <span class="fl">0.3</span>) </span></code></pre></div>
+<pre class="script-output"><code>***************************************************************
+*                          Note:                              *
+*    force.ultrametric does not include a formal method to    *
+*    ultrametricize a tree &amp; should only be used to coerce    *
+*   a phylogeny that fails is.ultrametric due to rounding --  *
+*    not as a substitute for formal rate-smoothing methods.   *
+***************************************************************</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb105-1"><a href="mag-catalogue-1.html#cb105-1" tabindex="-1"></a><span class="co"># 2. First heatmap: add order (row) color strip</span></span>
+<span id="cb105-2"><a href="mag-catalogue-1.html#cb105-2" tabindex="-1"></a>function_tree <span class="ot">&lt;-</span> <span class="fu">gheatmap</span>(</span>
+<span id="cb105-3"><a href="mag-catalogue-1.html#cb105-3" tabindex="-1"></a>    function_tree, </span>
+<span id="cb105-4"><a href="mag-catalogue-1.html#cb105-4" tabindex="-1"></a>    order_heatmap, </span>
+<span id="cb105-5"><a href="mag-catalogue-1.html#cb105-5" tabindex="-1"></a>    <span class="at">offset =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">colnames =</span> <span class="cn">FALSE</span></span>
+<span id="cb105-6"><a href="mag-catalogue-1.html#cb105-6" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb105-7"><a href="mag-catalogue-1.html#cb105-7" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> order_colors) <span class="sc">+</span></span>
+<span id="cb105-8"><a href="mag-catalogue-1.html#cb105-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Order&quot;</span>)</span>
+<span id="cb105-9"><a href="mag-catalogue-1.html#cb105-9" tabindex="-1"></a></span>
+<span id="cb105-10"><a href="mag-catalogue-1.html#cb105-10" tabindex="-1"></a><span class="co"># 5. Reset fill scale again for main function matrix</span></span>
+<span id="cb105-11"><a href="mag-catalogue-1.html#cb105-11" tabindex="-1"></a>function_tree <span class="ot">&lt;-</span> function_tree <span class="sc">+</span> <span class="fu">new_scale_fill</span>()</span>
+<span id="cb105-12"><a href="mag-catalogue-1.html#cb105-12" tabindex="-1"></a></span>
+<span id="cb105-13"><a href="mag-catalogue-1.html#cb105-13" tabindex="-1"></a><span class="co"># 6. Add the full function table heatmap (numeric)</span></span>
+<span id="cb105-14"><a href="mag-catalogue-1.html#cb105-14" tabindex="-1"></a>function_tree <span class="ot">&lt;-</span> <span class="fu">gheatmap</span>(</span>
+<span id="cb105-15"><a href="mag-catalogue-1.html#cb105-15" tabindex="-1"></a>    function_tree, </span>
+<span id="cb105-16"><a href="mag-catalogue-1.html#cb105-16" tabindex="-1"></a>    function_table, </span>
+<span id="cb105-17"><a href="mag-catalogue-1.html#cb105-17" tabindex="-1"></a>    <span class="at">offset =</span> <span class="fl">0.5</span>, </span>
+<span id="cb105-18"><a href="mag-catalogue-1.html#cb105-18" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">3.5</span>, </span>
+<span id="cb105-19"><a href="mag-catalogue-1.html#cb105-19" tabindex="-1"></a>    <span class="at">colnames =</span> <span class="cn">FALSE</span></span>
+<span id="cb105-20"><a href="mag-catalogue-1.html#cb105-20" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb105-21"><a href="mag-catalogue-1.html#cb105-21" tabindex="-1"></a>  <span class="fu">vexpand</span>(<span class="dv">0</span>) <span class="sc">+</span> <span class="co">#   vexpand(0.08) +</span></span>
+<span id="cb105-22"><a href="mag-catalogue-1.html#cb105-22" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">clip =</span> <span class="st">&quot;off&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-23"><a href="mag-catalogue-1.html#cb105-23" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;#f4f4f4&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#666666&quot;</span>, <span class="at">na.value =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-24"><a href="mag-catalogue-1.html#cb105-24" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;GIFT&quot;</span>)</span>
+<span id="cb105-25"><a href="mag-catalogue-1.html#cb105-25" tabindex="-1"></a></span>
+<span id="cb105-26"><a href="mag-catalogue-1.html#cb105-26" tabindex="-1"></a><span class="co"># 7. Final plot</span></span>
+<span id="cb105-27"><a href="mag-catalogue-1.html#cb105-27" tabindex="-1"></a>function_tree <span class="ot">&lt;-</span> function_tree <span class="sc">+</span></span>
+<span id="cb105-28"><a href="mag-catalogue-1.html#cb105-28" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb105-29"><a href="mag-catalogue-1.html#cb105-29" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) </span>
+<span id="cb105-30"><a href="mag-catalogue-1.html#cb105-30" tabindex="-1"></a><span class="co"># function_tree</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb106-1"><a href="mag-catalogue-1.html#cb106-1" tabindex="-1"></a><span class="co"># Join to get Code_function (e.g. B01, D01) for each Code_element (e.g. B0101, B0204)</span></span>
+<span id="cb106-2"><a href="mag-catalogue-1.html#cb106-2" tabindex="-1"></a>column_annotation <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Code_element =</span> <span class="fu">colnames</span>(function_table)) <span class="sc">%&gt;%</span></span>
+<span id="cb106-3"><a href="mag-catalogue-1.html#cb106-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb106-4"><a href="mag-catalogue-1.html#cb106-4" tabindex="-1"></a>    GIFT_db <span class="sc">%&gt;%</span> </span>
+<span id="cb106-5"><a href="mag-catalogue-1.html#cb106-5" tabindex="-1"></a>      <span class="fu">select</span>(Code_element, Code_function) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-6"><a href="mag-catalogue-1.html#cb106-6" tabindex="-1"></a>      <span class="fu">distinct</span>(Code_element, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-7"><a href="mag-catalogue-1.html#cb106-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">&quot;Code_element&quot;</span></span>
+<span id="cb106-8"><a href="mag-catalogue-1.html#cb106-8" tabindex="-1"></a>  )</span>
+<span id="cb106-9"><a href="mag-catalogue-1.html#cb106-9" tabindex="-1"></a></span>
+<span id="cb106-10"><a href="mag-catalogue-1.html#cb106-10" tabindex="-1"></a><span class="co"># Create a 1-row matrix with Code_function values</span></span>
+<span id="cb106-11"><a href="mag-catalogue-1.html#cb106-11" tabindex="-1"></a>column_annotation_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb106-12"><a href="mag-catalogue-1.html#cb106-12" tabindex="-1"></a>  column_annotation<span class="sc">$</span>Code_function,</span>
+<span id="cb106-13"><a href="mag-catalogue-1.html#cb106-13" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span>,</span>
+<span id="cb106-14"><a href="mag-catalogue-1.html#cb106-14" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="st">&quot;Function_group&quot;</span>, column_annotation<span class="sc">$</span>Code_element)</span>
+<span id="cb106-15"><a href="mag-catalogue-1.html#cb106-15" tabindex="-1"></a>)</span>
+<span id="cb106-16"><a href="mag-catalogue-1.html#cb106-16" tabindex="-1"></a></span>
+<span id="cb106-17"><a href="mag-catalogue-1.html#cb106-17" tabindex="-1"></a><span class="co"># Ensure Code_element order matches your heatmap</span></span>
+<span id="cb106-18"><a href="mag-catalogue-1.html#cb106-18" tabindex="-1"></a>column_annotation_df <span class="ot">&lt;-</span> column_annotation <span class="sc">%&gt;%</span></span>
+<span id="cb106-19"><a href="mag-catalogue-1.html#cb106-19" tabindex="-1"></a>  <span class="fu">distinct</span>(Code_element, Code_function)</span>
+<span id="cb106-20"><a href="mag-catalogue-1.html#cb106-20" tabindex="-1"></a></span>
+<span id="cb106-21"><a href="mag-catalogue-1.html#cb106-21" tabindex="-1"></a>column_annotation_df<span class="sc">$</span>Code_element <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb106-22"><a href="mag-catalogue-1.html#cb106-22" tabindex="-1"></a>  column_annotation_df<span class="sc">$</span>Code_element,</span>
+<span id="cb106-23"><a href="mag-catalogue-1.html#cb106-23" tabindex="-1"></a>  <span class="at">levels =</span> column_annotation<span class="sc">$</span>Code_element</span>
+<span id="cb106-24"><a href="mag-catalogue-1.html#cb106-24" tabindex="-1"></a>)</span>
+<span id="cb106-25"><a href="mag-catalogue-1.html#cb106-25" tabindex="-1"></a><span class="co"># Plot annotation strip</span></span>
+<span id="cb106-26"><a href="mag-catalogue-1.html#cb106-26" tabindex="-1"></a>annotation_strip <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(column_annotation_df, <span class="fu">aes</span>(<span class="at">x =</span> Code_element, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">fill =</span> Code_function)) <span class="sc">+</span></span>
+<span id="cb106-27"><a href="mag-catalogue-1.html#cb106-27" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb106-28"><a href="mag-catalogue-1.html#cb106-28" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> function_group_colors, <span class="at">na.translate =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb106-29"><a href="mag-catalogue-1.html#cb106-29" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb106-30"><a href="mag-catalogue-1.html#cb106-30" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb106-31"><a href="mag-catalogue-1.html#cb106-31" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb106-32"><a href="mag-catalogue-1.html#cb106-32" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb106-33"><a href="mag-catalogue-1.html#cb106-33" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb106-34"><a href="mag-catalogue-1.html#cb106-34" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-35"><a href="mag-catalogue-1.html#cb106-35" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb106-36"><a href="mag-catalogue-1.html#cb106-36" tabindex="-1"></a></span>
+<span id="cb106-37"><a href="mag-catalogue-1.html#cb106-37" tabindex="-1"></a></span>
+<span id="cb106-38"><a href="mag-catalogue-1.html#cb106-38" tabindex="-1"></a><span class="co"># annotation_strip</span></span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb107-1"><a href="mag-catalogue-1.html#cb107-1" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> ((<span class="fu">plot_spacer</span>() <span class="sc">|</span> <span class="fu">wrap_elements</span>(annotation_strip) <span class="sc">|</span> <span class="fu">plot_spacer</span>()) <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="fl">10.1</span>, <span class="dv">25</span>, <span class="fl">1.1</span>))) <span class="sc">/</span></span>
+<span id="cb107-2"><a href="mag-catalogue-1.html#cb107-2" tabindex="-1"></a>                 <span class="fu">wrap_elements</span>(function_tree) <span class="sc">+</span></span>
+<span id="cb107-3"><a href="mag-catalogue-1.html#cb107-3" tabindex="-1"></a>                 <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">10</span>))  <span class="co"># adjust strip height as needed</span></span>
+<span id="cb107-4"><a href="mag-catalogue-1.html#cb107-4" tabindex="-1"></a></span>
+<span id="cb107-5"><a href="mag-catalogue-1.html#cb107-5" tabindex="-1"></a>combined_plot</span></code></pre></div>
+<p><img src="_main_files/figure-html/function_heatmap_combined-1.png" width="960" /></p>
+</div>
+<div id="functional-distances" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> Functional distances<a href="mag-catalogue-1.html#functional-distances" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb108-1"><a href="mag-catalogue-1.html#cb108-1" tabindex="-1"></a>functional_distances <span class="ot">&lt;-</span> genome_gifts <span class="sc">%&gt;%</span></span>
+<span id="cb108-2"><a href="mag-catalogue-1.html#cb108-2" tabindex="-1"></a>    <span class="fu">to.elements</span>(., GIFT_db) <span class="sc">%&gt;%</span></span>
+<span id="cb108-3"><a href="mag-catalogue-1.html#cb108-3" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb108-4"><a href="mag-catalogue-1.html#cb108-4" tabindex="-1"></a>    stats<span class="sc">::</span><span class="fu">dist</span>(., <span class="at">method =</span> <span class="st">&quot;manhattan&quot;</span>) <span class="sc">/</span> <span class="fu">ncol</span>(genome_gifts[genome_metadata<span class="sc">$</span>genome, ])</span>
+<span id="cb108-5"><a href="mag-catalogue-1.html#cb108-5" tabindex="-1"></a></span>
+<span id="cb108-6"><a href="mag-catalogue-1.html#cb108-6" tabindex="-1"></a><span class="fu">mean</span>(functional_distances)</span>
+<span id="cb108-7"><a href="mag-catalogue-1.html#cb108-7" tabindex="-1"></a><span class="fu">sd</span>(functional_distances)</span>
+<span id="cb108-8"><a href="mag-catalogue-1.html#cb108-8" tabindex="-1"></a><span class="fu">max</span>(functional_distances)</span></code></pre></div>
+</div>
+<div id="functional-ordination" class="section level2 hasAnchor" number="10.8">
+<h2><span class="header-section-number">10.8</span> Functional ordination<a href="mag-catalogue-1.html#functional-ordination" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>PCoA functional ordination with PCA loadings.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb109-1"><a href="mag-catalogue-1.html#cb109-1" tabindex="-1"></a>gift_pcoa <span class="ot">&lt;-</span> genome_gifts <span class="sc">%&gt;%</span></span>
+<span id="cb109-2"><a href="mag-catalogue-1.html#cb109-2" tabindex="-1"></a>    <span class="fu">to.elements</span>(., GIFT_db) <span class="sc">%&gt;%</span></span>
+<span id="cb109-3"><a href="mag-catalogue-1.html#cb109-3" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb109-4"><a href="mag-catalogue-1.html#cb109-4" tabindex="-1"></a>    <span class="fu">vegdist</span>(<span class="at">method=</span><span class="st">&quot;euclidean&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb109-5"><a href="mag-catalogue-1.html#cb109-5" tabindex="-1"></a>    <span class="fu">pcoa</span>()</span>
+<span id="cb109-6"><a href="mag-catalogue-1.html#cb109-6" tabindex="-1"></a></span>
+<span id="cb109-7"><a href="mag-catalogue-1.html#cb109-7" tabindex="-1"></a>gift_pcoa_rel_eigen <span class="ot">&lt;-</span> gift_pcoa<span class="sc">$</span>values<span class="sc">$</span>Relative_eig[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb109-8"><a href="mag-catalogue-1.html#cb109-8" tabindex="-1"></a></span>
+<span id="cb109-9"><a href="mag-catalogue-1.html#cb109-9" tabindex="-1"></a></span>
+<span id="cb109-10"><a href="mag-catalogue-1.html#cb109-10" tabindex="-1"></a><span class="co"># Get genome positions</span></span>
+<span id="cb109-11"><a href="mag-catalogue-1.html#cb109-11" tabindex="-1"></a>gift_pcoa_vectors <span class="ot">&lt;-</span> gift_pcoa<span class="sc">$</span>vectors <span class="sc">%&gt;%</span> <span class="co">#extract vectors</span></span>
+<span id="cb109-12"><a href="mag-catalogue-1.html#cb109-12" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb109-13"><a href="mag-catalogue-1.html#cb109-13" tabindex="-1"></a>  <span class="fu">select</span>(Axis<span class="fl">.1</span>,Axis<span class="fl">.2</span>) <span class="co"># keep the first 2 axes</span></span>
+<span id="cb109-14"><a href="mag-catalogue-1.html#cb109-14" tabindex="-1"></a></span>
+<span id="cb109-15"><a href="mag-catalogue-1.html#cb109-15" tabindex="-1"></a>gift_pcoa_eigenvalues <span class="ot">&lt;-</span> gift_pcoa<span class="sc">$</span>values<span class="sc">$</span>Eigenvalues[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb109-16"><a href="mag-catalogue-1.html#cb109-16" tabindex="-1"></a></span>
+<span id="cb109-17"><a href="mag-catalogue-1.html#cb109-17" tabindex="-1"></a>gift_pcoa_gifts <span class="ot">&lt;-</span> <span class="fu">cov</span>(genome_gifts, <span class="fu">scale</span>(gift_pcoa_vectors)) <span class="sc">%*%</span> <span class="fu">diag</span>((gift_pcoa_eigenvalues<span class="sc">/</span>(<span class="fu">nrow</span>(genome_gifts)<span class="sc">-</span><span class="dv">1</span>))<span class="sc">^</span>(<span class="sc">-</span><span class="fl">0.5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb109-18"><a href="mag-catalogue-1.html#cb109-18" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb109-19"><a href="mag-catalogue-1.html#cb109-19" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Axis.1=</span><span class="dv">1</span>,<span class="at">Axis.2=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-20"><a href="mag-catalogue-1.html#cb109-20" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">&quot;label&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-21"><a href="mag-catalogue-1.html#cb109-21" tabindex="-1"></a>  <span class="co">#get function summary vectors</span></span>
+<span id="cb109-22"><a href="mag-catalogue-1.html#cb109-22" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">func=</span><span class="fu">substr</span>(label,<span class="dv">1</span>,<span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-23"><a href="mag-catalogue-1.html#cb109-23" tabindex="-1"></a>  <span class="fu">group_by</span>(func) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-24"><a href="mag-catalogue-1.html#cb109-24" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Axis.1=</span><span class="fu">mean</span>(Axis<span class="fl">.1</span>),</span>
+<span id="cb109-25"><a href="mag-catalogue-1.html#cb109-25" tabindex="-1"></a>            <span class="at">Axis.2=</span><span class="fu">mean</span>(Axis<span class="fl">.2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-26"><a href="mag-catalogue-1.html#cb109-26" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">label=</span>func) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-27"><a href="mag-catalogue-1.html#cb109-27" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;S01&quot;</span>,<span class="st">&quot;S02&quot;</span>,<span class="st">&quot;S03&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb110-1"><a href="mag-catalogue-1.html#cb110-1" tabindex="-1"></a>scale <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># scale for vector loadings</span></span>
+<span id="cb110-2"><a href="mag-catalogue-1.html#cb110-2" tabindex="-1"></a>pcoa_plot <span class="ot">&lt;-</span> gift_pcoa_vectors <span class="sc">%&gt;%</span> </span>
+<span id="cb110-3"><a href="mag-catalogue-1.html#cb110-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-4"><a href="mag-catalogue-1.html#cb110-4" tabindex="-1"></a>  <span class="fu">left_join</span>(genome_metadata, <span class="at">by=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb110-5"><a href="mag-catalogue-1.html#cb110-5" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb110-6"><a href="mag-catalogue-1.html#cb110-6" tabindex="-1"></a>      <span class="co">#genome positions</span></span>
+<span id="cb110-7"><a href="mag-catalogue-1.html#cb110-7" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(<span class="at">values=</span>order_colors)<span class="sc">+</span></span>
+<span id="cb110-8"><a href="mag-catalogue-1.html#cb110-8" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Axis<span class="fl">.1</span>,<span class="at">y=</span>Axis<span class="fl">.2</span>, <span class="at">color=</span>order, <span class="at">size=</span>length), </span>
+<span id="cb110-9"><a href="mag-catalogue-1.html#cb110-9" tabindex="-1"></a>                 <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">shape=</span><span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb110-10"><a href="mag-catalogue-1.html#cb110-10" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb110-11"><a href="mag-catalogue-1.html#cb110-11" tabindex="-1"></a>      <span class="co">#scale_color_manual(values=phylum_colors) +</span></span>
+<span id="cb110-12"><a href="mag-catalogue-1.html#cb110-12" tabindex="-1"></a>      <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb110-13"><a href="mag-catalogue-1.html#cb110-13" tabindex="-1"></a>      <span class="co">#loading positions</span></span>
+<span id="cb110-14"><a href="mag-catalogue-1.html#cb110-14" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="at">data=</span>gift_pcoa_gifts, </span>
+<span id="cb110-15"><a href="mag-catalogue-1.html#cb110-15" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">xend=</span>Axis<span class="fl">.1</span> <span class="sc">*</span> scale, <span class="at">yend=</span>Axis<span class="fl">.2</span> <span class="sc">*</span> scale),</span>
+<span id="cb110-16"><a href="mag-catalogue-1.html#cb110-16" tabindex="-1"></a>                    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>), </span>
+<span id="cb110-17"><a href="mag-catalogue-1.html#cb110-17" tabindex="-1"></a>                    <span class="at">type =</span> <span class="st">&quot;open&quot;</span>, </span>
+<span id="cb110-18"><a href="mag-catalogue-1.html#cb110-18" tabindex="-1"></a>                    <span class="at">angle =</span> <span class="dv">25</span>),</span>
+<span id="cb110-19"><a href="mag-catalogue-1.html#cb110-19" tabindex="-1"></a>                    <span class="at">linewidth =</span> <span class="fl">0.5</span>, </span>
+<span id="cb110-20"><a href="mag-catalogue-1.html#cb110-20" tabindex="-1"></a>                    <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb110-21"><a href="mag-catalogue-1.html#cb110-21" tabindex="-1"></a>     <span class="co">#Primary and secondary scale adjustments</span></span>
+<span id="cb110-22"><a href="mag-catalogue-1.html#cb110-22" tabindex="-1"></a>     <span class="co"># scale_x_continuous(name = paste0(&quot;PCoA1 (&quot;,round(gift_pcoa_rel_eigen[1]*100, digits = 2), &quot; %)&quot;),</span></span>
+<span id="cb110-23"><a href="mag-catalogue-1.html#cb110-23" tabindex="-1"></a>     <span class="co">#                  sec.axis = sec_axis(~ . / scale)</span></span>
+<span id="cb110-24"><a href="mag-catalogue-1.html#cb110-24" tabindex="-1"></a>     <span class="co">#        ) +</span></span>
+<span id="cb110-25"><a href="mag-catalogue-1.html#cb110-25" tabindex="-1"></a>     <span class="co"># scale_y_continuous(name = paste0(&quot;PCoA2 (&quot;,round(gift_pcoa_rel_eigen[2]*100, digits = 2), &quot; %)&quot;),</span></span>
+<span id="cb110-26"><a href="mag-catalogue-1.html#cb110-26" tabindex="-1"></a>     <span class="co">#                  sec.axis = sec_axis(~ . / scale)</span></span>
+<span id="cb110-27"><a href="mag-catalogue-1.html#cb110-27" tabindex="-1"></a>     <span class="co">#        ) +</span></span>
+<span id="cb110-28"><a href="mag-catalogue-1.html#cb110-28" tabindex="-1"></a>    <span class="fu">geom_label_repel</span>(<span class="at">data =</span> gift_pcoa_gifts,</span>
+<span id="cb110-29"><a href="mag-catalogue-1.html#cb110-29" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">label =</span> label, <span class="at">x =</span> Axis<span class="fl">.1</span> <span class="sc">*</span> scale, <span class="at">y =</span> Axis<span class="fl">.2</span> <span class="sc">*</span> scale),</span>
+<span id="cb110-30"><a href="mag-catalogue-1.html#cb110-30" tabindex="-1"></a>                     <span class="at">segment.color =</span> <span class="st">&#39;transparent&#39;</span>) <span class="sc">+</span></span>
+<span id="cb110-31"><a href="mag-catalogue-1.html#cb110-31" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() </span>
+<span id="cb110-32"><a href="mag-catalogue-1.html#cb110-32" tabindex="-1"></a></span>
+<span id="cb110-33"><a href="mag-catalogue-1.html#cb110-33" tabindex="-1"></a></span>
+<span id="cb110-34"><a href="mag-catalogue-1.html#cb110-34" tabindex="-1"></a><span class="co"># pcoa_plot</span></span></code></pre></div>
+<p>WARNING IS GIVEN FOR THIS:
+genome Axis.1 Axis.2 domain phylum class order family genus species completeness contamination coding_density length N50_length circularity
+1 MPB:bin_000147 -0.3441338 1.451352 <NA> <NA> <NA> <NA> <NA> <NA> <NA> NA NA NA NA NA <NA></p>
+<p>which I cannot find in genome metadata. So I will ignore this warning for now.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb111-1"><a href="mag-catalogue-1.html#cb111-1" tabindex="-1"></a>gift_axis_1 <span class="ot">&lt;-</span> gift_pcoa_vectors <span class="sc">%&gt;%</span> </span>
+<span id="cb111-2"><a href="mag-catalogue-1.html#cb111-2" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb111-3"><a href="mag-catalogue-1.html#cb111-3" tabindex="-1"></a>  <span class="fu">left_join</span>(genome_metadata, <span class="at">by=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb111-4"><a href="mag-catalogue-1.html#cb111-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Axis<span class="fl">.1</span>, <span class="at">y=</span>length)) <span class="sc">+</span></span>
+<span id="cb111-5"><a href="mag-catalogue-1.html#cb111-5" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-6"><a href="mag-catalogue-1.html#cb111-6" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb111-7"><a href="mag-catalogue-1.html#cb111-7" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-8"><a href="mag-catalogue-1.html#cb111-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Genome length&quot;</span>, <span class="at">x =</span>  <span class="st">&quot;PCoA Axis 1&quot;</span>) </span>
+<span id="cb111-9"><a href="mag-catalogue-1.html#cb111-9" tabindex="-1"></a></span>
+<span id="cb111-10"><a href="mag-catalogue-1.html#cb111-10" tabindex="-1"></a><span class="co"># gift_axis_1</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb112-1"><a href="mag-catalogue-1.html#cb112-1" tabindex="-1"></a>gift_df_PCoA <span class="ot">&lt;-</span> genome_gifts <span class="sc">%&gt;%</span></span>
+<span id="cb112-2"><a href="mag-catalogue-1.html#cb112-2" tabindex="-1"></a>    <span class="fu">to.elements</span>(., GIFT_db) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-3"><a href="mag-catalogue-1.html#cb112-3" tabindex="-1"></a>    <span class="fu">to.functions</span>(., GIFT_db) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-4"><a href="mag-catalogue-1.html#cb112-4" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb112-5"><a href="mag-catalogue-1.html#cb112-5" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-6"><a href="mag-catalogue-1.html#cb112-6" tabindex="-1"></a>    <span class="fu">left_join</span>(genome_metadata, <span class="at">by=</span><span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb112-7"><a href="mag-catalogue-1.html#cb112-7" tabindex="-1"></a>    <span class="fu">left_join</span>(gift_pcoa_vectors <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="at">var=</span><span class="st">&quot;genome&quot;</span>), <span class="at">by=</span><span class="st">&quot;genome&quot;</span>)</span>
+<span id="cb112-8"><a href="mag-catalogue-1.html#cb112-8" tabindex="-1"></a></span>
+<span id="cb112-9"><a href="mag-catalogue-1.html#cb112-9" tabindex="-1"></a>gift_long <span class="ot">&lt;-</span> gift_df_PCoA <span class="sc">%&gt;%</span></span>
+<span id="cb112-10"><a href="mag-catalogue-1.html#cb112-10" tabindex="-1"></a>  <span class="fu">select</span>(genome, Axis<span class="fl">.2</span>,</span>
+<span id="cb112-11"><a href="mag-catalogue-1.html#cb112-11" tabindex="-1"></a>         B01, B02, B03, B04, B06, B07, B08, B09, B10,</span>
+<span id="cb112-12"><a href="mag-catalogue-1.html#cb112-12" tabindex="-1"></a>         D01, D02, D03, D04, D05, D06, D07, D08, D09,</span>
+<span id="cb112-13"><a href="mag-catalogue-1.html#cb112-13" tabindex="-1"></a>         S01, S02, S03) <span class="sc">%&gt;%</span></span>
+<span id="cb112-14"><a href="mag-catalogue-1.html#cb112-14" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb112-15"><a href="mag-catalogue-1.html#cb112-15" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(B01, B02, B03, B04, B06, B07, B08, B09, B10,</span>
+<span id="cb112-16"><a href="mag-catalogue-1.html#cb112-16" tabindex="-1"></a>             D01, D02, D03, D04, D05, D06, D07, D08, D09,</span>
+<span id="cb112-17"><a href="mag-catalogue-1.html#cb112-17" tabindex="-1"></a>             S01, S02, S03),</span>
+<span id="cb112-18"><a href="mag-catalogue-1.html#cb112-18" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;component&quot;</span>,</span>
+<span id="cb112-19"><a href="mag-catalogue-1.html#cb112-19" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb112-20"><a href="mag-catalogue-1.html#cb112-20" tabindex="-1"></a>  )</span>
+<span id="cb112-21"><a href="mag-catalogue-1.html#cb112-21" tabindex="-1"></a><span class="co"># Plot: x = Axis.2, y = value, colored by component (D01 vs D02)</span></span>
+<span id="cb112-22"><a href="mag-catalogue-1.html#cb112-22" tabindex="-1"></a>gift_plot_PC2 <span class="ot">&lt;-</span> gift_long <span class="sc">%&gt;%</span></span>
+<span id="cb112-23"><a href="mag-catalogue-1.html#cb112-23" tabindex="-1"></a>  <span class="fu">filter</span>(component <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D01&quot;</span>, <span class="st">&quot;D02&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb112-24"><a href="mag-catalogue-1.html#cb112-24" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> value, <span class="at">x =</span>  Axis<span class="fl">.2</span>, <span class="at">color =</span> component)) <span class="sc">+</span></span>
+<span id="cb112-25"><a href="mag-catalogue-1.html#cb112-25" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb112-26"><a href="mag-catalogue-1.html#cb112-26" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">D01 =</span> <span class="st">&quot;#5ec4ed&quot;</span>, <span class="at">D02 =</span> <span class="st">&quot;#89d2ef&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb112-27"><a href="mag-catalogue-1.html#cb112-27" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb112-28"><a href="mag-catalogue-1.html#cb112-28" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;GIFT&quot;</span>, <span class="at">x =</span>  <span class="st">&quot;PCoA Axis 2&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Component&quot;</span>) <span class="sc">+</span></span>
+<span id="cb112-29"><a href="mag-catalogue-1.html#cb112-29" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb112-30"><a href="mag-catalogue-1.html#cb112-30" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
+<span id="cb112-31"><a href="mag-catalogue-1.html#cb112-31" tabindex="-1"></a><span class="co"># gift_plot_PC2</span></span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb113-1"><a href="mag-catalogue-1.html#cb113-1" tabindex="-1"></a>gift_long <span class="sc">%&gt;%</span></span>
+<span id="cb113-2"><a href="mag-catalogue-1.html#cb113-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Axis<span class="fl">.2</span>, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb113-3"><a href="mag-catalogue-1.html#cb113-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb113-4"><a href="mag-catalogue-1.html#cb113-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> component, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb113-5"><a href="mag-catalogue-1.html#cb113-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb113-6"><a href="mag-catalogue-1.html#cb113-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;PCoA Axis 2&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Component value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb113-7"><a href="mag-catalogue-1.html#cb113-7" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb113-8"><a href="mag-catalogue-1.html#cb113-8" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb113-9"><a href="mag-catalogue-1.html#cb113-9" tabindex="-1"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;lines&quot;</span>),</span>
+<span id="cb113-10"><a href="mag-catalogue-1.html#cb113-10" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb113-11"><a href="mag-catalogue-1.html#cb113-11" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="_main_files/figure-html/function_ordination_pcoa_D01_curve_all-1.png" width="1152" /></p>
+<p>Trying to make two axes but the coord_flip () flips them the wrong way
+<a href="https://www.reddit.com/r/rstats/comments/wh9bzd/how_can_i_add_a_secondary_axis_to_ggplot_that/" class="uri">https://www.reddit.com/r/rstats/comments/wh9bzd/how_can_i_add_a_secondary_axis_to_ggplot_that/</a></p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb114-1"><a href="mag-catalogue-1.html#cb114-1" tabindex="-1"></a><span class="co"># # Step 1. Compute ranges of each component</span></span>
+<span id="cb114-2"><a href="mag-catalogue-1.html#cb114-2" tabindex="-1"></a><span class="co"># ranges &lt;- gift_long %&gt;%</span></span>
+<span id="cb114-3"><a href="mag-catalogue-1.html#cb114-3" tabindex="-1"></a><span class="co">#   filter(component %in% c(&quot;D01&quot;, &quot;D02&quot;)) %&gt;%</span></span>
+<span id="cb114-4"><a href="mag-catalogue-1.html#cb114-4" tabindex="-1"></a><span class="co">#   group_by(component) %&gt;%</span></span>
+<span id="cb114-5"><a href="mag-catalogue-1.html#cb114-5" tabindex="-1"></a><span class="co">#   summarise(min_val = min(value, na.rm = TRUE),</span></span>
+<span id="cb114-6"><a href="mag-catalogue-1.html#cb114-6" tabindex="-1"></a><span class="co">#             max_val = max(value, na.rm = TRUE))</span></span>
+<span id="cb114-7"><a href="mag-catalogue-1.html#cb114-7" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-8"><a href="mag-catalogue-1.html#cb114-8" tabindex="-1"></a><span class="co"># ranges</span></span>
+<span id="cb114-9"><a href="mag-catalogue-1.html#cb114-9" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-10"><a href="mag-catalogue-1.html#cb114-10" tabindex="-1"></a><span class="co"># gift_plot_PC2 &lt;- gift_long %&gt;%</span></span>
+<span id="cb114-11"><a href="mag-catalogue-1.html#cb114-11" tabindex="-1"></a><span class="co">#   filter(component %in% c(&quot;D01&quot;, &quot;D02&quot;)) %&gt;%</span></span>
+<span id="cb114-12"><a href="mag-catalogue-1.html#cb114-12" tabindex="-1"></a><span class="co">#   ggplot(aes(x = Axis.2)) +</span></span>
+<span id="cb114-13"><a href="mag-catalogue-1.html#cb114-13" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-14"><a href="mag-catalogue-1.html#cb114-14" tabindex="-1"></a><span class="co">#   # Plot D01 as is</span></span>
+<span id="cb114-15"><a href="mag-catalogue-1.html#cb114-15" tabindex="-1"></a><span class="co">#   geom_smooth(</span></span>
+<span id="cb114-16"><a href="mag-catalogue-1.html#cb114-16" tabindex="-1"></a><span class="co">#     data = subset(gift_long, component == &quot;D01&quot;),</span></span>
+<span id="cb114-17"><a href="mag-catalogue-1.html#cb114-17" tabindex="-1"></a><span class="co">#     aes(y = value, color = &quot;Lipid degradation&quot;),</span></span>
+<span id="cb114-18"><a href="mag-catalogue-1.html#cb114-18" tabindex="-1"></a><span class="co">#     linewidth = 1</span></span>
+<span id="cb114-19"><a href="mag-catalogue-1.html#cb114-19" tabindex="-1"></a><span class="co">#   ) +</span></span>
+<span id="cb114-20"><a href="mag-catalogue-1.html#cb114-20" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-21"><a href="mag-catalogue-1.html#cb114-21" tabindex="-1"></a><span class="co">#   # Plot D02 rescaled to fit D01 range</span></span>
+<span id="cb114-22"><a href="mag-catalogue-1.html#cb114-22" tabindex="-1"></a><span class="co">#   geom_smooth(</span></span>
+<span id="cb114-23"><a href="mag-catalogue-1.html#cb114-23" tabindex="-1"></a><span class="co">#     data = subset(gift_long, component == &quot;D02&quot;),</span></span>
+<span id="cb114-24"><a href="mag-catalogue-1.html#cb114-24" tabindex="-1"></a><span class="co">#     aes(y = value / 1.5, color = &quot;Polysaccharide degradation&quot;),  # scale to align</span></span>
+<span id="cb114-25"><a href="mag-catalogue-1.html#cb114-25" tabindex="-1"></a><span class="co">#     linewidth = 1</span></span>
+<span id="cb114-26"><a href="mag-catalogue-1.html#cb114-26" tabindex="-1"></a><span class="co">#   ) +</span></span>
+<span id="cb114-27"><a href="mag-catalogue-1.html#cb114-27" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-28"><a href="mag-catalogue-1.html#cb114-28" tabindex="-1"></a><span class="co">#   scale_color_manual(values = c(</span></span>
+<span id="cb114-29"><a href="mag-catalogue-1.html#cb114-29" tabindex="-1"></a><span class="co">#     &quot;Lipid degradation&quot; = &quot;#5ec4ed&quot;,</span></span>
+<span id="cb114-30"><a href="mag-catalogue-1.html#cb114-30" tabindex="-1"></a><span class="co">#     &quot;Polysaccharide degradation&quot; = &quot;#89d2ef&quot;</span></span>
+<span id="cb114-31"><a href="mag-catalogue-1.html#cb114-31" tabindex="-1"></a><span class="co">#   )) +</span></span>
+<span id="cb114-32"><a href="mag-catalogue-1.html#cb114-32" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-33"><a href="mag-catalogue-1.html#cb114-33" tabindex="-1"></a><span class="co">#   # Add secondary axis showing original D02 scale (rescaled)</span></span>
+<span id="cb114-34"><a href="mag-catalogue-1.html#cb114-34" tabindex="-1"></a><span class="co">#   scale_y_continuous(</span></span>
+<span id="cb114-35"><a href="mag-catalogue-1.html#cb114-35" tabindex="-1"></a><span class="co">#     name = &quot;Lipid degradation&quot;,</span></span>
+<span id="cb114-36"><a href="mag-catalogue-1.html#cb114-36" tabindex="-1"></a><span class="co">#     sec.axis = sec_axis(~ . * 1.5, name = &quot;Polysaccharide degradation&quot;)</span></span>
+<span id="cb114-37"><a href="mag-catalogue-1.html#cb114-37" tabindex="-1"></a><span class="co">#   ) +</span></span>
+<span id="cb114-38"><a href="mag-catalogue-1.html#cb114-38" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-39"><a href="mag-catalogue-1.html#cb114-39" tabindex="-1"></a><span class="co">#   theme_minimal() +</span></span>
+<span id="cb114-40"><a href="mag-catalogue-1.html#cb114-40" tabindex="-1"></a><span class="co">#   coord_flip() +</span></span>
+<span id="cb114-41"><a href="mag-catalogue-1.html#cb114-41" tabindex="-1"></a><span class="co">#   theme(</span></span>
+<span id="cb114-42"><a href="mag-catalogue-1.html#cb114-42" tabindex="-1"></a><span class="co">#     legend.position = &quot;none&quot;,</span></span>
+<span id="cb114-43"><a href="mag-catalogue-1.html#cb114-43" tabindex="-1"></a><span class="co">#     axis.title.x.top  = element_text(color = &quot;#5ec4ed&quot;, face = &quot;bold&quot;),</span></span>
+<span id="cb114-44"><a href="mag-catalogue-1.html#cb114-44" tabindex="-1"></a><span class="co">#     axis.title.x.bottom = element_text(color = &quot;#89d2ef&quot;, face = &quot;bold&quot;)</span></span>
+<span id="cb114-45"><a href="mag-catalogue-1.html#cb114-45" tabindex="-1"></a><span class="co">#   )</span></span>
+<span id="cb114-46"><a href="mag-catalogue-1.html#cb114-46" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-47"><a href="mag-catalogue-1.html#cb114-47" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb114-48"><a href="mag-catalogue-1.html#cb114-48" tabindex="-1"></a><span class="co"># gift_plot_PC2</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb115-1"><a href="mag-catalogue-1.html#cb115-1" tabindex="-1"></a>((gift_axis_1<span class="sc">|</span> <span class="fu">plot_spacer</span>()) <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="fl">4.5</span>, <span class="dv">1</span>))) <span class="sc">/</span> </span>
+<span id="cb115-2"><a href="mag-catalogue-1.html#cb115-2" tabindex="-1"></a>  ((pcoa_plot <span class="sc">|</span> gift_plot_PC2) <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb115-3"><a href="mag-catalogue-1.html#cb115-3" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">6</span>), <span class="at">guides =</span> <span class="st">&quot;collect&quot;</span>) <span class="sc">+</span></span>
+<span id="cb115-4"><a href="mag-catalogue-1.html#cb115-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/function_ordination_pcoa_D01_curve_combined-1.png" width="1248" /></p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb116-1"><a href="mag-catalogue-1.html#cb116-1" tabindex="-1"></a>GIFT_db_functions <span class="ot">&lt;-</span> GIFT_db <span class="sc">%&gt;%</span></span>
+<span id="cb116-2"><a href="mag-catalogue-1.html#cb116-2" tabindex="-1"></a>  <span class="fu">select</span>(Code_function, Function, Domain) <span class="sc">%&gt;%</span></span>
+<span id="cb116-3"><a href="mag-catalogue-1.html#cb116-3" tabindex="-1"></a>  <span class="fu">distinct</span>(Code_function, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb116-4"><a href="mag-catalogue-1.html#cb116-4" tabindex="-1"></a>GIFT_db_functions</span></code></pre></div>
+<pre class="script-output"><code>   Code_function                           Function       Domain
+1            B01          Nucleic acid biosynthesis Biosynthesis
+2            B02            Amino acid biosynthesis Biosynthesis
+3            B03 Amino acid derivative biosynthesis Biosynthesis
+4            B04                  SCFA biosynthesis Biosynthesis
+5            B06         Organic anion biosynthesis Biosynthesis
+6            B07               Vitamin biosynthesis Biosynthesis
+7            B08     Aromatic compound biosynthesis Biosynthesis
+8            B09          Metallophore biosynthesis Biosynthesis
+9            B10            Antibiotic biosynthesis Biosynthesis
+10           D01                  Lipid degradation  Degradation
+11           D02         Polysaccharide degradation  Degradation
+12           D03                  Sugar degradation  Degradation
+13           D04                Protein degradation  Degradation
+14           D05             Amino acid degradation  Degradation
+15           D06      Nitrogen compound degradation  Degradation
+16           D07                Alcohol degradation  Degradation
+17           D08             Xenobiotic degradation  Degradation
+18           D09             Antibiotic degradation  Degradation
+19           S01                 Cellular structure    Structure
+20           S02                         Appendages    Structure
+21           S03                              Spore    Structure</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb118-1"><a href="mag-catalogue-1.html#cb118-1" tabindex="-1"></a>GIFT_legend_df <span class="ot">&lt;-</span> GIFT_db_functions <span class="sc">%&gt;%</span></span>
+<span id="cb118-2"><a href="mag-catalogue-1.html#cb118-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> function_group_colors[Code_function]) <span class="sc">%&gt;%</span></span>
+<span id="cb118-3"><a href="mag-catalogue-1.html#cb118-3" tabindex="-1"></a>  <span class="fu">arrange</span>(Code_function)  <span class="co"># keep the order consistent</span></span>
+<span id="cb118-4"><a href="mag-catalogue-1.html#cb118-4" tabindex="-1"></a></span>
+<span id="cb118-5"><a href="mag-catalogue-1.html#cb118-5" tabindex="-1"></a>function_colors <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(GIFT_legend_df, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">reorder</span>(Code_function, <span class="fu">desc</span>(Code_function)), <span class="at">x =</span> <span class="dv">1</span>, <span class="at">fill =</span> Code_function)) <span class="sc">+</span></span>
+<span id="cb118-6"><a href="mag-catalogue-1.html#cb118-6" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">width =</span> <span class="fl">1.1</span>, <span class="at">height =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb118-7"><a href="mag-catalogue-1.html#cb118-7" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> function_group_colors, <span class="at">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb118-8"><a href="mag-catalogue-1.html#cb118-8" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(Code_function, <span class="st">&quot;: &quot;</span>, Function)), </span>
+<span id="cb118-9"><a href="mag-catalogue-1.html#cb118-9" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">nudge_x =</span> <span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>) <span class="sc">+</span></span>
+<span id="cb118-10"><a href="mag-catalogue-1.html#cb118-10" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb118-11"><a href="mag-catalogue-1.html#cb118-11" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb118-12"><a href="mag-catalogue-1.html#cb118-12" tabindex="-1"></a>    <span class="at">aspect.ratio =</span> <span class="cn">NULL</span>,</span>
+<span id="cb118-13"><a href="mag-catalogue-1.html#cb118-13" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb118-14"><a href="mag-catalogue-1.html#cb118-14" tabindex="-1"></a>  ) </span>
+<span id="cb118-15"><a href="mag-catalogue-1.html#cb118-15" tabindex="-1"></a>function_colors</span></code></pre></div>
+<p><img src="_main_files/figure-html/GIFT-1.png" width="288" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="metabolomics-data-preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="histomonas-presence.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

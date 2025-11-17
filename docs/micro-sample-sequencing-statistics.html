@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Micro-sample Sequencing Statistics | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Micro-sample Sequencing Statistics | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Micro-sample Sequencing Statistics | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="micro-sample-counts.html"/>
+<link rel="next" href="macro-sample-metadata.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="micro-sample-sequencing-statistics" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Micro-sample Sequencing Statistics<a href="micro-sample-sequencing-statistics.html#micro-sample-sequencing-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Batches MSEB0042-MSEB0045
+ID: XXX
+Path: 3D-omics/processed_data/MSEB42-45-mg_quant/results/
+Access: read</p>
+<p>Download preprocess_data.zip &amp; place in appropriate directory.</p>
+<div id="load-required-data-1" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Load required data<a href="micro-sample-sequencing-statistics.html#load-required-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Load sample metadata, read counts, and genome metadata</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb38-1"><a href="micro-sample-sequencing-statistics.html#cb38-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb38-2"><a href="micro-sample-sequencing-statistics.html#cb38-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/counts.Rdata&quot;</span>)</span>
+<span id="cb38-3"><a href="micro-sample-sequencing-statistics.html#cb38-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/MAG_catalogue/data.Rdata&quot;</span>)</span></code></pre></div>
+</div>
+<div id="fastp-sequencing-statistics" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> FastP sequencing statistics<a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Get the multiqc_fastp.txt: FastP results, including QC. Packed in JSON format.
+(Does not contain gc and % unique content for before trimming.)</p>
+<p>Load and process FastP sequencing statistics</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb39-1"><a href="micro-sample-sequencing-statistics.html#cb39-1" tabindex="-1"></a>fastp_seq_stats <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;data/micro/MSEB0042_59/preprocess_data/multiqc_fastp.txt&quot;</span>, <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">&quot;Sample&quot;</span>, <span class="st">&quot;summary&quot;</span>, <span class="st">&quot;duplication&quot;</span>, <span class="st">&quot;filtering_result&quot;</span>, <span class="st">&quot;adapter_cutting&quot;</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="micro-sample-sequencing-statistics.html#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sample =</span> <span class="fu">str_extract</span>(Sample, <span class="st">&quot;M</span><span class="sc">\\</span><span class="st">d+&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="micro-sample-sequencing-statistics.html#cb39-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duplication =</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">&quot;.*:</span><span class="sc">\\</span><span class="st">s*([0-9</span><span class="sc">\\</span><span class="st">.]+).*&quot;</span>, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>, duplication))) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="micro-sample-sequencing-statistics.html#cb39-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">microsample =</span> Sample) <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="micro-sample-sequencing-statistics.html#cb39-5" tabindex="-1"></a>  <span class="co"># Keep only microsamples present in the sample_metadata</span></span>
+<span id="cb39-6"><a href="micro-sample-sequencing-statistics.html#cb39-6" tabindex="-1"></a>  <span class="fu">filter</span>(microsample <span class="sc">%in%</span> sample_metadata<span class="sc">$</span>microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb39-7"><a href="micro-sample-sequencing-statistics.html#cb39-7" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb39-8"><a href="micro-sample-sequencing-statistics.html#cb39-8" tabindex="-1"></a>    <span class="at">summary_clean =</span> <span class="fu">gsub</span>(<span class="st">&quot;&#39;&quot;</span>, <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>, summary),</span>
+<span id="cb39-9"><a href="micro-sample-sequencing-statistics.html#cb39-9" tabindex="-1"></a>    <span class="at">total_sequences_before_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>before_filtering<span class="sc">$</span>total_reads),</span>
+<span id="cb39-10"><a href="micro-sample-sequencing-statistics.html#cb39-10" tabindex="-1"></a>    <span class="at">total_bases_before_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>before_filtering<span class="sc">$</span>total_bases),</span>
+<span id="cb39-11"><a href="micro-sample-sequencing-statistics.html#cb39-11" tabindex="-1"></a>    <span class="at">percent_gc_before_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>before_filtering<span class="sc">$</span>gc_content),</span>
+<span id="cb39-12"><a href="micro-sample-sequencing-statistics.html#cb39-12" tabindex="-1"></a>    <span class="at">total_sequences_after_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>after_filtering<span class="sc">$</span>total_reads),</span>
+<span id="cb39-13"><a href="micro-sample-sequencing-statistics.html#cb39-13" tabindex="-1"></a>    <span class="at">total_bases_after_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>after_filtering<span class="sc">$</span>total_bases),</span>
+<span id="cb39-14"><a href="micro-sample-sequencing-statistics.html#cb39-14" tabindex="-1"></a>    <span class="at">percent_gc_after_trim =</span> <span class="fu">map_dbl</span>(summary_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>after_filtering<span class="sc">$</span>gc_content)</span>
+<span id="cb39-15"><a href="micro-sample-sequencing-statistics.html#cb39-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb39-16"><a href="micro-sample-sequencing-statistics.html#cb39-16" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb39-17"><a href="micro-sample-sequencing-statistics.html#cb39-17" tabindex="-1"></a>    <span class="at">adaptor_clean =</span> <span class="fu">gsub</span>(<span class="st">&quot;&#39;&quot;</span>, <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>, adapter_cutting),</span>
+<span id="cb39-18"><a href="micro-sample-sequencing-statistics.html#cb39-18" tabindex="-1"></a>    <span class="at">adapter_trimmed_reads =</span> <span class="fu">map_dbl</span>(adaptor_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>adapter_trimmed_reads),</span>
+<span id="cb39-19"><a href="micro-sample-sequencing-statistics.html#cb39-19" tabindex="-1"></a>    <span class="at">adapter_trimmed_bases =</span> <span class="fu">map_dbl</span>(adaptor_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>adapter_trimmed_bases)</span>
+<span id="cb39-20"><a href="micro-sample-sequencing-statistics.html#cb39-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb39-21"><a href="micro-sample-sequencing-statistics.html#cb39-21" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb39-22"><a href="micro-sample-sequencing-statistics.html#cb39-22" tabindex="-1"></a>    <span class="at">filtering_clean =</span> <span class="fu">gsub</span>(<span class="st">&quot;&#39;&quot;</span>, <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span>, filtering_result),</span>
+<span id="cb39-23"><a href="micro-sample-sequencing-statistics.html#cb39-23" tabindex="-1"></a>    <span class="at">passed_filter_reads =</span> <span class="fu">map_dbl</span>(filtering_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>passed_filter_reads),</span>
+<span id="cb39-24"><a href="micro-sample-sequencing-statistics.html#cb39-24" tabindex="-1"></a>    <span class="at">low_quality_reads =</span> <span class="fu">map_dbl</span>(filtering_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>low_quality_reads),</span>
+<span id="cb39-25"><a href="micro-sample-sequencing-statistics.html#cb39-25" tabindex="-1"></a>    <span class="at">too_many_N_reads =</span> <span class="fu">map_dbl</span>(filtering_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>too_many_N_reads),</span>
+<span id="cb39-26"><a href="micro-sample-sequencing-statistics.html#cb39-26" tabindex="-1"></a>    <span class="at">too_short_reads =</span> <span class="fu">map_dbl</span>(filtering_clean, <span class="sc">~</span> <span class="fu">fromJSON</span>(.)<span class="sc">$</span>too_short_reads)</span>
+<span id="cb39-27"><a href="micro-sample-sequencing-statistics.html#cb39-27" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb39-28"><a href="micro-sample-sequencing-statistics.html#cb39-28" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>summary_clean,<span class="sc">-</span>summary, <span class="sc">-</span>adaptor_clean, <span class="sc">-</span>filtering_result, <span class="sc">-</span>filtering_clean) <span class="sc">%&gt;%</span></span>
+<span id="cb39-29"><a href="micro-sample-sequencing-statistics.html#cb39-29" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, microsample)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-30"><a href="micro-sample-sequencing-statistics.html#cb39-30" tabindex="-1"></a>  <span class="fu">group_by</span>(microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb39-31"><a href="micro-sample-sequencing-statistics.html#cb39-31" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb39-32"><a href="micro-sample-sequencing-statistics.html#cb39-32" tabindex="-1"></a>    <span class="at">total_sequences_before_trim =</span> <span class="fu">sum</span>(total_sequences_before_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-33"><a href="micro-sample-sequencing-statistics.html#cb39-33" tabindex="-1"></a>    <span class="at">total_bases_before_trim =</span> <span class="fu">sum</span>(total_bases_before_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-34"><a href="micro-sample-sequencing-statistics.html#cb39-34" tabindex="-1"></a>    <span class="at">total_sequences_after_trim =</span> <span class="fu">sum</span>(total_sequences_after_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-35"><a href="micro-sample-sequencing-statistics.html#cb39-35" tabindex="-1"></a>    <span class="at">total_bases_after_trim =</span> <span class="fu">sum</span>(total_bases_after_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-36"><a href="micro-sample-sequencing-statistics.html#cb39-36" tabindex="-1"></a>    <span class="at">percent_gc_before_trim =</span> <span class="fu">mean</span>(percent_gc_before_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb39-37"><a href="micro-sample-sequencing-statistics.html#cb39-37" tabindex="-1"></a>    <span class="at">percent_gc_after_trim =</span> <span class="fu">mean</span>(percent_gc_after_trim, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-38"><a href="micro-sample-sequencing-statistics.html#cb39-38" tabindex="-1"></a>    <span class="at">duplication =</span> <span class="fu">mean</span>(duplication, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb39-39"><a href="micro-sample-sequencing-statistics.html#cb39-39" tabindex="-1"></a>    <span class="at">adapter_trimmed_reads =</span> <span class="fu">sum</span>(adapter_trimmed_reads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-40"><a href="micro-sample-sequencing-statistics.html#cb39-40" tabindex="-1"></a>    <span class="at">adapter_trimmed_bases =</span> <span class="fu">sum</span>(adapter_trimmed_bases, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-41"><a href="micro-sample-sequencing-statistics.html#cb39-41" tabindex="-1"></a>    <span class="at">passed_filter_reads =</span> <span class="fu">sum</span>(passed_filter_reads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-42"><a href="micro-sample-sequencing-statistics.html#cb39-42" tabindex="-1"></a>    <span class="at">low_quality_reads =</span> <span class="fu">sum</span>(low_quality_reads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-43"><a href="micro-sample-sequencing-statistics.html#cb39-43" tabindex="-1"></a>    <span class="at">too_many_N_reads =</span> <span class="fu">sum</span>(too_many_N_reads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-44"><a href="micro-sample-sequencing-statistics.html#cb39-44" tabindex="-1"></a>    <span class="at">too_short_reads =</span> <span class="fu">sum</span>(too_short_reads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   )</span></code></pre></div>
+</div>
+<div id="non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas<a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Get the multiqc_samtools_stats.txt.</p>
+<p>This is calculated on the trimmed reads.
+The reads are mapped to these references:
+1. turkey (Turkey_5.1),
+2. histomonas (Hmelea),
+3. chicken (GRCg7b),
+4. human (GRCh38), and
+5. swine (Sscrofa11.1)) sequentially.</p>
+<p>To find the number of reads mapped to each reference you have to either
+- estimate number from the columns: reads_mapped + (reads_mapped - reads_mapped_and_paired) OR
+- subtract the number of reads that entered the analysis (e.g. column ‘total_passed’ of human - from column ‘total_passed’ of chicken = reads mapped to human).
+If you try both, these numbers should be equal.</p>
+<p>Load and process non-bacterial mapping statistics</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb40-1"><a href="micro-sample-sequencing-statistics.html#cb40-1" tabindex="-1"></a>stats_non_bacteria_mapping <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;data/micro/MSEB0042_59/preprocess_data/multiqc_samtools_stats.txt&quot;</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="micro-sample-sequencing-statistics.html#cb40-2" tabindex="-1"></a>  <span class="co"># make new columns</span></span>
+<span id="cb40-3"><a href="micro-sample-sequencing-statistics.html#cb40-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reference =</span> <span class="fu">case_when</span>(</span>
+<span id="cb40-4"><a href="micro-sample-sequencing-statistics.html#cb40-4" tabindex="-1"></a>      <span class="co"># for type of reference based on reference code</span></span>
+<span id="cb40-5"><a href="micro-sample-sequencing-statistics.html#cb40-5" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">&quot;GRCh38&quot;</span>, Sample, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">&quot;human&quot;</span>,</span>
+<span id="cb40-6"><a href="micro-sample-sequencing-statistics.html#cb40-6" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">&quot;GRCg7b&quot;</span>, Sample, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">&quot;chicken&quot;</span>,</span>
+<span id="cb40-7"><a href="micro-sample-sequencing-statistics.html#cb40-7" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">&quot;Sscrofa11.1&quot;</span>, Sample, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">&quot;swine&quot;</span>,</span>
+<span id="cb40-8"><a href="micro-sample-sequencing-statistics.html#cb40-8" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">&quot;Hmelea&quot;</span>, Sample, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">&quot;histomonas&quot;</span>,</span>
+<span id="cb40-9"><a href="micro-sample-sequencing-statistics.html#cb40-9" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">&quot;Turkey_5.1&quot;</span>, Sample, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">&quot;turkey&quot;</span>,</span>
+<span id="cb40-10"><a href="micro-sample-sequencing-statistics.html#cb40-10" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>),</span>
+<span id="cb40-11"><a href="micro-sample-sequencing-statistics.html#cb40-11" tabindex="-1"></a>      <span class="co"># for microsample names</span></span>
+<span id="cb40-12"><a href="micro-sample-sequencing-statistics.html#cb40-12" tabindex="-1"></a>      <span class="at">microsample =</span> <span class="fu">str_extract</span>(Sample, <span class="st">&quot;M</span><span class="sc">\\</span><span class="st">d+&quot;</span>),</span>
+<span id="cb40-13"><a href="micro-sample-sequencing-statistics.html#cb40-13" tabindex="-1"></a>      <span class="co"># for number of reads as input to each reference mapping</span></span>
+<span id="cb40-14"><a href="micro-sample-sequencing-statistics.html#cb40-14" tabindex="-1"></a>      <span class="at">chicken_total_passed =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;chicken&quot;</span>, raw_total_sequences, <span class="cn">NA_real_</span>),</span>
+<span id="cb40-15"><a href="micro-sample-sequencing-statistics.html#cb40-15" tabindex="-1"></a>      <span class="at">human_total_passed =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;human&quot;</span>, raw_total_sequences, <span class="cn">NA_real_</span>),</span>
+<span id="cb40-16"><a href="micro-sample-sequencing-statistics.html#cb40-16" tabindex="-1"></a>      <span class="at">swine_total_passed =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;swine&quot;</span>, raw_total_sequences, <span class="cn">NA_real_</span>),</span>
+<span id="cb40-17"><a href="micro-sample-sequencing-statistics.html#cb40-17" tabindex="-1"></a>      <span class="at">turkey_total_passed =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;turkey&quot;</span>, raw_total_sequences, <span class="cn">NA_real_</span>),</span>
+<span id="cb40-18"><a href="micro-sample-sequencing-statistics.html#cb40-18" tabindex="-1"></a>      <span class="at">histomonas_total_passed =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;histomonas&quot;</span>, raw_total_sequences, <span class="cn">NA_real_</span>),</span>
+<span id="cb40-19"><a href="micro-sample-sequencing-statistics.html#cb40-19" tabindex="-1"></a>      <span class="co"># for number of reads that mapped to each reference </span></span>
+<span id="cb40-20"><a href="micro-sample-sequencing-statistics.html#cb40-20" tabindex="-1"></a>      <span class="at">chicken_total_mapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;chicken&quot;</span>, reads_mapped <span class="sc">+</span> (reads_mapped <span class="sc">-</span> reads_mapped_and_paired), <span class="cn">NA_real_</span>),</span>
+<span id="cb40-21"><a href="micro-sample-sequencing-statistics.html#cb40-21" tabindex="-1"></a>      <span class="at">human_total_mapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;human&quot;</span>, reads_mapped <span class="sc">+</span> (reads_mapped <span class="sc">-</span> reads_mapped_and_paired), <span class="cn">NA_real_</span>),</span>
+<span id="cb40-22"><a href="micro-sample-sequencing-statistics.html#cb40-22" tabindex="-1"></a>      <span class="at">swine_total_mapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;swine&quot;</span>, reads_mapped <span class="sc">+</span> (reads_mapped <span class="sc">-</span> reads_mapped_and_paired), <span class="cn">NA_real_</span>),</span>
+<span id="cb40-23"><a href="micro-sample-sequencing-statistics.html#cb40-23" tabindex="-1"></a>      <span class="at">turkey_total_mapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;turkey&quot;</span>, reads_mapped <span class="sc">+</span> (reads_mapped <span class="sc">-</span> reads_mapped_and_paired), <span class="cn">NA_real_</span>),</span>
+<span id="cb40-24"><a href="micro-sample-sequencing-statistics.html#cb40-24" tabindex="-1"></a>      <span class="at">histomonas_total_mapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;histomonas&quot;</span>, reads_mapped <span class="sc">+</span> (reads_mapped <span class="sc">-</span> reads_mapped_and_paired), <span class="cn">NA_real_</span>),</span>
+<span id="cb40-25"><a href="micro-sample-sequencing-statistics.html#cb40-25" tabindex="-1"></a>      <span class="co"># for unmapped reads after mapping to all three references</span></span>
+<span id="cb40-26"><a href="micro-sample-sequencing-statistics.html#cb40-26" tabindex="-1"></a>      <span class="at">swine_unmapped =</span> <span class="fu">ifelse</span>(reference <span class="sc">==</span> <span class="st">&quot;swine&quot;</span>, swine_total_passed <span class="sc">-</span> swine_total_mapped, <span class="cn">NA_real_</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-27"><a href="micro-sample-sequencing-statistics.html#cb40-27" tabindex="-1"></a>  <span class="co"># select relevant columns</span></span>
+<span id="cb40-28"><a href="micro-sample-sequencing-statistics.html#cb40-28" tabindex="-1"></a>  <span class="fu">select</span>(microsample,</span>
+<span id="cb40-29"><a href="micro-sample-sequencing-statistics.html#cb40-29" tabindex="-1"></a>        chicken_total_passed, human_total_passed, swine_total_passed, turkey_total_passed, histomonas_total_passed,</span>
+<span id="cb40-30"><a href="micro-sample-sequencing-statistics.html#cb40-30" tabindex="-1"></a>        chicken_total_mapped, human_total_mapped, swine_total_mapped, turkey_total_mapped, histomonas_total_mapped,</span>
+<span id="cb40-31"><a href="micro-sample-sequencing-statistics.html#cb40-31" tabindex="-1"></a>        swine_unmapped) <span class="sc">%&gt;%</span></span>
+<span id="cb40-32"><a href="micro-sample-sequencing-statistics.html#cb40-32" tabindex="-1"></a>  <span class="co"># Keep only microsamples present in the sample_metadata</span></span>
+<span id="cb40-33"><a href="micro-sample-sequencing-statistics.html#cb40-33" tabindex="-1"></a>  <span class="fu">filter</span>(microsample <span class="sc">%in%</span> sample_metadata<span class="sc">$</span>microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb40-34"><a href="micro-sample-sequencing-statistics.html#cb40-34" tabindex="-1"></a>  <span class="co"># sum reads for same microsample for each reference</span></span>
+<span id="cb40-35"><a href="micro-sample-sequencing-statistics.html#cb40-35" tabindex="-1"></a>  <span class="fu">group_by</span>(microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb40-36"><a href="micro-sample-sequencing-statistics.html#cb40-36" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(</span>
+<span id="cb40-37"><a href="micro-sample-sequencing-statistics.html#cb40-37" tabindex="-1"></a>    <span class="fu">starts_with</span>(<span class="st">&quot;turkey_&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;histomonas_&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;chicken_&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;human_&quot;</span>) <span class="sc">|</span> <span class="fu">starts_with</span>(<span class="st">&quot;swine_&quot;</span>), </span>
+<span id="cb40-38"><a href="micro-sample-sequencing-statistics.html#cb40-38" tabindex="-1"></a>    sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-39"><a href="micro-sample-sequencing-statistics.html#cb40-39" tabindex="-1"></a>  <span class="co"># keep microsamples starting with M (i.e., remove &#39;NA&#39; or &#39;undetermined&#39;)</span></span>
+<span id="cb40-40"><a href="micro-sample-sequencing-statistics.html#cb40-40" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, microsample))</span></code></pre></div>
+</div>
+<div id="bacterial-mapped-reads" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Bacterial mapped reads<a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Download quantify.zip &amp; place in appropriate directory.
+Get the multiqc_samtools_stats.txt.</p>
+<p>This is calculated on the trimmed reads after filtering for turkey, histomonas, human, chicken, and pig reads.
+‘Unmapped reads’ are trimmed reads that did not map to the turkey, histomonas, human, chicken, and swine references, or to the bacterial MAG catalogue.</p>
+<p>Load and process bacterial mapping statistics</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb41-1"><a href="micro-sample-sequencing-statistics.html#cb41-1" tabindex="-1"></a>stats_bacteria_mapping <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;data/micro/MSEB0042_59/quantify/multiqc_samtools_stats.txt&quot;</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="micro-sample-sequencing-statistics.html#cb41-2" tabindex="-1"></a>  <span class="co"># select only the dereplicated to 95% (as the file includes also the 98% and 99%)</span></span>
+<span id="cb41-3"><a href="micro-sample-sequencing-statistics.html#cb41-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Sample, <span class="st">&quot;drep</span><span class="sc">\\</span><span class="st">.0</span><span class="sc">\\</span><span class="st">.95&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="micro-sample-sequencing-statistics.html#cb41-4" tabindex="-1"></a>  <span class="co"># make new columns</span></span>
+<span id="cb41-5"><a href="micro-sample-sequencing-statistics.html#cb41-5" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb41-6"><a href="micro-sample-sequencing-statistics.html#cb41-6" tabindex="-1"></a>    <span class="at">microsample =</span> <span class="fu">str_extract</span>(Sample, <span class="st">&quot;M</span><span class="sc">\\</span><span class="st">d+&quot;</span>),</span>
+<span id="cb41-7"><a href="micro-sample-sequencing-statistics.html#cb41-7" tabindex="-1"></a>    <span class="at">bacteria_total_passed =</span> raw_total_sequences,</span>
+<span id="cb41-8"><a href="micro-sample-sequencing-statistics.html#cb41-8" tabindex="-1"></a>    <span class="at">bacteria_total_mapped =</span> reads_mapped,</span>
+<span id="cb41-9"><a href="micro-sample-sequencing-statistics.html#cb41-9" tabindex="-1"></a>    <span class="at">unmapped =</span> reads_unmapped</span>
+<span id="cb41-10"><a href="micro-sample-sequencing-statistics.html#cb41-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb41-11"><a href="micro-sample-sequencing-statistics.html#cb41-11" tabindex="-1"></a>  <span class="co"># Keep only microsamples present in the sample_metadata</span></span>
+<span id="cb41-12"><a href="micro-sample-sequencing-statistics.html#cb41-12" tabindex="-1"></a>  <span class="fu">filter</span>(microsample <span class="sc">%in%</span> sample_metadata<span class="sc">$</span>microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb41-13"><a href="micro-sample-sequencing-statistics.html#cb41-13" tabindex="-1"></a>  <span class="co"># sum reads of the same microsample because some samples were sequence multiple times</span></span>
+<span id="cb41-14"><a href="micro-sample-sequencing-statistics.html#cb41-14" tabindex="-1"></a>  <span class="fu">group_by</span>(microsample) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-15"><a href="micro-sample-sequencing-statistics.html#cb41-15" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb41-16"><a href="micro-sample-sequencing-statistics.html#cb41-16" tabindex="-1"></a>    <span class="at">bacteria_total_passed =</span> <span class="fu">sum</span>(bacteria_total_passed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb41-17"><a href="micro-sample-sequencing-statistics.html#cb41-17" tabindex="-1"></a>    <span class="at">bacteria_total_mapped =</span> <span class="fu">sum</span>(bacteria_total_mapped, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb41-18"><a href="micro-sample-sequencing-statistics.html#cb41-18" tabindex="-1"></a>    <span class="at">unmapped =</span> <span class="fu">sum</span>(unmapped, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb41-19"><a href="micro-sample-sequencing-statistics.html#cb41-19" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb41-20"><a href="micro-sample-sequencing-statistics.html#cb41-20" tabindex="-1"></a>  <span class="co"># select relevant columns</span></span>
+<span id="cb41-21"><a href="micro-sample-sequencing-statistics.html#cb41-21" tabindex="-1"></a>  <span class="fu">select</span>(microsample, bacteria_total_passed, bacteria_total_mapped, unmapped) <span class="sc">%&gt;%</span></span>
+<span id="cb41-22"><a href="micro-sample-sequencing-statistics.html#cb41-22" tabindex="-1"></a>  <span class="co"># keep microsamples starting with M (i.e., remove &#39;NA&#39; or &#39;undetermined&#39;)</span></span>
+<span id="cb41-23"><a href="micro-sample-sequencing-statistics.html#cb41-23" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, microsample))</span></code></pre></div>
+</div>
+<div id="alternative-way-to-estimate-bacterial-read-counts-from-count-table" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Alternative way to estimate bacterial read counts (from count table)<a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Calculate bacterial read counts from count table</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb42-1"><a href="micro-sample-sequencing-statistics.html#cb42-1" tabindex="-1"></a><span class="co"># Need to reload read_counts_df for this calculation</span></span>
+<span id="cb42-2"><a href="micro-sample-sequencing-statistics.html#cb42-2" tabindex="-1"></a>read_counts_df <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>( <span class="st">&quot;data/micro/MSEB0042_59/genome.count.REF0029-m_mg_hybrid-drep.0.95.tsv.gz&quot;</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="micro-sample-sequencing-statistics.html#cb42-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">genome =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="micro-sample-sequencing-statistics.html#cb42-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>genome, <span class="at">names_to =</span> <span class="st">&quot;data&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;counts&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="micro-sample-sequencing-statistics.html#cb42-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">substr</span>(data, <span class="dv">1</span>, <span class="dv">7</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="micro-sample-sequencing-statistics.html#cb42-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-7"><a href="micro-sample-sequencing-statistics.html#cb42-7" tabindex="-1"></a>  <span class="fu">group_by</span>(genome, sample) <span class="sc">%&gt;%</span></span>
+<span id="cb42-8"><a href="micro-sample-sequencing-statistics.html#cb42-8" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">counts =</span> <span class="fu">sum</span>(counts), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-9"><a href="micro-sample-sequencing-statistics.html#cb42-9" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;sample&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;counts&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-10"><a href="micro-sample-sequencing-statistics.html#cb42-10" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">match</span>(genome,genome_metadata<span class="sc">$</span>genome)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-11"><a href="micro-sample-sequencing-statistics.html#cb42-11" tabindex="-1"></a>  <span class="fu">select</span>(genome, <span class="fu">all_of</span>(sample_metadata<span class="sc">$</span>microsample))</span>
+<span id="cb42-12"><a href="micro-sample-sequencing-statistics.html#cb42-12" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="micro-sample-sequencing-statistics.html#cb42-13" tabindex="-1"></a><span class="co"># Use the read_counts_df, i.e. before I remove the 1 taxon that is missing from the tree.</span></span>
+<span id="cb42-14"><a href="micro-sample-sequencing-statistics.html#cb42-14" tabindex="-1"></a>stats_bacteria_mapping_alternative <span class="ot">&lt;-</span> read_counts_df <span class="sc">%&gt;%</span> </span>
+<span id="cb42-15"><a href="micro-sample-sequencing-statistics.html#cb42-15" tabindex="-1"></a>  <span class="co"># Move genome names to rownames</span></span>
+<span id="cb42-16"><a href="micro-sample-sequencing-statistics.html#cb42-16" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-17"><a href="micro-sample-sequencing-statistics.html#cb42-17" tabindex="-1"></a>  <span class="co"># Transpose the data</span></span>
+<span id="cb42-18"><a href="micro-sample-sequencing-statistics.html#cb42-18" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-19"><a href="micro-sample-sequencing-statistics.html#cb42-19" tabindex="-1"></a>  <span class="co"># Convert back to a data frame</span></span>
+<span id="cb42-20"><a href="micro-sample-sequencing-statistics.html#cb42-20" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb42-21"><a href="micro-sample-sequencing-statistics.html#cb42-21" tabindex="-1"></a>  <span class="co"># Move sample names into a column</span></span>
+<span id="cb42-22"><a href="micro-sample-sequencing-statistics.html#cb42-22" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-23"><a href="micro-sample-sequencing-statistics.html#cb42-23" tabindex="-1"></a>  <span class="co"># sum the counts of all genomes in each sample (i.e., sum of each row)</span></span>
+<span id="cb42-24"><a href="micro-sample-sequencing-statistics.html#cb42-24" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bacteria_total_read_counts =</span> <span class="fu">rowSums</span>(<span class="fu">select</span>(., <span class="sc">-</span>microsample))) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-25"><a href="micro-sample-sequencing-statistics.html#cb42-25" tabindex="-1"></a>  <span class="co"># select to show only the total_counts column</span></span>
+<span id="cb42-26"><a href="micro-sample-sequencing-statistics.html#cb42-26" tabindex="-1"></a>  <span class="fu">select</span>(microsample, bacteria_total_read_counts) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-27"><a href="micro-sample-sequencing-statistics.html#cb42-27" tabindex="-1"></a>  <span class="co"># select only microsamples starting with &#39;M&#39; (i.e. not &#39;NA&#39; or &#39;Undetermined&#39;)</span></span>
+<span id="cb42-28"><a href="micro-sample-sequencing-statistics.html#cb42-28" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, microsample))</span></code></pre></div>
+</div>
+<div id="sanity-checks" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Sanity checks<a href="micro-sample-sequencing-statistics.html#sanity-checks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Check if the two methods of counting bacterial reads agree:</p>
+<p>Compare bacterial mapping methods</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb43-1"><a href="micro-sample-sequencing-statistics.html#cb43-1" tabindex="-1"></a>comparison_bacteria_mapping <span class="ot">&lt;-</span> stats_bacteria_mapping_alternative <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="micro-sample-sequencing-statistics.html#cb43-2" tabindex="-1"></a>  <span class="co"># Join on &#39;microsample&#39;</span></span>
+<span id="cb43-3"><a href="micro-sample-sequencing-statistics.html#cb43-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(stats_bacteria_mapping, <span class="at">by =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="micro-sample-sequencing-statistics.html#cb43-4" tabindex="-1"></a>  <span class="co"># Compare the two columns</span></span>
+<span id="cb43-5"><a href="micro-sample-sequencing-statistics.html#cb43-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">same_counts =</span> bacteria_total_read_counts <span class="sc">==</span> bacteria_total_mapped) </span>
+<span id="cb43-6"><a href="micro-sample-sequencing-statistics.html#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="micro-sample-sequencing-statistics.html#cb43-7" tabindex="-1"></a><span class="co"># Check if all values are the same</span></span>
+<span id="cb43-8"><a href="micro-sample-sequencing-statistics.html#cb43-8" tabindex="-1"></a><span class="co"># TRUE if all are the same, FALSE otherwise</span></span>
+<span id="cb43-9"><a href="micro-sample-sequencing-statistics.html#cb43-9" tabindex="-1"></a><span class="fu">all</span>(comparison_bacteria_mapping<span class="sc">$</span>same_counts) </span>
+<span id="cb43-10"><a href="micro-sample-sequencing-statistics.html#cb43-10" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="micro-sample-sequencing-statistics.html#cb43-11" tabindex="-1"></a><span class="co"># Filter &amp; show rows where the counts between the two columns differ</span></span>
+<span id="cb43-12"><a href="micro-sample-sequencing-statistics.html#cb43-12" tabindex="-1"></a>comparison_bacteria_mapping <span class="sc">%&gt;%</span></span>
+<span id="cb43-13"><a href="micro-sample-sequencing-statistics.html#cb43-13" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>same_counts) <span class="sc">%&gt;%</span></span>
+<span id="cb43-14"><a href="micro-sample-sequencing-statistics.html#cb43-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> bacteria_total_read_counts<span class="sc">-</span> bacteria_total_mapped) <span class="sc">%&gt;%</span></span>
+<span id="cb43-15"><a href="micro-sample-sequencing-statistics.html#cb43-15" tabindex="-1"></a>  <span class="fu">select</span>(microsample, bacteria_total_read_counts, bacteria_total_mapped, difference)</span></code></pre></div>
+<p>Only 2 reads difference in sample M304439.</p>
+<p>Check if the output of swine (unmapped reads from swine mapping) and the input to bacteria (available reads that will map to MAG catalogue) is the same for all samples:</p>
+<p>Compare bacteria input with swine unmapped reads</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb44-1"><a href="micro-sample-sequencing-statistics.html#cb44-1" tabindex="-1"></a>comparison_bacteria_input <span class="ot">&lt;-</span> stats_bacteria_mapping <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="micro-sample-sequencing-statistics.html#cb44-2" tabindex="-1"></a>  <span class="co"># Align rows by microsample</span></span>
+<span id="cb44-3"><a href="micro-sample-sequencing-statistics.html#cb44-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(stats_non_bacteria_mapping, <span class="at">by =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href="micro-sample-sequencing-statistics.html#cb44-4" tabindex="-1"></a>  <span class="co"># Compare the two columns</span></span>
+<span id="cb44-5"><a href="micro-sample-sequencing-statistics.html#cb44-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">same_counts =</span> bacteria_total_passed <span class="sc">==</span> swine_unmapped) </span>
+<span id="cb44-6"><a href="micro-sample-sequencing-statistics.html#cb44-6" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="micro-sample-sequencing-statistics.html#cb44-7" tabindex="-1"></a><span class="co"># Check if all values are the same</span></span>
+<span id="cb44-8"><a href="micro-sample-sequencing-statistics.html#cb44-8" tabindex="-1"></a><span class="co"># TRUE if all are the same, FALSE otherwise</span></span>
+<span id="cb44-9"><a href="micro-sample-sequencing-statistics.html#cb44-9" tabindex="-1"></a><span class="fu">all</span>(comparison_bacteria_input<span class="sc">$</span>same_counts)</span>
+<span id="cb44-10"><a href="micro-sample-sequencing-statistics.html#cb44-10" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="micro-sample-sequencing-statistics.html#cb44-11" tabindex="-1"></a><span class="co"># Filter &amp; show rows where the counts between the two columns differ</span></span>
+<span id="cb44-12"><a href="micro-sample-sequencing-statistics.html#cb44-12" tabindex="-1"></a>comparison_bacteria_input <span class="sc">%&gt;%</span></span>
+<span id="cb44-13"><a href="micro-sample-sequencing-statistics.html#cb44-13" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>same_counts) <span class="sc">%&gt;%</span></span>
+<span id="cb44-14"><a href="micro-sample-sequencing-statistics.html#cb44-14" tabindex="-1"></a>  <span class="fu">select</span>(microsample, bacteria_total_passed, swine_unmapped)</span></code></pre></div>
+<p>We find that everything is fine, no rows differ.</p>
+</div>
+<div id="combine-relevant-sequencing-statistics" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Combine relevant sequencing statistics<a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Combine all sequencing statistics into a single dataframe</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb45-1"><a href="micro-sample-sequencing-statistics.html#cb45-1" tabindex="-1"></a>stats_combined <span class="ot">&lt;-</span> <span class="fu">reduce</span>(<span class="fu">list</span>(fastp_seq_stats,</span>
+<span id="cb45-2"><a href="micro-sample-sequencing-statistics.html#cb45-2" tabindex="-1"></a>                              stats_non_bacteria_mapping, </span>
+<span id="cb45-3"><a href="micro-sample-sequencing-statistics.html#cb45-3" tabindex="-1"></a>                              stats_bacteria_mapping,</span>
+<span id="cb45-4"><a href="micro-sample-sequencing-statistics.html#cb45-4" tabindex="-1"></a>                              stats_bacteria_mapping_alternative), </span>
+<span id="cb45-5"><a href="micro-sample-sequencing-statistics.html#cb45-5" tabindex="-1"></a>                         full_join, <span class="at">by =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-6"><a href="micro-sample-sequencing-statistics.html#cb45-6" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^M&quot;</span>, microsample))  <span class="sc">%&gt;%</span></span>
+<span id="cb45-7"><a href="micro-sample-sequencing-statistics.html#cb45-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">removed_sequences_after_trim =</span> total_sequences_before_trim <span class="sc">-</span> total_sequences_after_trim)</span>
+<span id="cb45-8"><a href="micro-sample-sequencing-statistics.html#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="micro-sample-sequencing-statistics.html#cb45-9" tabindex="-1"></a><span class="co"># estimate some percentages for easier plotting.</span></span>
+<span id="cb45-10"><a href="micro-sample-sequencing-statistics.html#cb45-10" tabindex="-1"></a>final_combined_stats <span class="ot">&lt;-</span> stats_combined <span class="sc">%&gt;%</span></span>
+<span id="cb45-11"><a href="micro-sample-sequencing-statistics.html#cb45-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-12"><a href="micro-sample-sequencing-statistics.html#cb45-12" tabindex="-1"></a>    <span class="at">trimmed_reads_percentage =</span> ((total_sequences_before_trim<span class="sc">-</span>total_sequences_after_trim)<span class="sc">/</span>total_sequences_before_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-13"><a href="micro-sample-sequencing-statistics.html#cb45-13" tabindex="-1"></a>    <span class="at">human_percentage =</span> (human_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-14"><a href="micro-sample-sequencing-statistics.html#cb45-14" tabindex="-1"></a>    <span class="at">chicken_percentage =</span> (chicken_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-15"><a href="micro-sample-sequencing-statistics.html#cb45-15" tabindex="-1"></a>    <span class="at">swine_percentage =</span> (swine_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-16"><a href="micro-sample-sequencing-statistics.html#cb45-16" tabindex="-1"></a>    <span class="at">turkey_percentage =</span> (turkey_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-17"><a href="micro-sample-sequencing-statistics.html#cb45-17" tabindex="-1"></a>    <span class="at">histomonas_percentage =</span> <span class="fu">round</span>((histomonas_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">7</span>),</span>
+<span id="cb45-18"><a href="micro-sample-sequencing-statistics.html#cb45-18" tabindex="-1"></a>    <span class="at">bacteria_percentage =</span> (bacteria_total_mapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-19"><a href="micro-sample-sequencing-statistics.html#cb45-19" tabindex="-1"></a>    <span class="at">unmapped_percentage =</span> (unmapped<span class="sc">/</span>total_sequences_after_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-20"><a href="micro-sample-sequencing-statistics.html#cb45-20" tabindex="-1"></a>    <span class="at">bacteria_percentage_enriched =</span> (bacteria_total_mapped<span class="sc">/</span>(bacteria_total_mapped<span class="sc">+</span>unmapped)<span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb45-21"><a href="micro-sample-sequencing-statistics.html#cb45-21" tabindex="-1"></a>    <span class="at">adapter_contamination_pct =</span> (adapter_trimmed_bases <span class="sc">/</span> total_bases_before_trim)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb45-22"><a href="micro-sample-sequencing-statistics.html#cb45-22" tabindex="-1"></a>    <span class="at">histomonas_over_bacteria =</span> <span class="fu">round</span>((histomonas_total_mapped<span class="sc">/</span>bacteria_total_mapped),<span class="dv">7</span>),</span>
+<span id="cb45-23"><a href="micro-sample-sequencing-statistics.html#cb45-23" tabindex="-1"></a>    <span class="at">bacteria_over_turkey =</span> (bacteria_total_mapped<span class="sc">/</span>turkey_total_mapped),</span>
+<span id="cb45-24"><a href="micro-sample-sequencing-statistics.html#cb45-24" tabindex="-1"></a>    <span class="at">unique_pct =</span> <span class="dv">100</span><span class="sc">-</span>duplication</span>
+<span id="cb45-25"><a href="micro-sample-sequencing-statistics.html#cb45-25" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-26"><a href="micro-sample-sequencing-statistics.html#cb45-26" tabindex="-1"></a>  <span class="co"># Keep only microsamples present in the sample_metadata</span></span>
+<span id="cb45-27"><a href="micro-sample-sequencing-statistics.html#cb45-27" tabindex="-1"></a>  <span class="fu">filter</span>(microsample <span class="sc">%in%</span> sample_metadata<span class="sc">$</span>microsample)</span></code></pre></div>
+<p>Add filter_status column</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb46-1"><a href="micro-sample-sequencing-statistics.html#cb46-1" tabindex="-1"></a><span class="co"># Load retained_samples_filt_30 from counts data</span></span>
+<span id="cb46-2"><a href="micro-sample-sequencing-statistics.html#cb46-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/counts.Rdata&quot;</span>)</span>
+<span id="cb46-3"><a href="micro-sample-sequencing-statistics.html#cb46-3" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="micro-sample-sequencing-statistics.html#cb46-4" tabindex="-1"></a><span class="co"># Add filter_status column to indicate which samples were retained by filtering</span></span>
+<span id="cb46-5"><a href="micro-sample-sequencing-statistics.html#cb46-5" tabindex="-1"></a>final_combined_stats <span class="ot">&lt;-</span> final_combined_stats <span class="sc">%&gt;%</span></span>
+<span id="cb46-6"><a href="micro-sample-sequencing-statistics.html#cb46-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">filter_status =</span> <span class="fu">if_else</span>(</span>
+<span id="cb46-7"><a href="micro-sample-sequencing-statistics.html#cb46-7" tabindex="-1"></a>    microsample <span class="sc">%in%</span> retained_samples_filt_30,</span>
+<span id="cb46-8"><a href="micro-sample-sequencing-statistics.html#cb46-8" tabindex="-1"></a>    <span class="st">&quot;Retained by filtering&quot;</span>,</span>
+<span id="cb46-9"><a href="micro-sample-sequencing-statistics.html#cb46-9" tabindex="-1"></a>    <span class="st">&quot;Excluded from filtering&quot;</span></span>
+<span id="cb46-10"><a href="micro-sample-sequencing-statistics.html#cb46-10" tabindex="-1"></a>  ))</span></code></pre></div>
+</div>
+<div id="create-plot_data_stats" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Create plot_data_stats<a href="micro-sample-sequencing-statistics.html#create-plot_data_stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Combine sequencing statistics with sample metadata and alpha diversity for plotting.</p>
+<p>Create plot_data_stats with sequencing stats, metadata, and alpha diversity</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb47-1"><a href="micro-sample-sequencing-statistics.html#cb47-1" tabindex="-1"></a><span class="co"># Load alpha diversity data (already loaded in load_data chunk)</span></span>
+<span id="cb47-2"><a href="micro-sample-sequencing-statistics.html#cb47-2" tabindex="-1"></a><span class="co"># Combine sequencing stats with sample metadata and alpha diversity</span></span>
+<span id="cb47-3"><a href="micro-sample-sequencing-statistics.html#cb47-3" tabindex="-1"></a>plot_data_stats <span class="ot">&lt;-</span> final_combined_stats <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="micro-sample-sequencing-statistics.html#cb47-4" tabindex="-1"></a>  <span class="fu">left_join</span>(alpha_div_filtered_30, <span class="at">by =</span> <span class="fu">join_by</span>(microsample <span class="sc">==</span> microsample)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-5"><a href="micro-sample-sequencing-statistics.html#cb47-5" tabindex="-1"></a>  <span class="fu">left_join</span>(sample_metadata, <span class="at">by =</span> <span class="fu">join_by</span>(microsample <span class="sc">==</span> microsample))</span></code></pre></div>
+</div>
+<div id="save-working-objects-3" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Save working objects<a href="micro-sample-sequencing-statistics.html#save-working-objects-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Save sequencing statistics data</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb48-1"><a href="micro-sample-sequencing-statistics.html#cb48-1" tabindex="-1"></a><span class="co"># Save seq stats-related objects to separate file</span></span>
+<span id="cb48-2"><a href="micro-sample-sequencing-statistics.html#cb48-2" tabindex="-1"></a><span class="fu">save</span>(</span>
+<span id="cb48-3"><a href="micro-sample-sequencing-statistics.html#cb48-3" tabindex="-1"></a>  final_combined_stats,</span>
+<span id="cb48-4"><a href="micro-sample-sequencing-statistics.html#cb48-4" tabindex="-1"></a>  plot_data_stats,</span>
+<span id="cb48-5"><a href="micro-sample-sequencing-statistics.html#cb48-5" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/micro/seq_stats.Rdata&quot;</span></span>
+<span id="cb48-6"><a href="micro-sample-sequencing-statistics.html#cb48-6" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="validation-3" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> Validation<a href="micro-sample-sequencing-statistics.html#validation-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Validate sequencing statistics</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb49-1"><a href="micro-sample-sequencing-statistics.html#cb49-1" tabindex="-1"></a><span class="co"># Check dimensions</span></span>
+<span id="cb49-2"><a href="micro-sample-sequencing-statistics.html#cb49-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Final combined stats dimensions:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-3"><a href="micro-sample-sequencing-statistics.html#cb49-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">dim</span>(final_combined_stats))</span>
+<span id="cb49-4"><a href="micro-sample-sequencing-statistics.html#cb49-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Number of samples:&quot;</span>, <span class="fu">nrow</span>(final_combined_stats), <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-5"><a href="micro-sample-sequencing-statistics.html#cb49-5" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="micro-sample-sequencing-statistics.html#cb49-6" tabindex="-1"></a><span class="co"># Check that sanity checks pass</span></span>
+<span id="cb49-7"><a href="micro-sample-sequencing-statistics.html#cb49-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Sanity check results:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-8"><a href="micro-sample-sequencing-statistics.html#cb49-8" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Bacterial mapping methods agree:&quot;</span>, <span class="fu">all</span>(comparison_bacteria_mapping<span class="sc">$</span>same_counts), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-9"><a href="micro-sample-sequencing-statistics.html#cb49-9" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(comparison_bacteria_mapping<span class="sc">$</span>same_counts)) {</span>
+<span id="cb49-10"><a href="micro-sample-sequencing-statistics.html#cb49-10" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;  Number of samples with differences:&quot;</span>, <span class="fu">sum</span>(<span class="sc">!</span>comparison_bacteria_mapping<span class="sc">$</span>same_counts), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-11"><a href="micro-sample-sequencing-statistics.html#cb49-11" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(comparison_bacteria_mapping <span class="sc">%&gt;%</span> </span>
+<span id="cb49-12"><a href="micro-sample-sequencing-statistics.html#cb49-12" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>same_counts) <span class="sc">%&gt;%</span></span>
+<span id="cb49-13"><a href="micro-sample-sequencing-statistics.html#cb49-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">difference =</span> bacteria_total_read_counts <span class="sc">-</span> bacteria_total_mapped) <span class="sc">%&gt;%</span></span>
+<span id="cb49-14"><a href="micro-sample-sequencing-statistics.html#cb49-14" tabindex="-1"></a>    <span class="fu">select</span>(microsample, bacteria_total_read_counts, bacteria_total_mapped, difference))</span>
+<span id="cb49-15"><a href="micro-sample-sequencing-statistics.html#cb49-15" tabindex="-1"></a>}</span>
+<span id="cb49-16"><a href="micro-sample-sequencing-statistics.html#cb49-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-17"><a href="micro-sample-sequencing-statistics.html#cb49-17" tabindex="-1"></a></span>
+<span id="cb49-18"><a href="micro-sample-sequencing-statistics.html#cb49-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Bacteria input matches swine unmapped:&quot;</span>, <span class="fu">all</span>(comparison_bacteria_input<span class="sc">$</span>same_counts), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-19"><a href="micro-sample-sequencing-statistics.html#cb49-19" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(comparison_bacteria_input<span class="sc">$</span>same_counts)) {</span>
+<span id="cb49-20"><a href="micro-sample-sequencing-statistics.html#cb49-20" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;  Number of samples with differences:&quot;</span>, <span class="fu">sum</span>(<span class="sc">!</span>comparison_bacteria_input<span class="sc">$</span>same_counts), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-21"><a href="micro-sample-sequencing-statistics.html#cb49-21" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(comparison_bacteria_input <span class="sc">%&gt;%</span> </span>
+<span id="cb49-22"><a href="micro-sample-sequencing-statistics.html#cb49-22" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>same_counts) <span class="sc">%&gt;%</span></span>
+<span id="cb49-23"><a href="micro-sample-sequencing-statistics.html#cb49-23" tabindex="-1"></a>    <span class="fu">select</span>(microsample, bacteria_total_passed, swine_unmapped))</span>
+<span id="cb49-24"><a href="micro-sample-sequencing-statistics.html#cb49-24" tabindex="-1"></a>}</span>
+<span id="cb49-25"><a href="micro-sample-sequencing-statistics.html#cb49-25" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-26"><a href="micro-sample-sequencing-statistics.html#cb49-26" tabindex="-1"></a></span>
+<span id="cb49-27"><a href="micro-sample-sequencing-statistics.html#cb49-27" tabindex="-1"></a><span class="co"># Verify percentages sum correctly (should be close to 100% for read composition)</span></span>
+<span id="cb49-28"><a href="micro-sample-sequencing-statistics.html#cb49-28" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Percentage validation:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-29"><a href="micro-sample-sequencing-statistics.html#cb49-29" tabindex="-1"></a><span class="co"># Check that percentages for read composition make sense</span></span>
+<span id="cb49-30"><a href="micro-sample-sequencing-statistics.html#cb49-30" tabindex="-1"></a>sample_check <span class="ot">&lt;-</span> final_combined_stats <span class="sc">%&gt;%</span></span>
+<span id="cb49-31"><a href="micro-sample-sequencing-statistics.html#cb49-31" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb49-32"><a href="micro-sample-sequencing-statistics.html#cb49-32" tabindex="-1"></a>    <span class="at">total_pct_check =</span> human_percentage <span class="sc">+</span> chicken_percentage <span class="sc">+</span> swine_percentage <span class="sc">+</span> </span>
+<span id="cb49-33"><a href="micro-sample-sequencing-statistics.html#cb49-33" tabindex="-1"></a>                      turkey_percentage <span class="sc">+</span> histomonas_percentage <span class="sc">+</span> </span>
+<span id="cb49-34"><a href="micro-sample-sequencing-statistics.html#cb49-34" tabindex="-1"></a>                      bacteria_percentage <span class="sc">+</span> unmapped_percentage</span>
+<span id="cb49-35"><a href="micro-sample-sequencing-statistics.html#cb49-35" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb49-36"><a href="micro-sample-sequencing-statistics.html#cb49-36" tabindex="-1"></a>  <span class="fu">select</span>(microsample, total_sequences_after_trim, total_pct_check, </span>
+<span id="cb49-37"><a href="micro-sample-sequencing-statistics.html#cb49-37" tabindex="-1"></a>         human_percentage, chicken_percentage, swine_percentage, </span>
+<span id="cb49-38"><a href="micro-sample-sequencing-statistics.html#cb49-38" tabindex="-1"></a>         turkey_percentage, histomonas_percentage, bacteria_percentage, unmapped_percentage)</span>
+<span id="cb49-39"><a href="micro-sample-sequencing-statistics.html#cb49-39" tabindex="-1"></a></span>
+<span id="cb49-40"><a href="micro-sample-sequencing-statistics.html#cb49-40" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Mean total percentage (should be ~100):&quot;</span>, <span class="fu">mean</span>(sample_check<span class="sc">$</span>total_pct_check, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-41"><a href="micro-sample-sequencing-statistics.html#cb49-41" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Range of total percentage:&quot;</span>, <span class="fu">range</span>(sample_check<span class="sc">$</span>total_pct_check, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-42"><a href="micro-sample-sequencing-statistics.html#cb49-42" tabindex="-1"></a></span>
+<span id="cb49-43"><a href="micro-sample-sequencing-statistics.html#cb49-43" tabindex="-1"></a><span class="co"># Check for anomalies</span></span>
+<span id="cb49-44"><a href="micro-sample-sequencing-statistics.html#cb49-44" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Anomaly checks:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-45"><a href="micro-sample-sequencing-statistics.html#cb49-45" tabindex="-1"></a><span class="co"># Samples with very low bacterial percentage</span></span>
+<span id="cb49-46"><a href="micro-sample-sequencing-statistics.html#cb49-46" tabindex="-1"></a>low_bacteria <span class="ot">&lt;-</span> final_combined_stats <span class="sc">%&gt;%</span></span>
+<span id="cb49-47"><a href="micro-sample-sequencing-statistics.html#cb49-47" tabindex="-1"></a>  <span class="fu">filter</span>(bacteria_percentage <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-48"><a href="micro-sample-sequencing-statistics.html#cb49-48" tabindex="-1"></a>  <span class="fu">select</span>(microsample, bacteria_percentage, total_sequences_after_trim)</span>
+<span id="cb49-49"><a href="micro-sample-sequencing-statistics.html#cb49-49" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(low_bacteria) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb49-50"><a href="micro-sample-sequencing-statistics.html#cb49-50" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Samples with &lt;1% bacterial reads:&quot;</span>, <span class="fu">nrow</span>(low_bacteria), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-51"><a href="micro-sample-sequencing-statistics.html#cb49-51" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(low_bacteria, <span class="dv">10</span>))</span>
+<span id="cb49-52"><a href="micro-sample-sequencing-statistics.html#cb49-52" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb49-53"><a href="micro-sample-sequencing-statistics.html#cb49-53" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;OK: No samples with &lt;1% bacterial reads</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-54"><a href="micro-sample-sequencing-statistics.html#cb49-54" tabindex="-1"></a>}</span>
+<span id="cb49-55"><a href="micro-sample-sequencing-statistics.html#cb49-55" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-56"><a href="micro-sample-sequencing-statistics.html#cb49-56" tabindex="-1"></a></span>
+<span id="cb49-57"><a href="micro-sample-sequencing-statistics.html#cb49-57" tabindex="-1"></a><span class="co"># Samples with very high unmapped percentage</span></span>
+<span id="cb49-58"><a href="micro-sample-sequencing-statistics.html#cb49-58" tabindex="-1"></a>high_unmapped <span class="ot">&lt;-</span> final_combined_stats <span class="sc">%&gt;%</span></span>
+<span id="cb49-59"><a href="micro-sample-sequencing-statistics.html#cb49-59" tabindex="-1"></a>  <span class="fu">filter</span>(unmapped_percentage <span class="sc">&gt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-60"><a href="micro-sample-sequencing-statistics.html#cb49-60" tabindex="-1"></a>  <span class="fu">select</span>(microsample, unmapped_percentage, total_sequences_after_trim)</span>
+<span id="cb49-61"><a href="micro-sample-sequencing-statistics.html#cb49-61" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(high_unmapped) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb49-62"><a href="micro-sample-sequencing-statistics.html#cb49-62" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Samples with &gt;50% unmapped reads:&quot;</span>, <span class="fu">nrow</span>(high_unmapped), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-63"><a href="micro-sample-sequencing-statistics.html#cb49-63" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(high_unmapped, <span class="dv">10</span>))</span>
+<span id="cb49-64"><a href="micro-sample-sequencing-statistics.html#cb49-64" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb49-65"><a href="micro-sample-sequencing-statistics.html#cb49-65" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;OK: No samples with &gt;50% unmapped reads</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-66"><a href="micro-sample-sequencing-statistics.html#cb49-66" tabindex="-1"></a>}</span>
+<span id="cb49-67"><a href="micro-sample-sequencing-statistics.html#cb49-67" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-68"><a href="micro-sample-sequencing-statistics.html#cb49-68" tabindex="-1"></a></span>
+<span id="cb49-69"><a href="micro-sample-sequencing-statistics.html#cb49-69" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb49-70"><a href="micro-sample-sequencing-statistics.html#cb49-70" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Summary statistics:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-71"><a href="micro-sample-sequencing-statistics.html#cb49-71" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  Mean bacterial percentage:&quot;</span>, <span class="fu">mean</span>(final_combined_stats<span class="sc">$</span>bacteria_percentage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;%</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-72"><a href="micro-sample-sequencing-statistics.html#cb49-72" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  Mean unmapped percentage:&quot;</span>, <span class="fu">mean</span>(final_combined_stats<span class="sc">$</span>unmapped_percentage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;%</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-73"><a href="micro-sample-sequencing-statistics.html#cb49-73" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  Mean histomonas percentage:&quot;</span>, <span class="fu">mean</span>(final_combined_stats<span class="sc">$</span>histomonas_percentage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;%</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb49-74"><a href="micro-sample-sequencing-statistics.html#cb49-74" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  Mean turkey percentage:&quot;</span>, <span class="fu">mean</span>(final_combined_stats<span class="sc">$</span>turkey_percentage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;%</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="micro-sample-counts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="macro-sample-metadata.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

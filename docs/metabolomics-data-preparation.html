@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Metabolomics Data Preparation | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Metabolomics Data Preparation | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Metabolomics Data Preparation | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="macro-sample-sequencing-statistics.html"/>
+<link rel="next" href="mag-catalogue-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="metabolomics-data-preparation" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Metabolomics Data Preparation<a href="metabolomics-data-preparation.html#metabolomics-data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This file processes metabolomics data from Afekta partners for Histomonas experiments.</p>
+<div id="load-metabolomics-data" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Load metabolomics data<a href="metabolomics-data-preparation.html#load-metabolomics-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="load-abundance-values-and-metabolites-metadata" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Load abundance values and metabolites metadata<a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb76-1"><a href="metabolomics-data-preparation.html#cb76-1" tabindex="-1"></a><span class="co"># Load abundance values (samples as columns)</span></span>
+<span id="cb76-2"><a href="metabolomics-data-preparation.html#cb76-2" tabindex="-1"></a>metabolites_abundance <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Afekta_Histomonas_Metabolites/histomonas_metabolomics_abundance_values.csv&quot;</span>, </span>
+<span id="cb76-3"><a href="metabolomics-data-preparation.html#cb76-3" tabindex="-1"></a>                                  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb76-4"><a href="metabolomics-data-preparation.html#cb76-4" tabindex="-1"></a></span>
+<span id="cb76-5"><a href="metabolomics-data-preparation.html#cb76-5" tabindex="-1"></a><span class="co"># Load metabolites metadata</span></span>
+<span id="cb76-6"><a href="metabolomics-data-preparation.html#cb76-6" tabindex="-1"></a>metabolites_metadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Afekta_Histomonas_Metabolites/histomonas_metabolomics_metabolites.csv&quot;</span>,</span>
+<span id="cb76-7"><a href="metabolomics-data-preparation.html#cb76-7" tabindex="-1"></a>                                 <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="classify-samples-by-type" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Classify samples by type<a href="metabolomics-data-preparation.html#classify-samples-by-type" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sample naming convention:
+- <strong>H samples</strong>: H###aN (Histomonas Chicken experiment, host tissue) or H###M (Histomonas Chicken experiment, digesta)
+- <strong>M samples</strong>: M###N (Histomonas Turkey experiment, host tissue) or M###M (Histomonas Turkey experiment, digesta)</p>
+<div id="identify-sample-columns-and-classify-by-type" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Identify sample columns and classify by type<a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb77-1"><a href="metabolomics-data-preparation.html#cb77-1" tabindex="-1"></a><span class="co"># Get all column names (excluding SAMPLE_ID and Curated ID)</span></span>
+<span id="cb77-2"><a href="metabolomics-data-preparation.html#cb77-2" tabindex="-1"></a>sample_cols <span class="ot">&lt;-</span> <span class="fu">colnames</span>(metabolites_abundance)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</span>
+<span id="cb77-3"><a href="metabolomics-data-preparation.html#cb77-3" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="metabolomics-data-preparation.html#cb77-4" tabindex="-1"></a><span class="co"># Classify samples into 4 groups</span></span>
+<span id="cb77-5"><a href="metabolomics-data-preparation.html#cb77-5" tabindex="-1"></a><span class="co"># HN: H samples ending in &quot;aN&quot; (Histomonas Chicken, host tissue)</span></span>
+<span id="cb77-6"><a href="metabolomics-data-preparation.html#cb77-6" tabindex="-1"></a><span class="co"># HM: H samples ending in &quot;M&quot; but NOT &quot;aN&quot; (Histomonas Chicken, digesta)</span></span>
+<span id="cb77-7"><a href="metabolomics-data-preparation.html#cb77-7" tabindex="-1"></a><span class="co"># MN: M samples ending in &quot;N&quot; but NOT &quot;M&quot; (Histomonas Turkey, host tissue)</span></span>
+<span id="cb77-8"><a href="metabolomics-data-preparation.html#cb77-8" tabindex="-1"></a><span class="co"># MM: M samples ending in &quot;M&quot; (Histomonas Turkey, digesta)</span></span>
+<span id="cb77-9"><a href="metabolomics-data-preparation.html#cb77-9" tabindex="-1"></a></span>
+<span id="cb77-10"><a href="metabolomics-data-preparation.html#cb77-10" tabindex="-1"></a>hn_samples <span class="ot">&lt;-</span> sample_cols[<span class="fu">grepl</span>(<span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">d+aN$&quot;</span>, sample_cols)]</span>
+<span id="cb77-11"><a href="metabolomics-data-preparation.html#cb77-11" tabindex="-1"></a>hm_samples <span class="ot">&lt;-</span> sample_cols[<span class="fu">grepl</span>(<span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">d+M$&quot;</span>, sample_cols) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">&quot;aN$&quot;</span>, sample_cols)]</span>
+<span id="cb77-12"><a href="metabolomics-data-preparation.html#cb77-12" tabindex="-1"></a>mn_samples <span class="ot">&lt;-</span> sample_cols[<span class="fu">grepl</span>(<span class="st">&quot;^M</span><span class="sc">\\</span><span class="st">d+N$&quot;</span>, sample_cols)]</span>
+<span id="cb77-13"><a href="metabolomics-data-preparation.html#cb77-13" tabindex="-1"></a>mm_samples <span class="ot">&lt;-</span> sample_cols[<span class="fu">grepl</span>(<span class="st">&quot;^M</span><span class="sc">\\</span><span class="st">d+M$&quot;</span>, sample_cols)]</span>
+<span id="cb77-14"><a href="metabolomics-data-preparation.html#cb77-14" tabindex="-1"></a></span>
+<span id="cb77-15"><a href="metabolomics-data-preparation.html#cb77-15" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Sample counts:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb77-16"><a href="metabolomics-data-preparation.html#cb77-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HN (H + aN):&quot;</span>, <span class="fu">length</span>(hn_samples), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb77-17"><a href="metabolomics-data-preparation.html#cb77-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HM (H + M):&quot;</span>, <span class="fu">length</span>(hm_samples), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb77-18"><a href="metabolomics-data-preparation.html#cb77-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MN (M + N):&quot;</span>, <span class="fu">length</span>(mn_samples), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb77-19"><a href="metabolomics-data-preparation.html#cb77-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MM (M + M):&quot;</span>, <span class="fu">length</span>(mm_samples), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="create-dataframes-for-each-sample-type" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Create dataframes for each sample type<a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="hn-histomonas-chicken-host-tissue" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> HN: Histomonas Chicken, host tissue<a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-dataframe-for-hn-samples" class="section level4 hasAnchor" number="9.3.1.1">
+<h4><span class="header-section-number">9.3.1.1</span> Create dataframe for HN samples<a href="metabolomics-data-preparation.html#create-dataframe-for-hn-samples" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb78-1"><a href="metabolomics-data-preparation.html#cb78-1" tabindex="-1"></a><span class="co"># Select HN samples, join with metadata to filter by ID level, then extract animal IDs</span></span>
+<span id="cb78-2"><a href="metabolomics-data-preparation.html#cb78-2" tabindex="-1"></a>metabolites_hn <span class="ot">&lt;-</span> metabolites_abundance <span class="sc">%&gt;%</span></span>
+<span id="cb78-3"><a href="metabolomics-data-preparation.html#cb78-3" tabindex="-1"></a>  <span class="fu">select</span>(SAMPLE_ID, <span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">all_of</span>(hn_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb78-4"><a href="metabolomics-data-preparation.html#cb78-4" tabindex="-1"></a>  <span class="co"># Join with metadata to get ID level</span></span>
+<span id="cb78-5"><a href="metabolomics-data-preparation.html#cb78-5" tabindex="-1"></a>  <span class="fu">left_join</span>(metabolites_metadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(Feature_ID, <span class="st">`</span><span class="at">ID level</span><span class="st">`</span>), </span>
+<span id="cb78-6"><a href="metabolomics-data-preparation.html#cb78-6" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;SAMPLE_ID&quot;</span> <span class="ot">=</span> <span class="st">&quot;Feature_ID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb78-7"><a href="metabolomics-data-preparation.html#cb78-7" tabindex="-1"></a>  <span class="co"># Filter for level 1 (high confidence) metabolites only</span></span>
+<span id="cb78-8"><a href="metabolomics-data-preparation.html#cb78-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">ID level</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb78-9"><a href="metabolomics-data-preparation.html#cb78-9" tabindex="-1"></a>  <span class="co"># Remove metadata columns</span></span>
+<span id="cb78-10"><a href="metabolomics-data-preparation.html#cb78-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SAMPLE_ID, <span class="sc">-</span><span class="st">`</span><span class="at">ID level</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb78-11"><a href="metabolomics-data-preparation.html#cb78-11" tabindex="-1"></a>  <span class="co"># Extract animal ID from column names (first 4 characters: H###)</span></span>
+<span id="cb78-12"><a href="metabolomics-data-preparation.html#cb78-12" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_extract</span>(.x, <span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">d+&quot;</span>), <span class="at">.cols =</span> <span class="fu">all_of</span>(hn_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb78-13"><a href="metabolomics-data-preparation.html#cb78-13" tabindex="-1"></a>  <span class="co"># Keep only Curated ID and abundance columns</span></span>
+<span id="cb78-14"><a href="metabolomics-data-preparation.html#cb78-14" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="hm-histomonas-chicken-digesta" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> HM: Histomonas Chicken, digesta<a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-dataframe-for-hm-samples" class="section level4 hasAnchor" number="9.3.2.1">
+<h4><span class="header-section-number">9.3.2.1</span> Create dataframe for HM samples<a href="metabolomics-data-preparation.html#create-dataframe-for-hm-samples" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb79-1"><a href="metabolomics-data-preparation.html#cb79-1" tabindex="-1"></a><span class="co"># Select HM samples, join with metadata to filter by ID level, then extract animal IDs</span></span>
+<span id="cb79-2"><a href="metabolomics-data-preparation.html#cb79-2" tabindex="-1"></a>metabolites_hm <span class="ot">&lt;-</span> metabolites_abundance <span class="sc">%&gt;%</span></span>
+<span id="cb79-3"><a href="metabolomics-data-preparation.html#cb79-3" tabindex="-1"></a>  <span class="fu">select</span>(SAMPLE_ID, <span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">all_of</span>(hm_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb79-4"><a href="metabolomics-data-preparation.html#cb79-4" tabindex="-1"></a>  <span class="co"># Join with metadata to get ID level</span></span>
+<span id="cb79-5"><a href="metabolomics-data-preparation.html#cb79-5" tabindex="-1"></a>  <span class="fu">left_join</span>(metabolites_metadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(Feature_ID, <span class="st">`</span><span class="at">ID level</span><span class="st">`</span>), </span>
+<span id="cb79-6"><a href="metabolomics-data-preparation.html#cb79-6" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;SAMPLE_ID&quot;</span> <span class="ot">=</span> <span class="st">&quot;Feature_ID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb79-7"><a href="metabolomics-data-preparation.html#cb79-7" tabindex="-1"></a>  <span class="co"># Filter for level 1 (high confidence) metabolites only</span></span>
+<span id="cb79-8"><a href="metabolomics-data-preparation.html#cb79-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">ID level</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-9"><a href="metabolomics-data-preparation.html#cb79-9" tabindex="-1"></a>  <span class="co"># Remove metadata columns</span></span>
+<span id="cb79-10"><a href="metabolomics-data-preparation.html#cb79-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SAMPLE_ID, <span class="sc">-</span><span class="st">`</span><span class="at">ID level</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-11"><a href="metabolomics-data-preparation.html#cb79-11" tabindex="-1"></a>  <span class="co"># Extract animal ID from column names (first 4 characters: H###)</span></span>
+<span id="cb79-12"><a href="metabolomics-data-preparation.html#cb79-12" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_extract</span>(.x, <span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">d+&quot;</span>), <span class="at">.cols =</span> <span class="fu">all_of</span>(hm_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb79-13"><a href="metabolomics-data-preparation.html#cb79-13" tabindex="-1"></a>  <span class="co"># Keep only Curated ID and abundance columns</span></span>
+<span id="cb79-14"><a href="metabolomics-data-preparation.html#cb79-14" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="mn-histomonas-turkey-host-tissue" class="section level3 hasAnchor" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> MN: Histomonas Turkey, host tissue<a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-dataframe-for-mn-samples" class="section level4 hasAnchor" number="9.3.3.1">
+<h4><span class="header-section-number">9.3.3.1</span> Create dataframe for MN samples<a href="metabolomics-data-preparation.html#create-dataframe-for-mn-samples" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb80-1"><a href="metabolomics-data-preparation.html#cb80-1" tabindex="-1"></a><span class="co"># Select MN samples, join with metadata to filter by ID level, then extract animal IDs</span></span>
+<span id="cb80-2"><a href="metabolomics-data-preparation.html#cb80-2" tabindex="-1"></a>metabolites_mn <span class="ot">&lt;-</span> metabolites_abundance <span class="sc">%&gt;%</span></span>
+<span id="cb80-3"><a href="metabolomics-data-preparation.html#cb80-3" tabindex="-1"></a>  <span class="fu">select</span>(SAMPLE_ID, <span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">all_of</span>(mn_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb80-4"><a href="metabolomics-data-preparation.html#cb80-4" tabindex="-1"></a>  <span class="co"># Join with metadata to get ID level</span></span>
+<span id="cb80-5"><a href="metabolomics-data-preparation.html#cb80-5" tabindex="-1"></a>  <span class="fu">left_join</span>(metabolites_metadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(Feature_ID, <span class="st">`</span><span class="at">ID level</span><span class="st">`</span>), </span>
+<span id="cb80-6"><a href="metabolomics-data-preparation.html#cb80-6" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;SAMPLE_ID&quot;</span> <span class="ot">=</span> <span class="st">&quot;Feature_ID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb80-7"><a href="metabolomics-data-preparation.html#cb80-7" tabindex="-1"></a>  <span class="co"># Filter for level 1 (high confidence) metabolites only</span></span>
+<span id="cb80-8"><a href="metabolomics-data-preparation.html#cb80-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">ID level</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-9"><a href="metabolomics-data-preparation.html#cb80-9" tabindex="-1"></a>  <span class="co"># Remove metadata columns</span></span>
+<span id="cb80-10"><a href="metabolomics-data-preparation.html#cb80-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SAMPLE_ID, <span class="sc">-</span><span class="st">`</span><span class="at">ID level</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-11"><a href="metabolomics-data-preparation.html#cb80-11" tabindex="-1"></a>  <span class="co"># Extract animal ID from column names (first 4 characters: M###)</span></span>
+<span id="cb80-12"><a href="metabolomics-data-preparation.html#cb80-12" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_extract</span>(.x, <span class="st">&quot;^M</span><span class="sc">\\</span><span class="st">d+&quot;</span>), <span class="at">.cols =</span> <span class="fu">all_of</span>(mn_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb80-13"><a href="metabolomics-data-preparation.html#cb80-13" tabindex="-1"></a>  <span class="co"># Keep only Curated ID and abundance columns</span></span>
+<span id="cb80-14"><a href="metabolomics-data-preparation.html#cb80-14" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="mm-histomonas-turkey-digesta" class="section level3 hasAnchor" number="9.3.4">
+<h3><span class="header-section-number">9.3.4</span> MM: Histomonas Turkey, digesta<a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="create-dataframe-for-mm-samples" class="section level4 hasAnchor" number="9.3.4.1">
+<h4><span class="header-section-number">9.3.4.1</span> Create dataframe for MM samples<a href="metabolomics-data-preparation.html#create-dataframe-for-mm-samples" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb81-1"><a href="metabolomics-data-preparation.html#cb81-1" tabindex="-1"></a><span class="co"># Select MM samples, join with metadata to filter by ID level, then extract animal IDs</span></span>
+<span id="cb81-2"><a href="metabolomics-data-preparation.html#cb81-2" tabindex="-1"></a>metabolites_mm <span class="ot">&lt;-</span> metabolites_abundance <span class="sc">%&gt;%</span></span>
+<span id="cb81-3"><a href="metabolomics-data-preparation.html#cb81-3" tabindex="-1"></a>  <span class="fu">select</span>(SAMPLE_ID, <span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">all_of</span>(mm_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb81-4"><a href="metabolomics-data-preparation.html#cb81-4" tabindex="-1"></a>  <span class="co"># Join with metadata to get ID level</span></span>
+<span id="cb81-5"><a href="metabolomics-data-preparation.html#cb81-5" tabindex="-1"></a>  <span class="fu">left_join</span>(metabolites_metadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(Feature_ID, <span class="st">`</span><span class="at">ID level</span><span class="st">`</span>), </span>
+<span id="cb81-6"><a href="metabolomics-data-preparation.html#cb81-6" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;SAMPLE_ID&quot;</span> <span class="ot">=</span> <span class="st">&quot;Feature_ID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb81-7"><a href="metabolomics-data-preparation.html#cb81-7" tabindex="-1"></a>  <span class="co"># Filter for level 1 (high confidence) metabolites only</span></span>
+<span id="cb81-8"><a href="metabolomics-data-preparation.html#cb81-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">ID level</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb81-9"><a href="metabolomics-data-preparation.html#cb81-9" tabindex="-1"></a>  <span class="co"># Remove metadata columns</span></span>
+<span id="cb81-10"><a href="metabolomics-data-preparation.html#cb81-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SAMPLE_ID, <span class="sc">-</span><span class="st">`</span><span class="at">ID level</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb81-11"><a href="metabolomics-data-preparation.html#cb81-11" tabindex="-1"></a>  <span class="co"># Extract animal ID from column names (first 4 characters: M###)</span></span>
+<span id="cb81-12"><a href="metabolomics-data-preparation.html#cb81-12" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">str_extract</span>(.x, <span class="st">&quot;^M</span><span class="sc">\\</span><span class="st">d+&quot;</span>), <span class="at">.cols =</span> <span class="fu">all_of</span>(mm_samples)) <span class="sc">%&gt;%</span></span>
+<span id="cb81-13"><a href="metabolomics-data-preparation.html#cb81-13" tabindex="-1"></a>  <span class="co"># Keep only Curated ID and abundance columns</span></span>
+<span id="cb81-14"><a href="metabolomics-data-preparation.html#cb81-14" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="fu">everything</span>())</span></code></pre></div>
+<p>&lt;｜tool▁calls▁begin｜&gt;&lt;｜tool▁call▁begin｜&gt;
+read_lints</p>
+</div>
+</div>
+</div>
+<div id="save-processed-data" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Save processed data<a href="metabolomics-data-preparation.html#save-processed-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="save-metabolomics-dataframes" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Save metabolomics dataframes<a href="metabolomics-data-preparation.html#save-metabolomics-dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb82-1"><a href="metabolomics-data-preparation.html#cb82-1" tabindex="-1"></a><span class="fu">save</span>(</span>
+<span id="cb82-2"><a href="metabolomics-data-preparation.html#cb82-2" tabindex="-1"></a>  metabolites_hn,</span>
+<span id="cb82-3"><a href="metabolomics-data-preparation.html#cb82-3" tabindex="-1"></a>  metabolites_hm,</span>
+<span id="cb82-4"><a href="metabolomics-data-preparation.html#cb82-4" tabindex="-1"></a>  metabolites_mn,</span>
+<span id="cb82-5"><a href="metabolomics-data-preparation.html#cb82-5" tabindex="-1"></a>  metabolites_mm,</span>
+<span id="cb82-6"><a href="metabolomics-data-preparation.html#cb82-6" tabindex="-1"></a>  metabolites_metadata,</span>
+<span id="cb82-7"><a href="metabolomics-data-preparation.html#cb82-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/Afekta_Histomonas_Metabolites/metabolites_data.Rdata&quot;</span></span>
+<span id="cb82-8"><a href="metabolomics-data-preparation.html#cb82-8" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+</div>
+<div id="validation-7" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Validation<a href="metabolomics-data-preparation.html#validation-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="validate-metabolomics-data" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Validate metabolomics data<a href="metabolomics-data-preparation.html#validate-metabolomics-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb83-1"><a href="metabolomics-data-preparation.html#cb83-1" tabindex="-1"></a><span class="co"># Check dimensions</span></span>
+<span id="cb83-2"><a href="metabolomics-data-preparation.html#cb83-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Metabolites dataframes dimensions:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-3"><a href="metabolomics-data-preparation.html#cb83-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HN:&quot;</span>, <span class="fu">nrow</span>(metabolites_hn), <span class="st">&quot;rows,&quot;</span>, <span class="fu">ncol</span>(metabolites_hn), <span class="st">&quot;columns</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-4"><a href="metabolomics-data-preparation.html#cb83-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HM:&quot;</span>, <span class="fu">nrow</span>(metabolites_hm), <span class="st">&quot;rows,&quot;</span>, <span class="fu">ncol</span>(metabolites_hm), <span class="st">&quot;columns</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-5"><a href="metabolomics-data-preparation.html#cb83-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MN:&quot;</span>, <span class="fu">nrow</span>(metabolites_mn), <span class="st">&quot;rows,&quot;</span>, <span class="fu">ncol</span>(metabolites_mn), <span class="st">&quot;columns</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-6"><a href="metabolomics-data-preparation.html#cb83-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MM:&quot;</span>, <span class="fu">nrow</span>(metabolites_mm), <span class="st">&quot;rows,&quot;</span>, <span class="fu">ncol</span>(metabolites_mm), <span class="st">&quot;columns</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-7"><a href="metabolomics-data-preparation.html#cb83-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-8"><a href="metabolomics-data-preparation.html#cb83-8" tabindex="-1"></a></span>
+<span id="cb83-9"><a href="metabolomics-data-preparation.html#cb83-9" tabindex="-1"></a><span class="co"># Check number of samples (animals) per sample type</span></span>
+<span id="cb83-10"><a href="metabolomics-data-preparation.html#cb83-10" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Number of samples (animals) per sample type:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-11"><a href="metabolomics-data-preparation.html#cb83-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HN:&quot;</span>, <span class="fu">ncol</span>(metabolites_hn) <span class="sc">-</span> <span class="dv">1</span>, <span class="st">&quot;samples</span><span class="sc">\n</span><span class="st">&quot;</span>)  <span class="co"># -1 for Curated ID column</span></span>
+<span id="cb83-12"><a href="metabolomics-data-preparation.html#cb83-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HM:&quot;</span>, <span class="fu">ncol</span>(metabolites_hm) <span class="sc">-</span> <span class="dv">1</span>, <span class="st">&quot;samples</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-13"><a href="metabolomics-data-preparation.html#cb83-13" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MN:&quot;</span>, <span class="fu">ncol</span>(metabolites_mn) <span class="sc">-</span> <span class="dv">1</span>, <span class="st">&quot;samples</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-14"><a href="metabolomics-data-preparation.html#cb83-14" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MM:&quot;</span>, <span class="fu">ncol</span>(metabolites_mm) <span class="sc">-</span> <span class="dv">1</span>, <span class="st">&quot;samples</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-15"><a href="metabolomics-data-preparation.html#cb83-15" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-16"><a href="metabolomics-data-preparation.html#cb83-16" tabindex="-1"></a></span>
+<span id="cb83-17"><a href="metabolomics-data-preparation.html#cb83-17" tabindex="-1"></a><span class="co"># Check unique metabolites</span></span>
+<span id="cb83-18"><a href="metabolomics-data-preparation.html#cb83-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Unique metabolites:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-19"><a href="metabolomics-data-preparation.html#cb83-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  Total unique Curated IDs:&quot;</span>, <span class="fu">n_distinct</span>(metabolites_hn<span class="sc">$</span><span class="st">`</span><span class="at">Curated ID</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-20"><a href="metabolomics-data-preparation.html#cb83-20" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-21"><a href="metabolomics-data-preparation.html#cb83-21" tabindex="-1"></a></span>
+<span id="cb83-22"><a href="metabolomics-data-preparation.html#cb83-22" tabindex="-1"></a><span class="co"># Display top rows</span></span>
+<span id="cb83-23"><a href="metabolomics-data-preparation.html#cb83-23" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Top 5 rows of HN dataframe:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-24"><a href="metabolomics-data-preparation.html#cb83-24" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(metabolites_hn, <span class="dv">5</span>))</span>
+<span id="cb83-25"><a href="metabolomics-data-preparation.html#cb83-25" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-26"><a href="metabolomics-data-preparation.html#cb83-26" tabindex="-1"></a></span>
+<span id="cb83-27"><a href="metabolomics-data-preparation.html#cb83-27" tabindex="-1"></a><span class="co"># Show column names (sample IDs)</span></span>
+<span id="cb83-28"><a href="metabolomics-data-preparation.html#cb83-28" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Sample IDs (first 10):</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-29"><a href="metabolomics-data-preparation.html#cb83-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HN:&quot;</span>, <span class="fu">paste</span>(<span class="fu">head</span>(<span class="fu">colnames</span>(metabolites_hn)[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">10</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-30"><a href="metabolomics-data-preparation.html#cb83-30" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  HM:&quot;</span>, <span class="fu">paste</span>(<span class="fu">head</span>(<span class="fu">colnames</span>(metabolites_hm)[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">10</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-31"><a href="metabolomics-data-preparation.html#cb83-31" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MN:&quot;</span>, <span class="fu">paste</span>(<span class="fu">head</span>(<span class="fu">colnames</span>(metabolites_mn)[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">10</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb83-32"><a href="metabolomics-data-preparation.html#cb83-32" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;  MM:&quot;</span>, <span class="fu">paste</span>(<span class="fu">head</span>(<span class="fu">colnames</span>(metabolites_mm)[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">10</span>), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="notes-on-metabolites-metadata" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Notes on metabolites metadata<a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The metabolites metadata file (<code>histomonas_metabolomics_metabolites.csv</code>) contains valuable information for downstream analyses:</p>
+<div id="available-metadata-fields" class="section level3 hasAnchor" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> Available metadata fields:<a href="metabolomics-data-preparation.html#available-metadata-fields" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Feature_ID</strong>: Unique identifier for each metabolite feature (matches SAMPLE_ID in abundance file)</li>
+<li><strong>Mode</strong>: LC-MS mode (HILIC_neg, HILIC_pos, RP_pos, RP_neg) - useful for mode-specific analyses</li>
+<li><strong>Retention time</strong>: Chromatographic retention time (min) - useful for quality control</li>
+<li><strong>m/z</strong>: Mass-to-charge ratio - useful for identification and quality control</li>
+<li><strong>Adduct type</strong>: Ionization adduct ([M+H]+, [M-H]-, [M+Na]+, etc.) - important for interpretation</li>
+<li><strong>Curated ID</strong>: Metabolite name - human-readable identifier</li>
+<li><strong>Database identifiers</strong>:
+<ul>
+<li>HMDB (Human Metabolome Database)</li>
+<li>LipidMaps (for lipid metabolites)</li>
+<li>Other databases</li>
+</ul></li>
+<li><strong>KEGG</strong>: KEGG compound ID - useful for pathway enrichment analysis</li>
+<li><strong>ID level</strong>: Confidence level (1 = high confidence, 2 = medium confidence) - important for filtering</li>
+<li><strong>Chemical taxonomy</strong>: Chemical class/functional group - useful for grouping and summarizing metabolites</li>
+</ul>
+</div>
+<div id="suggested-uses" class="section level3 hasAnchor" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> Suggested uses:<a href="metabolomics-data-preparation.html#suggested-uses" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Filtering by ID level</strong>: Use level 1 (high confidence) metabolites for primary analyses</li>
+<li><strong>Grouping by chemical taxonomy</strong>: Analyze metabolite classes (amino acids, lipids, nucleotides, etc.)</li>
+<li><strong>Mode-based analysis</strong>: Separate analyses by LC-MS mode (HILIC vs RP, positive vs negative)</li>
+<li><strong>Pathway analysis</strong>: Use KEGG IDs for pathway enrichment analysis (e.g., with KEGG pathway databases)</li>
+<li><strong>Database integration</strong>: Use HMDB/LipidMaps IDs for additional annotations and cross-referencing</li>
+<li><strong>Quality control</strong>: Filter by retention time or m/z for data quality checks</li>
+<li><strong>Metabolite class summaries</strong>: Group metabolites by chemical taxonomy for class-level comparisons</li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="macro-sample-sequencing-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mag-catalogue-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

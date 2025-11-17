@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>18 Spatial Analysis - Micro Samples | 3D’omics | Histomonas Turkeys</title>
+  <meta name="description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="18 Spatial Analysis - Micro Samples | 3D’omics | Histomonas Turkeys" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  <meta name="github-repo" content="3d-omics/ANMI024_Histomonas_Turkeys_Macro_and_Micro" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="18 Spatial Analysis - Micro Samples | 3D’omics | Histomonas Turkeys" />
+  
+  <meta name="twitter:description" content="Data analysis code for 3D’omics Histomoans trial in Turkeys" />
+  
+
+<meta name="author" content="Amalia Bogri" />
+<meta name="author" content="Jorge Langa" />
+<meta name="author" content="Antton Alberdi" />
+
+
+<meta name="date" content="2025-11-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="beta-diversity---macro-vs-micro-comparison.html"/>
+<link rel="next" href="export-data-for-microbetag.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prepare-the-r-environment"><i class="fa fa-check"></i><b>1.1</b> Prepare the R environment</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#environment"><i class="fa fa-check"></i><b>1.1.1</b> Environment</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#helper-functions"><i class="fa fa-check"></i><b>1.2</b> Helper Functions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#alpha-diversity-calculation"><i class="fa fa-check"></i><b>1.2.1</b> Alpha Diversity Calculation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#remove-samples-or-taxa"><i class="fa fa-check"></i><b>1.2.2</b> Remove samples or taxa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#clr_function"><i class="fa fa-check"></i><b>1.2.3</b> clr_function</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#perform_pca"><i class="fa fa-check"></i><b>1.2.4</b> perform_pca</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#plot_pca"><i class="fa fa-check"></i><b>1.2.5</b> plot_pca</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notes"><i class="fa fa-check"></i><b>1.3</b> Notes:</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#installation-of-modules"><i class="fa fa-check"></i><b>1.3.1</b> Installation of modules</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#airtable-access"><i class="fa fa-check"></i><b>1.3.2</b> Airtable access:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mag-catalogue.html"><a href="mag-catalogue.html"><i class="fa fa-check"></i><b>2</b> MAG Catalogue</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#dereplicated-genomes"><i class="fa fa-check"></i><b>2.1</b> Dereplicated genomes</a></li>
+<li class="chapter" data-level="2.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-tree"><i class="fa fa-check"></i><b>2.2</b> Genome (MAGs) tree</a></li>
+<li class="chapter" data-level="2.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-taxonomy"><i class="fa fa-check"></i><b>2.3</b> Genome (MAGs) taxonomy</a></li>
+<li class="chapter" data-level="2.4" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-quality"><i class="fa fa-check"></i><b>2.4</b> Genome (MAGs) quality</a></li>
+<li class="chapter" data-level="2.5" data-path="mag-catalogue.html"><a href="mag-catalogue.html#merged-genome-mags-taxonomy-quality"><i class="fa fa-check"></i><b>2.5</b> Merged Genome (MAGs) taxonomy &amp; quality</a></li>
+<li class="chapter" data-level="2.6" data-path="mag-catalogue.html"><a href="mag-catalogue.html#factoring-of-taxonomic-levels"><i class="fa fa-check"></i><b>2.6</b> Factoring of taxonomic levels</a></li>
+<li class="chapter" data-level="2.7" data-path="mag-catalogue.html"><a href="mag-catalogue.html#genome-mags-functional-annotations"><i class="fa fa-check"></i><b>2.7</b> Genome (MAGs) functional annotations</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#distil-functional-annotations"><i class="fa fa-check"></i><b>2.7.1</b> Distil functional annotations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="mag-catalogue.html"><a href="mag-catalogue.html#bacterial-phyla-color-scheme-data"><i class="fa fa-check"></i><b>2.8</b> Bacterial phyla color scheme data</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-color-schemes-for-phyla-and-orders"><i class="fa fa-check"></i><b>2.8.1</b> Define color schemes for phyla and orders</a></li>
+<li class="chapter" data-level="2.8.2" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-plotting-settings"><i class="fa fa-check"></i><b>2.8.2</b> Define plotting settings</a></li>
+<li class="chapter" data-level="2.8.3" data-path="mag-catalogue.html"><a href="mag-catalogue.html#define-treatment-color-schemes"><i class="fa fa-check"></i><b>2.8.3</b> Define treatment color schemes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="mag-catalogue.html"><a href="mag-catalogue.html#save-working-objects"><i class="fa fa-check"></i><b>2.9</b> Save working objects</a></li>
+<li class="chapter" data-level="2.10" data-path="mag-catalogue.html"><a href="mag-catalogue.html#validation"><i class="fa fa-check"></i><b>2.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html"><i class="fa fa-check"></i><b>3</b> Micro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#load-and-process-micro-sample-metadata-from-airtable"><i class="fa fa-check"></i><b>3.1</b> Load and process micro-sample metadata from Airtable</a></li>
+<li class="chapter" data-level="3.2" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#save-working-objects-1"><i class="fa fa-check"></i><b>3.2</b> Save working objects</a></li>
+<li class="chapter" data-level="3.3" data-path="micro-sample-metadata.html"><a href="micro-sample-metadata.html#validation-1"><i class="fa fa-check"></i><b>3.3</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html"><i class="fa fa-check"></i><b>4</b> Micro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#load-required-data"><i class="fa fa-check"></i><b>4.1</b> Load required data</a></li>
+<li class="chapter" data-level="4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#bacterial-reads-counts"><i class="fa fa-check"></i><b>4.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#genome-covered-bases"><i class="fa fa-check"></i><b>4.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="4.4" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#filter-and-normalise-data"><i class="fa fa-check"></i><b>4.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#coverage-filtering"><i class="fa fa-check"></i><b>4.4.1</b> Coverage filtering</a></li>
+<li class="chapter" data-level="4.4.2" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-genome-count-table"><i class="fa fa-check"></i><b>4.4.2</b> Generate genome count table</a></li>
+<li class="chapter" data-level="4.4.3" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#generate-length-corrected-read-count-tables"><i class="fa fa-check"></i><b>4.4.3</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#alpha-diversity-calculations"><i class="fa fa-check"></i><b>4.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="4.6" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#save-working-objects-2"><i class="fa fa-check"></i><b>4.6</b> Save working objects</a></li>
+<li class="chapter" data-level="4.7" data-path="micro-sample-counts.html"><a href="micro-sample-counts.html#validation-2"><i class="fa fa-check"></i><b>4.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>5</b> Micro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#load-required-data-1"><i class="fa fa-check"></i><b>5.1</b> Load required data</a></li>
+<li class="chapter" data-level="5.2" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#fastp-sequencing-statistics"><i class="fa fa-check"></i><b>5.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="5.3" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas"><i class="fa fa-check"></i><b>5.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="5.4" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#bacterial-mapped-reads"><i class="fa fa-check"></i><b>5.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="5.5" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table"><i class="fa fa-check"></i><b>5.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="5.6" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#sanity-checks"><i class="fa fa-check"></i><b>5.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="5.7" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics"><i class="fa fa-check"></i><b>5.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="5.8" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#create-plot_data_stats"><i class="fa fa-check"></i><b>5.8</b> Create plot_data_stats</a></li>
+<li class="chapter" data-level="5.9" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#save-working-objects-3"><i class="fa fa-check"></i><b>5.9</b> Save working objects</a></li>
+<li class="chapter" data-level="5.10" data-path="micro-sample-sequencing-statistics.html"><a href="micro-sample-sequencing-statistics.html#validation-3"><i class="fa fa-check"></i><b>5.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html"><i class="fa fa-check"></i><b>6</b> Macro-sample Metadata</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#save-working-objects-4"><i class="fa fa-check"></i><b>6.1</b> Save working objects</a></li>
+<li class="chapter" data-level="6.2" data-path="macro-sample-metadata.html"><a href="macro-sample-metadata.html#validation-4"><i class="fa fa-check"></i><b>6.2</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html"><i class="fa fa-check"></i><b>7</b> Macro-sample Counts</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#load-required-data-2"><i class="fa fa-check"></i><b>7.1</b> Load required data</a></li>
+<li class="chapter" data-level="7.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#bacterial-reads-counts-1"><i class="fa fa-check"></i><b>7.2</b> Bacterial reads (counts)</a></li>
+<li class="chapter" data-level="7.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#genome-covered-bases-1"><i class="fa fa-check"></i><b>7.3</b> Genome covered bases</a></li>
+<li class="chapter" data-level="7.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#filter-and-normalise-data-1"><i class="fa fa-check"></i><b>7.4</b> Filter and normalise data</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-coverage-table"><i class="fa fa-check"></i><b>7.4.1</b> Generate coverage table</a></li>
+<li class="chapter" data-level="7.4.2" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#coverage-filtering-1"><i class="fa fa-check"></i><b>7.4.2</b> Coverage filtering</a></li>
+<li class="chapter" data-level="7.4.3" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-genome-count-table-1"><i class="fa fa-check"></i><b>7.4.3</b> Generate genome count table</a></li>
+<li class="chapter" data-level="7.4.4" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#generate-length-corrected-read-count-tables-1"><i class="fa fa-check"></i><b>7.4.4</b> Generate length-corrected read count tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#alpha-diversity-calculations-1"><i class="fa fa-check"></i><b>7.5</b> Alpha diversity calculations</a></li>
+<li class="chapter" data-level="7.6" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#save-working-objects-5"><i class="fa fa-check"></i><b>7.6</b> Save working objects</a></li>
+<li class="chapter" data-level="7.7" data-path="macro-sample-counts.html"><a href="macro-sample-counts.html#validation-5"><i class="fa fa-check"></i><b>7.7</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html"><i class="fa fa-check"></i><b>8</b> Macro-sample Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#load-required-data-3"><i class="fa fa-check"></i><b>8.1</b> Load required data</a></li>
+<li class="chapter" data-level="8.2" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#fastp-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.2</b> FastP sequencing statistics</a></li>
+<li class="chapter" data-level="8.3" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#non-bacterial-mapped-reads-human-chicken-swine-turkey-histomonas-1"><i class="fa fa-check"></i><b>8.3</b> Non-bacterial mapped reads: human, chicken, swine, turkey, histomonas</a></li>
+<li class="chapter" data-level="8.4" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#bacterial-mapped-reads-1"><i class="fa fa-check"></i><b>8.4</b> Bacterial mapped reads</a></li>
+<li class="chapter" data-level="8.5" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#alternative-way-to-estimate-bacterial-read-counts-from-count-table-1"><i class="fa fa-check"></i><b>8.5</b> Alternative way to estimate bacterial read counts (from count table)</a></li>
+<li class="chapter" data-level="8.6" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#sanity-checks-1"><i class="fa fa-check"></i><b>8.6</b> Sanity checks</a></li>
+<li class="chapter" data-level="8.7" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#combine-relevant-sequencing-statistics-1"><i class="fa fa-check"></i><b>8.7</b> Combine relevant sequencing statistics</a></li>
+<li class="chapter" data-level="8.8" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#create-plot_data_stats_macro"><i class="fa fa-check"></i><b>8.8</b> Create plot_data_stats_macro</a></li>
+<li class="chapter" data-level="8.9" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#save-working-objects-6"><i class="fa fa-check"></i><b>8.9</b> Save working objects</a></li>
+<li class="chapter" data-level="8.10" data-path="macro-sample-sequencing-statistics.html"><a href="macro-sample-sequencing-statistics.html#validation-6"><i class="fa fa-check"></i><b>8.10</b> Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html"><i class="fa fa-check"></i><b>9</b> Metabolomics Data Preparation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-metabolomics-data"><i class="fa fa-check"></i><b>9.1</b> Load metabolomics data</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#load-abundance-values-and-metabolites-metadata"><i class="fa fa-check"></i><b>9.1.1</b> Load abundance values and metabolites metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#classify-samples-by-type"><i class="fa fa-check"></i><b>9.2</b> Classify samples by type</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#identify-sample-columns-and-classify-by-type"><i class="fa fa-check"></i><b>9.2.1</b> Identify sample columns and classify by type</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#create-dataframes-for-each-sample-type"><i class="fa fa-check"></i><b>9.3</b> Create dataframes for each sample type</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hn-histomonas-chicken-host-tissue"><i class="fa fa-check"></i><b>9.3.1</b> HN: Histomonas Chicken, host tissue</a></li>
+<li class="chapter" data-level="9.3.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#hm-histomonas-chicken-digesta"><i class="fa fa-check"></i><b>9.3.2</b> HM: Histomonas Chicken, digesta</a></li>
+<li class="chapter" data-level="9.3.3" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mn-histomonas-turkey-host-tissue"><i class="fa fa-check"></i><b>9.3.3</b> MN: Histomonas Turkey, host tissue</a></li>
+<li class="chapter" data-level="9.3.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#mm-histomonas-turkey-digesta"><i class="fa fa-check"></i><b>9.3.4</b> MM: Histomonas Turkey, digesta</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-processed-data"><i class="fa fa-check"></i><b>9.4</b> Save processed data</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#save-metabolomics-dataframes"><i class="fa fa-check"></i><b>9.4.1</b> Save metabolomics dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validation-7"><i class="fa fa-check"></i><b>9.5</b> Validation</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#validate-metabolomics-data"><i class="fa fa-check"></i><b>9.5.1</b> Validate metabolomics data</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#notes-on-metabolites-metadata"><i class="fa fa-check"></i><b>9.6</b> Notes on metabolites metadata</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#available-metadata-fields"><i class="fa fa-check"></i><b>9.6.1</b> Available metadata fields:</a></li>
+<li class="chapter" data-level="9.6.2" data-path="metabolomics-data-preparation.html"><a href="metabolomics-data-preparation.html#suggested-uses"><i class="fa fa-check"></i><b>9.6.2</b> Suggested uses:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html"><i class="fa fa-check"></i><b>10</b> MAG catalogue</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-quality"><i class="fa fa-check"></i><b>10.1</b> Genome quality</a></li>
+<li class="chapter" data-level="10.2" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours"><i class="fa fa-check"></i><b>10.2</b> MAG catalogue phyla and order colours</a></li>
+<li class="chapter" data-level="10.3" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#mag-catalogue-phyla-and-order-colours-and-genera-number"><i class="fa fa-check"></i><b>10.3</b> MAG catalogue phyla and order colours, and genera number</a></li>
+<li class="chapter" data-level="10.4" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot"><i class="fa fa-check"></i><b>10.4</b> Genome phylogeny plot</a></li>
+<li class="chapter" data-level="10.5" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#genome-phylogeny-plot-without-legend"><i class="fa fa-check"></i><b>10.5</b> Genome phylogeny plot without legend</a></li>
+<li class="chapter" data-level="10.6" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-overview"><i class="fa fa-check"></i><b>10.6</b> Functional overview</a></li>
+<li class="chapter" data-level="10.7" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-distances"><i class="fa fa-check"></i><b>10.7</b> Functional distances</a></li>
+<li class="chapter" data-level="10.8" data-path="mag-catalogue-1.html"><a href="mag-catalogue-1.html#functional-ordination"><i class="fa fa-check"></i><b>10.8</b> Functional ordination</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="histomonas-presence.html"><a href="histomonas-presence.html"><i class="fa fa-check"></i><b>11</b> Histomonas Presence</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="histomonas-presence.html"><a href="histomonas-presence.html#macro"><i class="fa fa-check"></i><b>11.1</b> Macro</a></li>
+<li class="chapter" data-level="11.2" data-path="histomonas-presence.html"><a href="histomonas-presence.html#micro"><i class="fa fa-check"></i><b>11.2</b> Micro</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html"><i class="fa fa-check"></i><b>12</b> Sequencing Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#prepare-tidy-tables-for-plotting"><i class="fa fa-check"></i><b>12.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="12.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#macro-samples"><i class="fa fa-check"></i><b>12.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases-reads"><i class="fa fa-check"></i><b>12.2.1</b> Number of bases &amp; reads</a></li>
+<li class="chapter" data-level="12.2.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped"><i class="fa fa-check"></i><b>12.2.2</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.2.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#composition-of-reads-vs.-references"><i class="fa fa-check"></i><b>12.2.3</b> Composition of reads vs. references</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#micro-samples"><i class="fa fa-check"></i><b>12.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-bases"><i class="fa fa-check"></i><b>12.3.1</b> Number of bases</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#number-of-reads-after-trimming"><i class="fa fa-check"></i><b>12.3.2</b> Number of reads after trimming</a></li>
+<li class="chapter" data-level="12.3.3" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#of-reads-mapped-to-references-removed-by-trimming-unmapped-1"><i class="fa fa-check"></i><b>12.3.3</b> % of reads mapped to references, removed by trimming, unmapped</a></li>
+<li class="chapter" data-level="12.3.4" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts"><i class="fa fa-check"></i><b>12.3.4</b> Collection attempts</a></li>
+<li class="chapter" data-level="12.3.5" data-path="sequencing-statistics.html"><a href="sequencing-statistics.html#collection-attempts-vs-filtering-retention"><i class="fa fa-check"></i><b>12.3.5</b> Collection attempts vs filtering retention</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bacterial-load.html"><a href="bacterial-load.html"><i class="fa fa-check"></i><b>13</b> Bacterial Load</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="bacterial-load.html"><a href="bacterial-load.html#macro-samples-1"><i class="fa fa-check"></i><b>13.1</b> Macro-samples</a></li>
+<li class="chapter" data-level="13.2" data-path="bacterial-load.html"><a href="bacterial-load.html#micro-samples-1"><i class="fa fa-check"></i><b>13.2</b> Micro-samples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="alpha-diversity.html"><a href="alpha-diversity.html"><i class="fa fa-check"></i><b>14</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#prepare-tidy-tables-for-plotting-1"><i class="fa fa-check"></i><b>14.1</b> Prepare tidy tables for plotting</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-tidy-tables"><i class="fa fa-check"></i><b>14.1.1</b> Alpha diversity tidy tables</a></li>
+<li class="chapter" data-level="14.1.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#genome-counts-tidy-tables"><i class="fa fa-check"></i><b>14.1.2</b> Genome counts tidy tables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#macro-samples-2"><i class="fa fa-check"></i><b>14.2</b> Macro-samples</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div"><i class="fa fa-check"></i><b>14.2.1</b> Alpha-div</a></li>
+<li class="chapter" data-level="14.2.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size"><i class="fa fa-check"></i><b>14.2.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="alpha-diversity.html"><a href="alpha-diversity.html#micro-samples-2"><i class="fa fa-check"></i><b>14.3</b> Micro-samples</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-diversity-1"><i class="fa fa-check"></i><b>14.3.1</b> Alpha diversity</a></li>
+<li class="chapter" data-level="14.3.2" data-path="alpha-diversity.html"><a href="alpha-diversity.html#alpha-div-vs-genome-size-1"><i class="fa fa-check"></i><b>14.3.2</b> Alpha-div vs genome size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html"><i class="fa fa-check"></i><b>15</b> Beta Diversity - Macro Samples</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#prepare-tidy-tables-for-plotting-2"><i class="fa fa-check"></i><b>15.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="15.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-level"><i class="fa fa-check"></i><b>15.2</b> Species level</a></li>
+<li class="chapter" data-level="15.3" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#genus-level"><i class="fa fa-check"></i><b>15.3</b> Genus level</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#permanova"><i class="fa fa-check"></i><b>15.3.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="15.3.2" data-path="beta-diversity---macro-samples.html"><a href="beta-diversity---macro-samples.html#species-representative-genomes-overlap"><i class="fa fa-check"></i><b>15.3.2</b> Species representative genomes overlap</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html"><i class="fa fa-check"></i><b>16</b> Beta Diversity - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#prepare-tidy-tables-for-plotting-3"><i class="fa fa-check"></i><b>16.1</b> Prepare tidy tables for plotting</a></li>
+<li class="chapter" data-level="16.2" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#species-level-1"><i class="fa fa-check"></i><b>16.2</b> Species level</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="beta-diversity---micro-samples.html"><a href="beta-diversity---micro-samples.html#permanova-1"><i class="fa fa-check"></i><b>16.2.1</b> PERMANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html"><i class="fa fa-check"></i><b>17</b> Beta Diversity - Macro vs Micro Comparison</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#genomes-overlap"><i class="fa fa-check"></i><b>17.1</b> Genomes overlap</a></li>
+<li class="chapter" data-level="17.2" data-path="beta-diversity---macro-vs-micro-comparison.html"><a href="beta-diversity---macro-vs-micro-comparison.html#micro-vs-macro-genus-level"><i class="fa fa-check"></i><b>17.2</b> Micro vs Macro Genus level</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html"><i class="fa fa-check"></i><b>18</b> Spatial Analysis - Micro Samples</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#functions"><i class="fa fa-check"></i><b>18.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#spatial_cryosections"><i class="fa fa-check"></i><b>18.1.1</b> spatial_cryosections</a></li>
+<li class="chapter" data-level="18.1.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning"><i class="fa fa-check"></i><b>18.1.2</b> Additive diversity partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#load-data"><i class="fa fa-check"></i><b>18.2</b> Load data</a></li>
+<li class="chapter" data-level="18.3" data-path="spatial-analysis---micro-samples.html"><a href="spatial-analysis---micro-samples.html#extended-rlq-analysis"><i class="fa fa-check"></i><b>18.3</b> Extended RLQ analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html"><i class="fa fa-check"></i><b>19</b> Export Data for MicrobeTag</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#load-required-data-4"><i class="fa fa-check"></i><b>19.1</b> Load required data</a></li>
+<li class="chapter" data-level="19.2" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-sample-metadata-macro-samples"><i class="fa fa-check"></i><b>19.2</b> Export sample metadata (macro samples)</a></li>
+<li class="chapter" data-level="19.3" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-metabolites-data-mm-samples"><i class="fa fa-check"></i><b>19.3</b> Export metabolites data (MM samples)</a></li>
+<li class="chapter" data-level="19.4" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-metadata"><i class="fa fa-check"></i><b>19.4</b> Export genome metadata</a></li>
+<li class="chapter" data-level="19.5" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#export-genome-counts-macro-samples-filtered"><i class="fa fa-check"></i><b>19.5</b> Export genome counts (macro samples, filtered)</a></li>
+<li class="chapter" data-level="19.6" data-path="export-data-for-microbetag.html"><a href="export-data-for-microbetag.html#summary"><i class="fa fa-check"></i><b>19.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="package-versions.html"><a href="package-versions.html"><i class="fa fa-check"></i><b>20</b> Package Versions</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">3D’omics | Histomonas Turkeys</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-analysis---micro-samples" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">18</span> Spatial Analysis - Micro Samples<a href="spatial-analysis---micro-samples.html#spatial-analysis---micro-samples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb258-1"><a href="spatial-analysis---micro-samples.html#cb258-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/sample_metadata.Rdata&quot;</span>)</span>
+<span id="cb258-2"><a href="spatial-analysis---micro-samples.html#cb258-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/counts.Rdata&quot;</span>)</span>
+<span id="cb258-3"><a href="spatial-analysis---micro-samples.html#cb258-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/micro/seq_stats.Rdata&quot;</span>)</span>
+<span id="cb258-4"><a href="spatial-analysis---micro-samples.html#cb258-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/data_colors.Rdata&quot;</span>)</span></code></pre></div>
+<p>Amalia’s comment: Code from Inaki, adapted by Antton and Carlotta. I tried to adapt it for Deliverable 6.3, not everything works yet.</p>
+<div id="functions" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> Functions<a href="spatial-analysis---micro-samples.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="spatial_cryosections" class="section level3 hasAnchor" number="18.1.1">
+<h3><span class="header-section-number">18.1.1</span> spatial_cryosections<a href="spatial-analysis---micro-samples.html#spatial_cryosections" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb259-1"><a href="spatial-analysis---micro-samples.html#cb259-1" tabindex="-1"></a>spatial_cryosections <span class="ot">&lt;-</span> <span class="cf">function</span>(cryosection_list, metadata_df, comm_clr) {</span>
+<span id="cb259-2"><a href="spatial-analysis---micro-samples.html#cb259-2" tabindex="-1"></a>  cryosection_dfs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-3"><a href="spatial-analysis---micro-samples.html#cb259-3" tabindex="-1"></a>  mantel_results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-4"><a href="spatial-analysis---micro-samples.html#cb259-4" tabindex="-1"></a>  mantelcor_results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-5"><a href="spatial-analysis---micro-samples.html#cb259-5" tabindex="-1"></a>  decay_dfs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-6"><a href="spatial-analysis---micro-samples.html#cb259-6" tabindex="-1"></a>  distance_decay_plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-7"><a href="spatial-analysis---micro-samples.html#cb259-7" tabindex="-1"></a>  structure_results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb259-8"><a href="spatial-analysis---micro-samples.html#cb259-8" tabindex="-1"></a></span>
+<span id="cb259-9"><a href="spatial-analysis---micro-samples.html#cb259-9" tabindex="-1"></a>  <span class="cf">for</span> (cryosection <span class="cf">in</span> cryosection_list) {</span>
+<span id="cb259-10"><a href="spatial-analysis---micro-samples.html#cb259-10" tabindex="-1"></a>    <span class="co"># Filter metadata for this section</span></span>
+<span id="cb259-11"><a href="spatial-analysis---micro-samples.html#cb259-11" tabindex="-1"></a>    metadata_data <span class="ot">&lt;-</span> metadata_df <span class="sc">%&gt;%</span></span>
+<span id="cb259-12"><a href="spatial-analysis---micro-samples.html#cb259-12" tabindex="-1"></a>      <span class="fu">filter</span>(cryosection <span class="sc">==</span> <span class="sc">!!</span>cryosection, <span class="sc">!</span><span class="fu">is.na</span>(.data<span class="sc">$</span>Xcoord), <span class="sc">!</span><span class="fu">is.na</span>(.data<span class="sc">$</span>Ycoord))</span>
+<span id="cb259-13"><a href="spatial-analysis---micro-samples.html#cb259-13" tabindex="-1"></a></span>
+<span id="cb259-14"><a href="spatial-analysis---micro-samples.html#cb259-14" tabindex="-1"></a>    <span class="co"># Filter community data</span></span>
+<span id="cb259-15"><a href="spatial-analysis---micro-samples.html#cb259-15" tabindex="-1"></a>    comm_data <span class="ot">&lt;-</span> comm_clr <span class="sc">%&gt;%</span></span>
+<span id="cb259-16"><a href="spatial-analysis---micro-samples.html#cb259-16" tabindex="-1"></a>      <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb259-17"><a href="spatial-analysis---micro-samples.html#cb259-17" tabindex="-1"></a>      <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb259-18"><a href="spatial-analysis---micro-samples.html#cb259-18" tabindex="-1"></a>      <span class="fu">filter</span>(microsample <span class="sc">%in%</span> metadata_data<span class="sc">$</span>microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb259-19"><a href="spatial-analysis---micro-samples.html#cb259-19" tabindex="-1"></a>      <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>)</span>
+<span id="cb259-20"><a href="spatial-analysis---micro-samples.html#cb259-20" tabindex="-1"></a></span>
+<span id="cb259-21"><a href="spatial-analysis---micro-samples.html#cb259-21" tabindex="-1"></a>    cryosection_dfs[[cryosection]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb259-22"><a href="spatial-analysis---micro-samples.html#cb259-22" tabindex="-1"></a>      <span class="at">comm_clr =</span> comm_data,</span>
+<span id="cb259-23"><a href="spatial-analysis---micro-samples.html#cb259-23" tabindex="-1"></a>      <span class="at">metadata =</span> metadata_data</span>
+<span id="cb259-24"><a href="spatial-analysis---micro-samples.html#cb259-24" tabindex="-1"></a>    )</span>
+<span id="cb259-25"><a href="spatial-analysis---micro-samples.html#cb259-25" tabindex="-1"></a></span>
+<span id="cb259-26"><a href="spatial-analysis---micro-samples.html#cb259-26" tabindex="-1"></a>    <span class="co"># Mantel correlogram</span></span>
+<span id="cb259-27"><a href="spatial-analysis---micro-samples.html#cb259-27" tabindex="-1"></a>    mantel <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">mantel</span>(</span>
+<span id="cb259-28"><a href="spatial-analysis---micro-samples.html#cb259-28" tabindex="-1"></a>      <span class="fu">dist</span>(comm_data),</span>
+<span id="cb259-29"><a href="spatial-analysis---micro-samples.html#cb259-29" tabindex="-1"></a>      <span class="fu">dist</span>(metadata_data[, <span class="fu">c</span>(<span class="st">&quot;Xcoord&quot;</span>, <span class="st">&quot;Ycoord&quot;</span>)]),</span>
+<span id="cb259-30"><a href="spatial-analysis---micro-samples.html#cb259-30" tabindex="-1"></a>      <span class="at">permutations =</span> <span class="dv">999</span></span>
+<span id="cb259-31"><a href="spatial-analysis---micro-samples.html#cb259-31" tabindex="-1"></a>    )</span>
+<span id="cb259-32"><a href="spatial-analysis---micro-samples.html#cb259-32" tabindex="-1"></a>    mantel_results[[cryosection]] <span class="ot">&lt;-</span> mantel</span>
+<span id="cb259-33"><a href="spatial-analysis---micro-samples.html#cb259-33" tabindex="-1"></a></span>
+<span id="cb259-34"><a href="spatial-analysis---micro-samples.html#cb259-34" tabindex="-1"></a>    <span class="co"># Mantel correlogram</span></span>
+<span id="cb259-35"><a href="spatial-analysis---micro-samples.html#cb259-35" tabindex="-1"></a>    correlog <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">mantel.correlog</span>(</span>
+<span id="cb259-36"><a href="spatial-analysis---micro-samples.html#cb259-36" tabindex="-1"></a>      <span class="at">D.eco =</span> <span class="fu">dist</span>(comm_data),</span>
+<span id="cb259-37"><a href="spatial-analysis---micro-samples.html#cb259-37" tabindex="-1"></a>      <span class="at">D.geo =</span> <span class="fu">dist</span>(metadata_data[, <span class="fu">c</span>(<span class="st">&quot;Xcoord&quot;</span>, <span class="st">&quot;Ycoord&quot;</span>)]),</span>
+<span id="cb259-38"><a href="spatial-analysis---micro-samples.html#cb259-38" tabindex="-1"></a>      <span class="at">nperm =</span> <span class="dv">999</span></span>
+<span id="cb259-39"><a href="spatial-analysis---micro-samples.html#cb259-39" tabindex="-1"></a>    )</span>
+<span id="cb259-40"><a href="spatial-analysis---micro-samples.html#cb259-40" tabindex="-1"></a>    mantelcor_results[[cryosection]] <span class="ot">&lt;-</span> correlog</span>
+<span id="cb259-41"><a href="spatial-analysis---micro-samples.html#cb259-41" tabindex="-1"></a></span>
+<span id="cb259-42"><a href="spatial-analysis---micro-samples.html#cb259-42" tabindex="-1"></a>    <span class="co"># Distance decay</span></span>
+<span id="cb259-43"><a href="spatial-analysis---micro-samples.html#cb259-43" tabindex="-1"></a>    toplot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb259-44"><a href="spatial-analysis---micro-samples.html#cb259-44" tabindex="-1"></a>      <span class="at">spat_dist =</span> <span class="fu">as.numeric</span>(<span class="fu">dist</span>(metadata_data[, <span class="fu">c</span>(<span class="st">&quot;Xcoord&quot;</span>, <span class="st">&quot;Ycoord&quot;</span>)])),</span>
+<span id="cb259-45"><a href="spatial-analysis---micro-samples.html#cb259-45" tabindex="-1"></a>      <span class="at">comm_dist =</span> <span class="fu">as.numeric</span>(<span class="fu">dist</span>(comm_data))</span>
+<span id="cb259-46"><a href="spatial-analysis---micro-samples.html#cb259-46" tabindex="-1"></a>    )</span>
+<span id="cb259-47"><a href="spatial-analysis---micro-samples.html#cb259-47" tabindex="-1"></a>    decay_dfs[[cryosection]] <span class="ot">&lt;-</span> toplot</span>
+<span id="cb259-48"><a href="spatial-analysis---micro-samples.html#cb259-48" tabindex="-1"></a></span>
+<span id="cb259-49"><a href="spatial-analysis---micro-samples.html#cb259-49" tabindex="-1"></a>    <span class="co"># Plot</span></span>
+<span id="cb259-50"><a href="spatial-analysis---micro-samples.html#cb259-50" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(toplot, <span class="fu">aes</span>(<span class="at">x =</span> spat_dist, <span class="at">y =</span> comm_dist)) <span class="sc">+</span></span>
+<span id="cb259-51"><a href="spatial-analysis---micro-samples.html#cb259-51" tabindex="-1"></a>      <span class="co"># geom_point() +</span></span>
+<span id="cb259-52"><a href="spatial-analysis---micro-samples.html#cb259-52" tabindex="-1"></a>      <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb259-53"><a href="spatial-analysis---micro-samples.html#cb259-53" tabindex="-1"></a>      <span class="fu">xlab</span>(<span class="st">&quot;Spatial distance (μm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb259-54"><a href="spatial-analysis---micro-samples.html#cb259-54" tabindex="-1"></a>      <span class="fu">ylab</span>(<span class="st">&quot;Aitchison </span><span class="sc">\n</span><span class="st">distance&quot;</span>) <span class="sc">+</span></span>
+<span id="cb259-55"><a href="spatial-analysis---micro-samples.html#cb259-55" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb259-56"><a href="spatial-analysis---micro-samples.html#cb259-56" tabindex="-1"></a>      custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb259-57"><a href="spatial-analysis---micro-samples.html#cb259-57" tabindex="-1"></a>      <span class="co"># ggtitle(paste(&quot;Distance Decay -&quot;, cryosection))</span></span>
+<span id="cb259-58"><a href="spatial-analysis---micro-samples.html#cb259-58" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste</span>(cryosection))</span>
+<span id="cb259-59"><a href="spatial-analysis---micro-samples.html#cb259-59" tabindex="-1"></a>    distance_decay_plots[[cryosection]] <span class="ot">&lt;-</span> p</span>
+<span id="cb259-60"><a href="spatial-analysis---micro-samples.html#cb259-60" tabindex="-1"></a></span>
+<span id="cb259-61"><a href="spatial-analysis---micro-samples.html#cb259-61" tabindex="-1"></a>    <span class="co"># Print summary</span></span>
+<span id="cb259-62"><a href="spatial-analysis---micro-samples.html#cb259-62" tabindex="-1"></a>    <span class="co"># print(paste(&quot;Summary for&quot;, cryosection))</span></span>
+<span id="cb259-63"><a href="spatial-analysis---micro-samples.html#cb259-63" tabindex="-1"></a>    <span class="co"># print(summary(lm(comm_dist ~ spat_dist, data = toplot)))</span></span>
+<span id="cb259-64"><a href="spatial-analysis---micro-samples.html#cb259-64" tabindex="-1"></a></span>
+<span id="cb259-65"><a href="spatial-analysis---micro-samples.html#cb259-65" tabindex="-1"></a>    <span class="do">#### Complex spatial structures</span></span>
+<span id="cb259-66"><a href="spatial-analysis---micro-samples.html#cb259-66" tabindex="-1"></a>    <span class="co"># set.seed(111)</span></span>
+<span id="cb259-67"><a href="spatial-analysis---micro-samples.html#cb259-67" tabindex="-1"></a>    <span class="co"># spat_SWNs&lt;-listw.candidates(data.frame(metadata_data[,c(&quot;Xcoord&quot;,&quot;Ycoord&quot;)]),</span></span>
+<span id="cb259-68"><a href="spatial-analysis---micro-samples.html#cb259-68" tabindex="-1"></a>    <span class="co"># nb = c(&quot;gab&quot;),</span></span>
+<span id="cb259-69"><a href="spatial-analysis---micro-samples.html#cb259-69" tabindex="-1"></a>    <span class="co"># weights = c(&quot;fdown&quot;, &quot;fup&quot;),</span></span>
+<span id="cb259-70"><a href="spatial-analysis---micro-samples.html#cb259-70" tabindex="-1"></a>    <span class="co"># y_fdown = c(2,5), y_fup = c(0.1,0.5))</span></span>
+<span id="cb259-71"><a href="spatial-analysis---micro-samples.html#cb259-71" tabindex="-1"></a>    <span class="co"># W_sel &lt;- listw.select(comm_data, spat_SWNs, MEM.autocor = &quot;positive&quot;,</span></span>
+<span id="cb259-72"><a href="spatial-analysis---micro-samples.html#cb259-72" tabindex="-1"></a>    <span class="co"># p.adjust = T, method=&quot;FWD&quot;)</span></span>
+<span id="cb259-73"><a href="spatial-analysis---micro-samples.html#cb259-73" tabindex="-1"></a>    <span class="co"># structure_results[[cryosection]] &lt;- W_sel</span></span>
+<span id="cb259-74"><a href="spatial-analysis---micro-samples.html#cb259-74" tabindex="-1"></a>  }</span>
+<span id="cb259-75"><a href="spatial-analysis---micro-samples.html#cb259-75" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb259-76"><a href="spatial-analysis---micro-samples.html#cb259-76" tabindex="-1"></a>    <span class="at">cryosection_dfs =</span> cryosection_dfs,</span>
+<span id="cb259-77"><a href="spatial-analysis---micro-samples.html#cb259-77" tabindex="-1"></a>    <span class="at">mantel_results =</span> mantel_results,</span>
+<span id="cb259-78"><a href="spatial-analysis---micro-samples.html#cb259-78" tabindex="-1"></a>    <span class="at">mantelcor_results =</span> mantelcor_results,</span>
+<span id="cb259-79"><a href="spatial-analysis---micro-samples.html#cb259-79" tabindex="-1"></a>    <span class="at">decay_dfs =</span> decay_dfs,</span>
+<span id="cb259-80"><a href="spatial-analysis---micro-samples.html#cb259-80" tabindex="-1"></a>    <span class="at">distance_decay_plots =</span> distance_decay_plots,</span>
+<span id="cb259-81"><a href="spatial-analysis---micro-samples.html#cb259-81" tabindex="-1"></a>    <span class="at">structure_results =</span> structure_results</span>
+<span id="cb259-82"><a href="spatial-analysis---micro-samples.html#cb259-82" tabindex="-1"></a>  ))</span>
+<span id="cb259-83"><a href="spatial-analysis---micro-samples.html#cb259-83" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="additive-diversity-partitioning" class="section level3 hasAnchor" number="18.1.2">
+<h3><span class="header-section-number">18.1.2</span> Additive diversity partitioning<a href="spatial-analysis---micro-samples.html#additive-diversity-partitioning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb260-1"><a href="spatial-analysis---micro-samples.html#cb260-1" tabindex="-1"></a><span class="co"># Function to calculate hierarchical additive partitioning</span></span>
+<span id="cb260-2"><a href="spatial-analysis---micro-samples.html#cb260-2" tabindex="-1"></a>hier_adipart <span class="ot">&lt;-</span> <span class="cf">function</span>(comm, hier, <span class="at">nsim =</span> <span class="dv">999</span>) {</span>
+<span id="cb260-3"><a href="spatial-analysis---micro-samples.html#cb260-3" tabindex="-1"></a>  comm_bin <span class="ot">&lt;-</span> (<span class="fu">as.matrix</span>(comm) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">*</span> <span class="dv">1</span></span>
+<span id="cb260-4"><a href="spatial-analysis---micro-samples.html#cb260-4" tabindex="-1"></a>  alpha_obs <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>(comm_bin))</span>
+<span id="cb260-5"><a href="spatial-analysis---micro-samples.html#cb260-5" tabindex="-1"></a></span>
+<span id="cb260-6"><a href="spatial-analysis---micro-samples.html#cb260-6" tabindex="-1"></a>  get_level_richness <span class="ot">&lt;-</span> <span class="cf">function</span>(fac) {</span>
+<span id="cb260-7"><a href="spatial-analysis---micro-samples.html#cb260-7" tabindex="-1"></a>    <span class="fu">tapply</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(comm_bin)), fac, <span class="cf">function</span>(idx) {</span>
+<span id="cb260-8"><a href="spatial-analysis---micro-samples.html#cb260-8" tabindex="-1"></a>      <span class="fu">sum</span>(<span class="fu">colSums</span>(comm_bin[idx, , <span class="at">drop =</span> <span class="cn">FALSE</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb260-9"><a href="spatial-analysis---micro-samples.html#cb260-9" tabindex="-1"></a>    }) <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span>
+<span id="cb260-10"><a href="spatial-analysis---micro-samples.html#cb260-10" tabindex="-1"></a>  }</span>
+<span id="cb260-11"><a href="spatial-analysis---micro-samples.html#cb260-11" tabindex="-1"></a></span>
+<span id="cb260-12"><a href="spatial-analysis---micro-samples.html#cb260-12" tabindex="-1"></a>  level_names <span class="ot">&lt;-</span> <span class="fu">names</span>(hier)</span>
+<span id="cb260-13"><a href="spatial-analysis---micro-samples.html#cb260-13" tabindex="-1"></a>  level_rich  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(hier, get_level_richness)</span>
+<span id="cb260-14"><a href="spatial-analysis---micro-samples.html#cb260-14" tabindex="-1"></a>  gamma_obs   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">colSums</span>(comm_bin) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb260-15"><a href="spatial-analysis---micro-samples.html#cb260-15" tabindex="-1"></a></span>
+<span id="cb260-16"><a href="spatial-analysis---micro-samples.html#cb260-16" tabindex="-1"></a>  <span class="co"># exactly L betas</span></span>
+<span id="cb260-17"><a href="spatial-analysis---micro-samples.html#cb260-17" tabindex="-1"></a>  betas <span class="ot">&lt;-</span> <span class="fu">c</span>(level_rich[<span class="dv">1</span>] <span class="sc">-</span> alpha_obs, <span class="fu">diff</span>(level_rich))</span>
+<span id="cb260-18"><a href="spatial-analysis---micro-samples.html#cb260-18" tabindex="-1"></a>  <span class="fu">names</span>(betas) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;beta (&quot;</span>, level_names, <span class="st">&quot;)&quot;</span>)</span>
+<span id="cb260-19"><a href="spatial-analysis---micro-samples.html#cb260-19" tabindex="-1"></a>  observed <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">alpha =</span> alpha_obs, betas, <span class="at">gamma =</span> gamma_obs)</span>
+<span id="cb260-20"><a href="spatial-analysis---micro-samples.html#cb260-20" tabindex="-1"></a></span>
+<span id="cb260-21"><a href="spatial-analysis---micro-samples.html#cb260-21" tabindex="-1"></a>  stat_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb260-22"><a href="spatial-analysis---micro-samples.html#cb260-22" tabindex="-1"></a>    x <span class="ot">&lt;-</span> (x <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">*</span> <span class="dv">1</span></span>
+<span id="cb260-23"><a href="spatial-analysis---micro-samples.html#cb260-23" tabindex="-1"></a>    alpha <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>(x))</span>
+<span id="cb260-24"><a href="spatial-analysis---micro-samples.html#cb260-24" tabindex="-1"></a>    lvl <span class="ot">&lt;-</span> <span class="fu">sapply</span>(hier, <span class="cf">function</span>(fac) {</span>
+<span id="cb260-25"><a href="spatial-analysis---micro-samples.html#cb260-25" tabindex="-1"></a>      <span class="fu">tapply</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(x)), fac, <span class="cf">function</span>(idx)</span>
+<span id="cb260-26"><a href="spatial-analysis---micro-samples.html#cb260-26" tabindex="-1"></a>        <span class="fu">sum</span>(<span class="fu">colSums</span>(x[idx, , <span class="at">drop =</span> <span class="cn">FALSE</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span>
+<span id="cb260-27"><a href="spatial-analysis---micro-samples.html#cb260-27" tabindex="-1"></a>    })</span>
+<span id="cb260-28"><a href="spatial-analysis---micro-samples.html#cb260-28" tabindex="-1"></a>    gamma <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">colSums</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb260-29"><a href="spatial-analysis---micro-samples.html#cb260-29" tabindex="-1"></a>    betas <span class="ot">&lt;-</span> <span class="fu">c</span>(lvl[<span class="dv">1</span>] <span class="sc">-</span> alpha, <span class="fu">diff</span>(lvl))     <span class="co"># ✅ no gamma - last_level</span></span>
+<span id="cb260-30"><a href="spatial-analysis---micro-samples.html#cb260-30" tabindex="-1"></a>    <span class="fu">names</span>(betas) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;beta (&quot;</span>, level_names, <span class="st">&quot;)&quot;</span>)</span>
+<span id="cb260-31"><a href="spatial-analysis---micro-samples.html#cb260-31" tabindex="-1"></a>    <span class="fu">c</span>(<span class="at">alpha =</span> alpha, betas, <span class="at">gamma =</span> gamma)</span>
+<span id="cb260-32"><a href="spatial-analysis---micro-samples.html#cb260-32" tabindex="-1"></a>  }</span>
+<span id="cb260-33"><a href="spatial-analysis---micro-samples.html#cb260-33" tabindex="-1"></a></span>
+<span id="cb260-34"><a href="spatial-analysis---micro-samples.html#cb260-34" tabindex="-1"></a>  sim <span class="ot">&lt;-</span> <span class="fu">oecosimu</span>(comm_bin, stat_fun, <span class="at">method =</span> <span class="st">&quot;r2dtable&quot;</span>, <span class="at">nsimul =</span> nsim)</span>
+<span id="cb260-35"><a href="spatial-analysis---micro-samples.html#cb260-35" tabindex="-1"></a></span>
+<span id="cb260-36"><a href="spatial-analysis---micro-samples.html#cb260-36" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb260-37"><a href="spatial-analysis---micro-samples.html#cb260-37" tabindex="-1"></a>    <span class="at">component =</span> <span class="fu">names</span>(observed),</span>
+<span id="cb260-38"><a href="spatial-analysis---micro-samples.html#cb260-38" tabindex="-1"></a>    <span class="at">observed  =</span> <span class="fu">as.numeric</span>(observed),</span>
+<span id="cb260-39"><a href="spatial-analysis---micro-samples.html#cb260-39" tabindex="-1"></a>    <span class="at">expected  =</span> <span class="fu">as.numeric</span>(sim<span class="sc">$</span>oecosimu<span class="sc">$</span>mean),</span>
+<span id="cb260-40"><a href="spatial-analysis---micro-samples.html#cb260-40" tabindex="-1"></a>    <span class="at">pval      =</span> <span class="fu">as.numeric</span>(sim<span class="sc">$</span>oecosimu<span class="sc">$</span>pval)</span>
+<span id="cb260-41"><a href="spatial-analysis---micro-samples.html#cb260-41" tabindex="-1"></a>  )</span>
+<span id="cb260-42"><a href="spatial-analysis---micro-samples.html#cb260-42" tabindex="-1"></a>}</span>
+<span id="cb260-43"><a href="spatial-analysis---micro-samples.html#cb260-43" tabindex="-1"></a></span>
+<span id="cb260-44"><a href="spatial-analysis---micro-samples.html#cb260-44" tabindex="-1"></a></span>
+<span id="cb260-45"><a href="spatial-analysis---micro-samples.html#cb260-45" tabindex="-1"></a></span>
+<span id="cb260-46"><a href="spatial-analysis---micro-samples.html#cb260-46" tabindex="-1"></a></span>
+<span id="cb260-47"><a href="spatial-analysis---micro-samples.html#cb260-47" tabindex="-1"></a>plot_hier_adipart <span class="ot">&lt;-</span> <span class="cf">function</span>(res, <span class="at">title =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb260-48"><a href="spatial-analysis---micro-samples.html#cb260-48" tabindex="-1"></a>  p_to_stars <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">case_when</span>(</span>
+<span id="cb260-49"><a href="spatial-analysis---micro-samples.html#cb260-49" tabindex="-1"></a>    p <span class="sc">&lt;=</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">&quot;***&quot;</span>,</span>
+<span id="cb260-50"><a href="spatial-analysis---micro-samples.html#cb260-50" tabindex="-1"></a>    p <span class="sc">&lt;=</span> <span class="fl">0.01</span>  <span class="sc">~</span> <span class="st">&quot;**&quot;</span>,</span>
+<span id="cb260-51"><a href="spatial-analysis---micro-samples.html#cb260-51" tabindex="-1"></a>    p <span class="sc">&lt;=</span> <span class="fl">0.05</span>  <span class="sc">~</span> <span class="st">&quot;*&quot;</span>,</span>
+<span id="cb260-52"><a href="spatial-analysis---micro-samples.html#cb260-52" tabindex="-1"></a>    <span class="cn">TRUE</span>      <span class="sc">~</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb260-53"><a href="spatial-analysis---micro-samples.html#cb260-53" tabindex="-1"></a>  )</span>
+<span id="cb260-54"><a href="spatial-analysis---micro-samples.html#cb260-54" tabindex="-1"></a>  </span>
+<span id="cb260-55"><a href="spatial-analysis---micro-samples.html#cb260-55" tabindex="-1"></a>  res_long <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb260-56"><a href="spatial-analysis---micro-samples.html#cb260-56" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="fu">c</span>(observed, expected), <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb260-57"><a href="spatial-analysis---micro-samples.html#cb260-57" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb260-58"><a href="spatial-analysis---micro-samples.html#cb260-58" tabindex="-1"></a>    <span class="at">component =</span> <span class="fu">factor</span>(</span>
+<span id="cb260-59"><a href="spatial-analysis---micro-samples.html#cb260-59" tabindex="-1"></a>      component,</span>
+<span id="cb260-60"><a href="spatial-analysis---micro-samples.html#cb260-60" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>,</span>
+<span id="cb260-61"><a href="spatial-analysis---micro-samples.html#cb260-61" tabindex="-1"></a>                 <span class="st">&quot;beta (cryosection)&quot;</span>,</span>
+<span id="cb260-62"><a href="spatial-analysis---micro-samples.html#cb260-62" tabindex="-1"></a>                 <span class="st">&quot;beta (animal)&quot;</span>,</span>
+<span id="cb260-63"><a href="spatial-analysis---micro-samples.html#cb260-63" tabindex="-1"></a>                 <span class="st">&quot;beta (treatment)&quot;</span>,</span>
+<span id="cb260-64"><a href="spatial-analysis---micro-samples.html#cb260-64" tabindex="-1"></a>                 <span class="st">&quot;gamma&quot;</span>)</span>
+<span id="cb260-65"><a href="spatial-analysis---micro-samples.html#cb260-65" tabindex="-1"></a>    )</span>
+<span id="cb260-66"><a href="spatial-analysis---micro-samples.html#cb260-66" tabindex="-1"></a>  )</span>
+<span id="cb260-67"><a href="spatial-analysis---micro-samples.html#cb260-67" tabindex="-1"></a>  </span>
+<span id="cb260-68"><a href="spatial-analysis---micro-samples.html#cb260-68" tabindex="-1"></a>  <span class="fu">ggplot</span>(res_long, <span class="fu">aes</span>(<span class="at">x =</span> component, <span class="at">y =</span> value, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb260-69"><a href="spatial-analysis---micro-samples.html#cb260-69" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.7</span>), <span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb260-70"><a href="spatial-analysis---micro-samples.html#cb260-70" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> res, <span class="fu">aes</span>(<span class="at">x =</span> component,</span>
+<span id="cb260-71"><a href="spatial-analysis---micro-samples.html#cb260-71" tabindex="-1"></a>                              <span class="at">y =</span> <span class="fu">pmax</span>(observed, expected) <span class="sc">*</span> <span class="fl">1.05</span>,</span>
+<span id="cb260-72"><a href="spatial-analysis---micro-samples.html#cb260-72" tabindex="-1"></a>                              <span class="at">label =</span> <span class="fu">p_to_stars</span>(pval)),</span>
+<span id="cb260-73"><a href="spatial-analysis---micro-samples.html#cb260-73" tabindex="-1"></a>              <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb260-74"><a href="spatial-analysis---micro-samples.html#cb260-74" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Richness&quot;</span>, <span class="at">fill =</span> <span class="cn">NULL</span>, <span class="at">title =</span> title) <span class="sc">+</span></span>
+<span id="cb260-75"><a href="spatial-analysis---micro-samples.html#cb260-75" tabindex="-1"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb260-76"><a href="spatial-analysis---micro-samples.html#cb260-76" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb260-77"><a href="spatial-analysis---micro-samples.html#cb260-77" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb260-78"><a href="spatial-analysis---micro-samples.html#cb260-78" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="load-data" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">18.2</span> Load data<a href="spatial-analysis---micro-samples.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb261-1"><a href="spatial-analysis---micro-samples.html#cb261-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> plot_data_stats <span class="sc">%&gt;%</span></span>
+<span id="cb261-2"><a href="spatial-analysis---micro-samples.html#cb261-2" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb261-3"><a href="spatial-analysis---micro-samples.html#cb261-3" tabindex="-1"></a>    treatment <span class="sc">==</span> <span class="st">&quot;TM3&quot;</span>,</span>
+<span id="cb261-4"><a href="spatial-analysis---micro-samples.html#cb261-4" tabindex="-1"></a>    age_category <span class="sc">==</span> <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb261-5"><a href="spatial-analysis---micro-samples.html#cb261-5" tabindex="-1"></a>    type_simple <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;P&quot;</span>),</span>
+<span id="cb261-6"><a href="spatial-analysis---micro-samples.html#cb261-6" tabindex="-1"></a>    filter_status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Retained by filtering&quot;</span>),</span>
+<span id="cb261-7"><a href="spatial-analysis---micro-samples.html#cb261-7" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(Xcoord))</span>
+<span id="cb261-8"><a href="spatial-analysis---micro-samples.html#cb261-8" tabindex="-1"></a></span>
+<span id="cb261-9"><a href="spatial-analysis---micro-samples.html#cb261-9" tabindex="-1"></a>comm_data <span class="ot">&lt;-</span> genome_counts_filt_30_zerosrem <span class="sc">%&gt;%</span></span>
+<span id="cb261-10"><a href="spatial-analysis---micro-samples.html#cb261-10" tabindex="-1"></a>  <span class="fu">select</span>(genome, metadata<span class="sc">$</span>microsample) <span class="sc">%&gt;%</span></span>
+<span id="cb261-11"><a href="spatial-analysis---micro-samples.html#cb261-11" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb261-12"><a href="spatial-analysis---micro-samples.html#cb261-12" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb261-13"><a href="spatial-analysis---micro-samples.html#cb261-13" tabindex="-1"></a>  <span class="fu">row_to_names</span>(<span class="at">row_number =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb261-14"><a href="spatial-analysis---micro-samples.html#cb261-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), as.numeric))</span>
+<span id="cb261-15"><a href="spatial-analysis---micro-samples.html#cb261-15" tabindex="-1"></a></span>
+<span id="cb261-16"><a href="spatial-analysis---micro-samples.html#cb261-16" tabindex="-1"></a><span class="co"># table(rowSums(comm_data) &gt; 0)</span></span>
+<span id="cb261-17"><a href="spatial-analysis---micro-samples.html#cb261-17" tabindex="-1"></a><span class="co"># all(metadata$microsample == rownames(comm_data))</span></span>
+<span id="cb261-18"><a href="spatial-analysis---micro-samples.html#cb261-18" tabindex="-1"></a><span class="co"># table(is.na(comm_data))</span></span>
+<span id="cb261-19"><a href="spatial-analysis---micro-samples.html#cb261-19" tabindex="-1"></a><span class="co"># table(metadata$section, metadata$cryosection)</span></span>
+<span id="cb261-20"><a href="spatial-analysis---micro-samples.html#cb261-20" tabindex="-1"></a></span>
+<span id="cb261-21"><a href="spatial-analysis---micro-samples.html#cb261-21" tabindex="-1"></a></span>
+<span id="cb261-22"><a href="spatial-analysis---micro-samples.html#cb261-22" tabindex="-1"></a>comm_ca <span class="ot">&lt;-</span> comm_data[, <span class="fu">colSums</span>(comm_data) <span class="sc">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb261-23"><a href="spatial-analysis---micro-samples.html#cb261-23" tabindex="-1"></a></span>
+<span id="cb261-24"><a href="spatial-analysis---micro-samples.html#cb261-24" tabindex="-1"></a>metadata_ca <span class="ot">&lt;-</span> metadata</span>
+<span id="cb261-25"><a href="spatial-analysis---micro-samples.html#cb261-25" tabindex="-1"></a><span class="fu">table</span>(metadata<span class="sc">$</span>section, metadata<span class="sc">$</span>cryosection)</span></code></pre></div>
+<pre class="script-output"><code>              
+               M041aI101A M042aI101A
+  Caecum right         76         83</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb263-1"><a href="spatial-analysis---micro-samples.html#cb263-1" tabindex="-1"></a><span class="fu">table</span>(metadata<span class="sc">$</span>section, metadata<span class="sc">$</span>animal)</span></code></pre></div>
+<pre class="script-output"><code>              
+               M041a M042a
+  Caecum right    76    83</code></pre>
+<div id="transform-the-data-for-posterior-multivariate-analyses" class="section level4 hasAnchor" number="18.2.0.1">
+<h4><span class="header-section-number">18.2.0.1</span> Transform the data for posterior multivariate analyses<a href="spatial-analysis---micro-samples.html#transform-the-data-for-posterior-multivariate-analyses" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb265-1"><a href="spatial-analysis---micro-samples.html#cb265-1" tabindex="-1"></a><span class="co"># Store original dimensions</span></span>
+<span id="cb265-2"><a href="spatial-analysis---micro-samples.html#cb265-2" tabindex="-1"></a>original_rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(comm_ca)</span>
+<span id="cb265-3"><a href="spatial-analysis---micro-samples.html#cb265-3" tabindex="-1"></a>original_cols <span class="ot">&lt;-</span> <span class="fu">ncol</span>(comm_ca)</span>
+<span id="cb265-4"><a href="spatial-analysis---micro-samples.html#cb265-4" tabindex="-1"></a>  </span>
+<span id="cb265-5"><a href="spatial-analysis---micro-samples.html#cb265-5" tabindex="-1"></a>comm_ca_zeroRepl <span class="ot">&lt;-</span> <span class="fu">cmultRepl</span>(comm_ca, <span class="at">method =</span> <span class="st">&quot;GBM&quot;</span>, <span class="at">output =</span> <span class="st">&quot;prop&quot;</span>, <span class="at">z.warning =</span> <span class="fl">0.95</span>, <span class="at">z.delete =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre class="script-output"><code>No. adjusted imputations:  4931 </code></pre>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb267-1"><a href="spatial-analysis---micro-samples.html#cb267-1" tabindex="-1"></a><span class="co"># Print removed rows and columns</span></span>
+<span id="cb267-2"><a href="spatial-analysis---micro-samples.html#cb267-2" tabindex="-1"></a>removed_rows <span class="ot">&lt;-</span> original_rows <span class="sc">-</span> <span class="fu">nrow</span>(comm_ca_zeroRepl)</span>
+<span id="cb267-3"><a href="spatial-analysis---micro-samples.html#cb267-3" tabindex="-1"></a>removed_cols <span class="ot">&lt;-</span> original_cols <span class="sc">-</span> <span class="fu">ncol</span>(comm_ca_zeroRepl)</span>
+<span id="cb267-4"><a href="spatial-analysis---micro-samples.html#cb267-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Rows (samples) removed:&quot;</span>, removed_rows, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Rows (samples) removed: 16 </code></pre>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb269-1"><a href="spatial-analysis---micro-samples.html#cb269-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Columns (taxa) removed:&quot;</span>, removed_cols, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Columns (taxa) removed: 59 </code></pre>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb271-1"><a href="spatial-analysis---micro-samples.html#cb271-1" tabindex="-1"></a>metadata_ca_clr <span class="ot">&lt;-</span> metadata_ca[metadata_ca<span class="sc">$</span>microsample <span class="sc">%in%</span> <span class="fu">rownames</span>(comm_ca_zeroRepl), ]</span>
+<span id="cb271-2"><a href="spatial-analysis---micro-samples.html#cb271-2" tabindex="-1"></a></span>
+<span id="cb271-3"><a href="spatial-analysis---micro-samples.html#cb271-3" tabindex="-1"></a>clr_transform <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb271-4"><a href="spatial-analysis---micro-samples.html#cb271-4" tabindex="-1"></a>  <span class="fu">log</span>(x) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">log</span>(x), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb271-5"><a href="spatial-analysis---micro-samples.html#cb271-5" tabindex="-1"></a>}</span>
+<span id="cb271-6"><a href="spatial-analysis---micro-samples.html#cb271-6" tabindex="-1"></a>comm_ca_clr <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">apply</span>(comm_ca_zeroRepl, <span class="dv">1</span>, clr_transform)))</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb272-1"><a href="spatial-analysis---micro-samples.html#cb272-1" tabindex="-1"></a><span class="co"># Ensure hierarchy variables are factors, in order: cryosection (lowest), animal, treatment (highest)</span></span>
+<span id="cb272-2"><a href="spatial-analysis---micro-samples.html#cb272-2" tabindex="-1"></a>hier_ca <span class="ot">&lt;-</span> metadata_ca <span class="sc">%&gt;%</span></span>
+<span id="cb272-3"><a href="spatial-analysis---micro-samples.html#cb272-3" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb272-4"><a href="spatial-analysis---micro-samples.html#cb272-4" tabindex="-1"></a>    <span class="at">cryosection =</span> <span class="fu">factor</span>(cryosection),</span>
+<span id="cb272-5"><a href="spatial-analysis---micro-samples.html#cb272-5" tabindex="-1"></a>    <span class="at">animal      =</span> <span class="fu">factor</span>(animal),</span>
+<span id="cb272-6"><a href="spatial-analysis---micro-samples.html#cb272-6" tabindex="-1"></a>    <span class="at">treatment   =</span> <span class="fu">factor</span>(treatment)</span>
+<span id="cb272-7"><a href="spatial-analysis---micro-samples.html#cb272-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb273-1"><a href="spatial-analysis---micro-samples.html#cb273-1" tabindex="-1"></a><span class="co"># Suppose comm_ca is your samples x genomes matrix</span></span>
+<span id="cb273-2"><a href="spatial-analysis---micro-samples.html#cb273-2" tabindex="-1"></a><span class="co"># and hier_ca is your data frame with cryosection, animal, treatment (in order lowest → highest)</span></span>
+<span id="cb273-3"><a href="spatial-analysis---micro-samples.html#cb273-3" tabindex="-1"></a>res_ca <span class="ot">&lt;-</span> <span class="fu">hier_adipart</span>(comm_ca, hier_ca, <span class="at">nsim =</span> <span class="dv">999</span>)</span>
+<span id="cb273-4"><a href="spatial-analysis---micro-samples.html#cb273-4" tabindex="-1"></a></span>
+<span id="cb273-5"><a href="spatial-analysis---micro-samples.html#cb273-5" tabindex="-1"></a><span class="fu">print</span>(res_ca)</span></code></pre></div>
+<pre class="script-output"><code># A tibble: 5 × 4
+  component          observed expected  pval
+  &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 alpha                 113.      79.5 0.001
+2 beta (cryosection)    131.     215.  0.001
+3 beta (animal)           0        0   1    
+4 beta (treatment)       72.5     21.3 0.001
+5 gamma                 316      316   1    </code></pre>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb275-1"><a href="spatial-analysis---micro-samples.html#cb275-1" tabindex="-1"></a><span class="fu">plot_hier_adipart</span>(res_ca, <span class="at">title =</span> <span class="st">&quot;Caecum&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb275-2"><a href="spatial-analysis---micro-samples.html#cb275-2" tabindex="-1"></a>  custom_ggplot_theme</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_spatial_hier_adipart_ca-1.png" width="672" /></p>
+<div id="ceacum-cryosection" class="section level5 hasAnchor" number="18.2.0.1.1">
+<h5><span class="header-section-number">18.2.0.1.1</span> Ceacum Cryosection<a href="spatial-analysis---micro-samples.html#ceacum-cryosection" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb276-1"><a href="spatial-analysis---micro-samples.html#cb276-1" tabindex="-1"></a>cryosections <span class="ot">=</span> metadata <span class="sc">%&gt;%</span></span>
+<span id="cb276-2"><a href="spatial-analysis---micro-samples.html#cb276-2" tabindex="-1"></a>  <span class="fu">distinct</span>(cryosection) <span class="sc">%&gt;%</span></span>
+<span id="cb276-3"><a href="spatial-analysis---micro-samples.html#cb276-3" tabindex="-1"></a>  <span class="fu">pull</span>(cryosection)</span>
+<span id="cb276-4"><a href="spatial-analysis---micro-samples.html#cb276-4" tabindex="-1"></a></span>
+<span id="cb276-5"><a href="spatial-analysis---micro-samples.html#cb276-5" tabindex="-1"></a>results_ca <span class="ot">&lt;-</span> <span class="fu">spatial_cryosections</span>(</span>
+<span id="cb276-6"><a href="spatial-analysis---micro-samples.html#cb276-6" tabindex="-1"></a>  <span class="at">cryosection_list =</span> cryosections,</span>
+<span id="cb276-7"><a href="spatial-analysis---micro-samples.html#cb276-7" tabindex="-1"></a>  <span class="at">metadata_df =</span> metadata_ca_clr,</span>
+<span id="cb276-8"><a href="spatial-analysis---micro-samples.html#cb276-8" tabindex="-1"></a>  <span class="at">comm_clr =</span> comm_ca_clr</span>
+<span id="cb276-9"><a href="spatial-analysis---micro-samples.html#cb276-9" tabindex="-1"></a>)</span></code></pre></div>
+<div id="mantel-test" class="section level6 hasAnchor" number="18.2.0.1.1.1">
+<h6><span class="header-section-number">18.2.0.1.1.1</span> Mantel test<a href="spatial-analysis---micro-samples.html#mantel-test" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb277-1"><a href="spatial-analysis---micro-samples.html#cb277-1" tabindex="-1"></a>results_ca<span class="sc">$</span>mantel_results</span></code></pre></div>
+<pre class="script-output"><code>$M042aI101A
+
+Mantel statistic based on Pearson&#39;s product-moment correlation 
+
+Call:
+vegan::mantel(xdis = dist(comm_data), ydis = dist(metadata_data[,      c(&quot;Xcoord&quot;, &quot;Ycoord&quot;)]), permutations = 999) 
+
+Mantel statistic r: 0.07512 
+      Significance: 0.097 
+
+Upper quantiles of permutations (null model):
+   90%    95%  97.5%    99% 
+0.0740 0.0965 0.1138 0.1450 
+Permutation: free
+Number of permutations: 999
+
+
+$M041aI101A
+
+Mantel statistic based on Pearson&#39;s product-moment correlation 
+
+Call:
+vegan::mantel(xdis = dist(comm_data), ydis = dist(metadata_data[,      c(&quot;Xcoord&quot;, &quot;Ycoord&quot;)]), permutations = 999) 
+
+Mantel statistic r: 0.1785 
+      Significance: 0.007 
+
+Upper quantiles of permutations (null model):
+   90%    95%  97.5%    99% 
+0.0803 0.1108 0.1293 0.1627 
+Permutation: free
+Number of permutations: 999</code></pre>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb279-1"><a href="spatial-analysis---micro-samples.html#cb279-1" tabindex="-1"></a><span class="co"># results_ca$mantel_results$G121eI104C$statistic</span></span>
+<span id="cb279-2"><a href="spatial-analysis---micro-samples.html#cb279-2" tabindex="-1"></a><span class="co"># results_ca$mantel_results$G121eI104C$signif</span></span>
+<span id="cb279-3"><a href="spatial-analysis---micro-samples.html#cb279-3" tabindex="-1"></a><span class="co"># p &lt; 0.05 → Statistically significant correlation between two distance matrices</span></span>
+<span id="cb279-4"><a href="spatial-analysis---micro-samples.html#cb279-4" tabindex="-1"></a><span class="co"># p &gt; 0.05 → No significant correlation between two distance matrices</span></span></code></pre></div>
+</div>
+<div id="mantel-correlogram-stat" class="section level6 hasAnchor" number="18.2.0.1.1.2">
+<h6><span class="header-section-number">18.2.0.1.1.2</span> Mantel Correlogram Stat<a href="spatial-analysis---micro-samples.html#mantel-correlogram-stat" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb280-1"><a href="spatial-analysis---micro-samples.html#cb280-1" tabindex="-1"></a>results_ca<span class="sc">$</span>mantelcor_results</span></code></pre></div>
+<pre class="script-output"><code>$M042aI101A
+
+Mantel Correlogram Analysis
+
+Call:
+ 
+vegan::mantel.correlog(D.eco = dist(comm_data), D.geo = dist(metadata_data[,      c(&quot;Xcoord&quot;, &quot;Ycoord&quot;)]), nperm = 999) 
+
+        class.index      n.dist  Mantel.cor Pr(Mantel) Pr(corrected)  
+D.cl.1   3.8591e+02  2.1200e+02  3.2274e-02      0.020         0.020 *
+D.cl.2   1.1068e+03  7.2800e+02  5.3378e-02      0.010         0.020 *
+D.cl.3   1.8277e+03  8.8200e+02  2.2039e-02      0.201         0.201  
+D.cl.4   2.5485e+03  1.0420e+03  1.8137e-02      0.237         0.402  
+D.cl.5   3.2694e+03  9.9600e+02 -5.4002e-03      0.411         0.603  
+D.cl.6   3.9903e+03  8.2400e+02 -3.7989e-02      0.030         0.120  
+D.cl.7   4.7112e+03  6.9200e+02 -4.9872e-02      0.018         0.108  
+D.cl.8   5.4320e+03  5.2000e+02          NA         NA            NA  
+D.cl.9   6.1529e+03  2.8200e+02          NA         NA            NA  
+D.cl.10  6.8738e+03  1.9600e+02          NA         NA            NA  
+D.cl.11  7.5947e+03  7.6000e+01          NA         NA            NA  
+D.cl.12  8.3156e+03  2.2000e+01          NA         NA            NA  
+D.cl.13  9.0364e+03  6.0000e+00          NA         NA            NA  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+$M041aI101A
+
+Mantel Correlogram Analysis
+
+Call:
+ 
+vegan::mantel.correlog(D.eco = dist(comm_data), D.geo = dist(metadata_data[,      c(&quot;Xcoord&quot;, &quot;Ycoord&quot;)]), nperm = 999) 
+
+        class.index      n.dist  Mantel.cor Pr(Mantel) Pr(corrected)   
+D.cl.1   8.6026e+02  6.3200e+02  8.0461e-02      0.007         0.007 **
+D.cl.2   2.4044e+03  9.0600e+02  8.2752e-02      0.012         0.014 * 
+D.cl.3   3.9485e+03  6.6400e+02  5.1263e-02      0.013         0.024 * 
+D.cl.4   5.4926e+03  5.8000e+02 -4.3210e-02      0.035         0.036 * 
+D.cl.5   7.0367e+03  3.9400e+02 -5.8352e-02      0.017         0.048 * 
+D.cl.6   8.5808e+03  2.2800e+02 -5.5414e-02      0.035         0.070 . 
+D.cl.7   1.0125e+04  1.7200e+02          NA         NA            NA   
+D.cl.8   1.1669e+04  1.0600e+02          NA         NA            NA   
+D.cl.9   1.3213e+04  5.2000e+01          NA         NA            NA   
+D.cl.10  1.4757e+04  2.0000e+01          NA         NA            NA   
+D.cl.11  1.6301e+04  2.0000e+01          NA         NA            NA   
+D.cl.12  1.7845e+04  6.0000e+00          NA         NA            NA   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="mantel-correlogram-plot" class="section level6 hasAnchor" number="18.2.0.1.1.3">
+<h6><span class="header-section-number">18.2.0.1.1.3</span> Mantel Correlogram Plot<a href="spatial-analysis---micro-samples.html#mantel-correlogram-plot" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb282-1"><a href="spatial-analysis---micro-samples.html#cb282-1" tabindex="-1"></a>mantel_ca_grob <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb282-2"><a href="spatial-analysis---micro-samples.html#cb282-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(results_ca<span class="sc">$</span>mantelcor_results<span class="sc">$</span>M041aI101A<span class="sc">$</span>mantel.res) <span class="sc">%&gt;%</span></span>
+<span id="cb282-3"><a href="spatial-analysis---micro-samples.html#cb282-3" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sign_label =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">Pr.Mantel.</span><span class="st">`</span> <span class="sc">&lt;=</span> <span class="fl">0.05</span>, <span class="st">&quot;Significant&quot;</span>, <span class="st">&quot;Not significant&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb282-4"><a href="spatial-analysis---micro-samples.html#cb282-4" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Mantel.cor)),</span>
+<span id="cb282-5"><a href="spatial-analysis---micro-samples.html#cb282-5" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> class.index, <span class="at">y =</span> Mantel.cor)</span>
+<span id="cb282-6"><a href="spatial-analysis---micro-samples.html#cb282-6" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb282-7"><a href="spatial-analysis---micro-samples.html#cb282-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> sign_label), <span class="at">shape =</span> <span class="dv">23</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb282-8"><a href="spatial-analysis---micro-samples.html#cb282-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb282-9"><a href="spatial-analysis---micro-samples.html#cb282-9" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Significant&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>, <span class="st">&quot;Not significant&quot;</span> <span class="ot">=</span> <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb282-10"><a href="spatial-analysis---micro-samples.html#cb282-10" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb282-11"><a href="spatial-analysis---micro-samples.html#cb282-11" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;M041aI101A&quot;</span>,</span>
+<span id="cb282-12"><a href="spatial-analysis---micro-samples.html#cb282-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Distance Class Index&quot;</span>,</span>
+<span id="cb282-13"><a href="spatial-analysis---micro-samples.html#cb282-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Mantel Correlation&quot;</span>,</span>
+<span id="cb282-14"><a href="spatial-analysis---micro-samples.html#cb282-14" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Significance&quot;</span></span>
+<span id="cb282-15"><a href="spatial-analysis---micro-samples.html#cb282-15" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb282-16"><a href="spatial-analysis---micro-samples.html#cb282-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb282-17"><a href="spatial-analysis---micro-samples.html#cb282-17" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb282-18"><a href="spatial-analysis---micro-samples.html#cb282-18" tabindex="-1"></a>  custom_ggplot_theme <span class="sc">+</span></span>
+<span id="cb282-19"><a href="spatial-analysis---micro-samples.html#cb282-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>List of 13
+ $ axis.title        :List of 11
+  ..$ family       : NULL
+  ..$ face         : chr &quot;bold&quot;
+  ..$ colour       : NULL
+  ..$ size         : num 12
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+ $ axis.text         :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : num 10
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+ $ panel.background  :List of 5
+  ..$ fill         : chr &quot;white&quot;
+  ..$ colour       : NULL
+  ..$ linewidth    : NULL
+  ..$ linetype     : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+ $ panel.spacing     : &#39;simpleUnit&#39; num 0.1lines
+  ..- attr(*, &quot;unit&quot;)= int 3
+ $ panel.grid.major  :List of 6
+  ..$ colour       : chr &quot;#dde3e9&quot;
+  ..$ linewidth    : NULL
+  ..$ linetype     : NULL
+  ..$ lineend      : NULL
+  ..$ arrow        : logi FALSE
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_line&quot; &quot;element&quot;
+ $ panel.grid.minor  : list()
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_blank&quot; &quot;element&quot;
+ $ plot.margin       : &#39;simpleUnit&#39; num [1:4] 1cm 1cm 1cm 1cm
+  ..- attr(*, &quot;unit&quot;)= int 1
+ $ strip.background  :List of 5
+  ..$ fill         : chr &quot;#dde3e9&quot;
+  ..$ colour       : chr &quot;white&quot;
+  ..$ linewidth    : num 0.8
+  ..$ linetype     : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+ $ strip.placement   : chr &quot;outside&quot;
+ $ strip.text        :List of 11
+  ..$ family       : NULL
+  ..$ face         : chr &quot;bold&quot;
+  ..$ colour       : chr &quot;black&quot;
+  ..$ size         : num 8
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+ $ strip.text.y.left :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : num 0
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+ $ strip.text.y.right:List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : num 0
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi FALSE
+  ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+ $ legend.position   : chr &quot;none&quot;
+ - attr(*, &quot;class&quot;)= chr [1:2] &quot;theme&quot; &quot;gg&quot;
+ - attr(*, &quot;complete&quot;)= logi FALSE
+ - attr(*, &quot;validate&quot;)= logi TRUE</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb284-1"><a href="spatial-analysis---micro-samples.html#cb284-1" tabindex="-1"></a>mantel_ca_grob</span></code></pre></div>
+<p><img src="_main_files/figure-html/caecum_spatial_mantelcor_plot-1.png" width="672" /></p>
+</div>
+<div id="distance-decay-stat" class="section level6 hasAnchor" number="18.2.0.1.1.4">
+<h6><span class="header-section-number">18.2.0.1.1.4</span> Distance Decay Stat<a href="spatial-analysis---micro-samples.html#distance-decay-stat" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb285-1"><a href="spatial-analysis---micro-samples.html#cb285-1" tabindex="-1"></a><span class="fu">aovperm</span>(<span class="fu">lmperm</span>(comm_dist <span class="sc">~</span> spat_dist, <span class="at">data =</span> results_ca<span class="sc">$</span>decay_dfs<span class="sc">$</span>M041aI101A), <span class="at">np =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<pre class="script-output"><code>Anova Table
+Resampling test using freedman_lane to handle nuisance variables and 10000 permutations.
+               SS   df     F parametric P(&gt;F) resampled P(&gt;F)
+spat_dist   334.2    1 62.18        5.329e-15           1e-04
+Residuals 10153.0 1889                                       </code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb287-1"><a href="spatial-analysis---micro-samples.html#cb287-1" tabindex="-1"></a><span class="co"># p &lt; 0.05 → Significant correlation: Spatial distance influences microbial composition.</span></span>
+<span id="cb287-2"><a href="spatial-analysis---micro-samples.html#cb287-2" tabindex="-1"></a><span class="co"># p &gt; 0.05 → No significant relationship: Microbial communities do not change with distance.</span></span></code></pre></div>
+</div>
+<div id="distance-decay-plot" class="section level6 hasAnchor" number="18.2.0.1.1.5">
+<h6><span class="header-section-number">18.2.0.1.1.5</span> Distance Decay Plot<a href="spatial-analysis---micro-samples.html#distance-decay-plot" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb288-1"><a href="spatial-analysis---micro-samples.html#cb288-1" tabindex="-1"></a>results_ca<span class="sc">$</span>distance_decay_plots</span></code></pre></div>
+<pre class="script-output"><code>$M042aI101A</code></pre>
+<p><img src="_main_files/figure-html/plot_spatial_decay_ca_list-1.png" width="672" /></p>
+<pre class="script-output"><code>
+$M041aI101A</code></pre>
+<p><img src="_main_files/figure-html/plot_spatial_decay_ca_list-2.png" width="672" /></p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb291-1"><a href="spatial-analysis---micro-samples.html#cb291-1" tabindex="-1"></a>results_ca<span class="sc">$</span>distance_decay_plots<span class="sc">$</span>M041aI101A <span class="sc">+</span> mantel_ca_grob</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_spatial_decay_ca_combined-1.png" width="960" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="extended-rlq-analysis" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">18.3</span> Extended RLQ analysis<a href="spatial-analysis---micro-samples.html#extended-rlq-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>On cryosections with a signal</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb292-1"><a href="spatial-analysis---micro-samples.html#cb292-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;data/JEC_1743_sm_apps5.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb293-1"><a href="spatial-analysis---micro-samples.html#cb293-1" tabindex="-1"></a><span class="co"># comm_co_G121eO301A &lt;- results_co$cryosection_dfs[[cryosection]]$comm_clr</span></span>
+<span id="cb293-2"><a href="spatial-analysis---micro-samples.html#cb293-2" tabindex="-1"></a><span class="co"># metadata_co_G121eO301A &lt;- results_co$cryosection_dfs[[cryosection]]$metadata</span></span>
+<span id="cb293-3"><a href="spatial-analysis---micro-samples.html#cb293-3" tabindex="-1"></a></span>
+<span id="cb293-4"><a href="spatial-analysis---micro-samples.html#cb293-4" tabindex="-1"></a>selected_cryosection <span class="ot">=</span> <span class="st">&quot;M041aI101A&quot;</span></span>
+<span id="cb293-5"><a href="spatial-analysis---micro-samples.html#cb293-5" tabindex="-1"></a></span>
+<span id="cb293-6"><a href="spatial-analysis---micro-samples.html#cb293-6" tabindex="-1"></a>comm_ca_cryosection <span class="ot">&lt;-</span> comm_data[metadata<span class="sc">$</span>cryosection <span class="sc">==</span> selected_cryosection, ]</span>
+<span id="cb293-7"><a href="spatial-analysis---micro-samples.html#cb293-7" tabindex="-1"></a>comm_ca_cryosection <span class="ot">&lt;-</span> comm_ca_cryosection[, <span class="fu">colSums</span>(comm_ca_cryosection) <span class="sc">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb293-8"><a href="spatial-analysis---micro-samples.html#cb293-8" tabindex="-1"></a></span>
+<span id="cb293-9"><a href="spatial-analysis---micro-samples.html#cb293-9" tabindex="-1"></a></span>
+<span id="cb293-10"><a href="spatial-analysis---micro-samples.html#cb293-10" tabindex="-1"></a>metadata_ca_cryosection <span class="ot">&lt;-</span> metadata[metadata<span class="sc">$</span>cryosection <span class="sc">==</span> selected_cryosection, ]</span>
+<span id="cb293-11"><a href="spatial-analysis---micro-samples.html#cb293-11" tabindex="-1"></a></span>
+<span id="cb293-12"><a href="spatial-analysis---micro-samples.html#cb293-12" tabindex="-1"></a></span>
+<span id="cb293-13"><a href="spatial-analysis---micro-samples.html#cb293-13" tabindex="-1"></a>comm_ca_cryosection <span class="ot">&lt;-</span> comm_ca_cryosection <span class="sc">%&gt;%</span></span>
+<span id="cb293-14"><a href="spatial-analysis---micro-samples.html#cb293-14" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb293-15"><a href="spatial-analysis---micro-samples.html#cb293-15" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;microsample&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb293-16"><a href="spatial-analysis---micro-samples.html#cb293-16" tabindex="-1"></a>  <span class="fu">bind_cols</span>(metadata_ca_cryosection) <span class="sc">%&gt;%</span></span>
+<span id="cb293-17"><a href="spatial-analysis---micro-samples.html#cb293-17" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;bin_&quot;</span>))</span>
+<span id="cb293-18"><a href="spatial-analysis---micro-samples.html#cb293-18" tabindex="-1"></a></span>
+<span id="cb293-19"><a href="spatial-analysis---micro-samples.html#cb293-19" tabindex="-1"></a></span>
+<span id="cb293-20"><a href="spatial-analysis---micro-samples.html#cb293-20" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">decostand</span>(comm_ca_cryosection, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">method =</span> <span class="st">&quot;hellinger&quot;</span>) <span class="co"># Standardize composition by rows</span></span>
+<span id="cb293-21"><a href="spatial-analysis---micro-samples.html#cb293-21" tabindex="-1"></a><span class="fu">colnames</span>(comp) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="st">&quot;:&quot;</span>, <span class="fu">names</span>(comp))</span>
+<span id="cb293-22"><a href="spatial-analysis---micro-samples.html#cb293-22" tabindex="-1"></a>env <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb293-23"><a href="spatial-analysis---micro-samples.html#cb293-23" tabindex="-1"></a>  <span class="at">log_seq_counts =</span> <span class="fu">log</span>(metadata_ca_cryosection<span class="sc">$</span>total_sequences_after_trim),</span>
+<span id="cb293-24"><a href="spatial-analysis---micro-samples.html#cb293-24" tabindex="-1"></a>  <span class="at">div =</span> <span class="fu">rowSums</span>(comp <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb293-25"><a href="spatial-analysis---micro-samples.html#cb293-25" tabindex="-1"></a>) <span class="co"># Environmental matrix</span></span>
+<span id="cb293-26"><a href="spatial-analysis---micro-samples.html#cb293-26" tabindex="-1"></a></span>
+<span id="cb293-27"><a href="spatial-analysis---micro-samples.html#cb293-27" tabindex="-1"></a>genome_gifts <span class="ot">&lt;-</span> genome_gifts[<span class="fu">rownames</span>(genome_gifts) <span class="sc">%in%</span> <span class="fu">colnames</span>(comp), ]</span>
+<span id="cb293-28"><a href="spatial-analysis---micro-samples.html#cb293-28" tabindex="-1"></a>genome_funct <span class="ot">&lt;-</span> genome_gifts <span class="sc">%&gt;%</span></span>
+<span id="cb293-29"><a href="spatial-analysis---micro-samples.html#cb293-29" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb293-30"><a href="spatial-analysis---micro-samples.html#cb293-30" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;id&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Preserve row names as a column</span></span>
+<span id="cb293-31"><a href="spatial-analysis---micro-samples.html#cb293-31" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>id, <span class="at">names_to =</span> <span class="st">&quot;column&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Reshape to long format</span></span>
+<span id="cb293-32"><a href="spatial-analysis---micro-samples.html#cb293-32" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">substr</span>(column, <span class="dv">1</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> <span class="co"># Extract the first 3 characters of column names</span></span>
+<span id="cb293-33"><a href="spatial-analysis---micro-samples.html#cb293-33" tabindex="-1"></a>  <span class="fu">group_by</span>(id, group) <span class="sc">%&gt;%</span> <span class="co"># Group by row (id) and prefix</span></span>
+<span id="cb293-34"><a href="spatial-analysis---micro-samples.html#cb293-34" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_value =</span> <span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Calculate rowMeans for each group</span></span>
+<span id="cb293-35"><a href="spatial-analysis---micro-samples.html#cb293-35" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> mean_value) <span class="sc">%&gt;%</span> <span class="co"># Reshape back to wide format</span></span>
+<span id="cb293-36"><a href="spatial-analysis---micro-samples.html#cb293-36" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;id&quot;</span>)</span>
+<span id="cb293-37"><a href="spatial-analysis---micro-samples.html#cb293-37" tabindex="-1"></a>genome_funct <span class="ot">&lt;-</span> genome_funct[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>)]</span>
+<span id="cb293-38"><a href="spatial-analysis---micro-samples.html#cb293-38" tabindex="-1"></a></span>
+<span id="cb293-39"><a href="spatial-analysis---micro-samples.html#cb293-39" tabindex="-1"></a>phy <span class="ot">&lt;-</span> genome_tree <span class="co"># Phylogenetic tree constructed with Phylomatic V3 + Phylocom</span></span>
+<span id="cb293-40"><a href="spatial-analysis---micro-samples.html#cb293-40" tabindex="-1"></a></span>
+<span id="cb293-41"><a href="spatial-analysis---micro-samples.html#cb293-41" tabindex="-1"></a>phy <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(phy, <span class="fu">setdiff</span>(phy<span class="sc">$</span>tip.label, <span class="fu">rownames</span>(genome_funct)))</span>
+<span id="cb293-42"><a href="spatial-analysis---micro-samples.html#cb293-42" tabindex="-1"></a>spa <span class="ot">&lt;-</span> metadata_ca_cryosection[, <span class="fu">c</span>(<span class="st">&quot;Xcoord&quot;</span>, <span class="st">&quot;Ycoord&quot;</span>)] <span class="co"># Matrix of X Y spatial coordinates</span></span>
+<span id="cb293-43"><a href="spatial-analysis---micro-samples.html#cb293-43" tabindex="-1"></a>comp <span class="ot">&lt;-</span> comp[, <span class="fu">match</span>(phy<span class="sc">$</span>tip.label, <span class="fu">colnames</span>(comp))]</span>
+<span id="cb293-44"><a href="spatial-analysis---micro-samples.html#cb293-44" tabindex="-1"></a>genome_funct <span class="ot">&lt;-</span> genome_funct[<span class="fu">match</span>(phy<span class="sc">$</span>tip.label, <span class="fu">rownames</span>(genome_funct)), ]</span>
+<span id="cb293-45"><a href="spatial-analysis---micro-samples.html#cb293-45" tabindex="-1"></a></span>
+<span id="cb293-46"><a href="spatial-analysis---micro-samples.html#cb293-46" tabindex="-1"></a><span class="fu">mean</span>(phy<span class="sc">$</span>tip.label <span class="sc">==</span> <span class="fu">colnames</span>(comp))</span></code></pre></div>
+<pre class="script-output"><code>[1] 1</code></pre>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb295-1"><a href="spatial-analysis---micro-samples.html#cb295-1" tabindex="-1"></a><span class="co"># Change the phylogenetic tree (an object of the class &quot;phylo&quot;) into an object of the class &quot;phylog&quot;, used by ade4</span></span>
+<span id="cb295-2"><a href="spatial-analysis---micro-samples.html#cb295-2" tabindex="-1"></a>phylog <span class="ot">&lt;-</span> <span class="fu">newick2phylog</span>(<span class="fu">write.tree</span>(phy)) <span class="co"># =&gt; &quot;phylog&quot; class</span></span>
+<span id="cb295-3"><a href="spatial-analysis---micro-samples.html#cb295-3" tabindex="-1"></a><span class="fu">colnames</span>(comp) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;:&quot;</span>, <span class="st">&quot;_&quot;</span>, <span class="fu">colnames</span>(comp))</span>
+<span id="cb295-4"><a href="spatial-analysis---micro-samples.html#cb295-4" tabindex="-1"></a><span class="fu">rownames</span>(genome_funct) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;:&quot;</span>, <span class="st">&quot;_&quot;</span>, <span class="fu">rownames</span>(genome_funct))</span></code></pre></div>
+<div id="correspondence-analysis-of-the-composition-matrix" class="section level7" number="18.3.0.0.0.0.1">
+<p class="heading"><span class="header-section-number">18.3.0.0.0.0.1</span> Correspondence analysis of the composition matrix</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb296-1"><a href="spatial-analysis---micro-samples.html#cb296-1" tabindex="-1"></a>coacomp <span class="ot">&lt;-</span> <span class="fu">dudi.coa</span>(comp, <span class="at">scan =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">108</span>)</span>
+<span id="cb296-2"><a href="spatial-analysis---micro-samples.html#cb296-2" tabindex="-1"></a><span class="fu">summary</span>(coacomp)</span></code></pre></div>
+<pre class="script-output"><code>Class: coa dudi
+Call: dudi.coa(df = comp, scannf = FALSE, nf = 108)
+
+Total inertia: 1.728
+
+Eigenvalues:
+    Ax1     Ax2     Ax3     Ax4     Ax5 
+0.22286 0.19236 0.11452 0.08660 0.07086 
+
+Projected inertia (%):
+    Ax1     Ax2     Ax3     Ax4     Ax5 
+ 12.897  11.132   6.627   5.011   4.100 
+
+Cumulative projected inertia (%):
+    Ax1   Ax1:2   Ax1:3   Ax1:4   Ax1:5 
+  12.90   24.03   30.66   35.67   39.77 
+
+(Only 5 dimensions (out of 74) are shown)</code></pre>
+</div>
+<div id="spatial-analysis" class="section level6 hasAnchor" number="18.3.0.0.0.1">
+<h6><span class="header-section-number">18.3.0.0.0.1</span> Spatial analysis<a href="spatial-analysis---micro-samples.html#spatial-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+</div>
+<div id="gabriel-graph" class="section level6 hasAnchor" number="18.3.0.0.0.2">
+<h6><span class="header-section-number">18.3.0.0.0.2</span> Gabriel graph<a href="spatial-analysis---micro-samples.html#gabriel-graph" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb298-1"><a href="spatial-analysis---micro-samples.html#cb298-1" tabindex="-1"></a><span class="co"># Create the Gabriel graph</span></span>
+<span id="cb298-2"><a href="spatial-analysis---micro-samples.html#cb298-2" tabindex="-1"></a>nb1 <span class="ot">&lt;-</span> <span class="fu">graph2nb</span>(<span class="fu">gabrielneigh</span>(<span class="fu">as.matrix</span>(spa)), <span class="at">sym =</span> T)</span>
+<span id="cb298-3"><a href="spatial-analysis---micro-samples.html#cb298-3" tabindex="-1"></a>nb1</span></code></pre></div>
+<pre class="script-output"><code>Neighbour list object:
+Number of regions: 76 
+Number of nonzero links: 250 
+Percentage nonzero weights: 4.328255 
+Average number of links: 3.289474 </code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb300-1"><a href="spatial-analysis---micro-samples.html#cb300-1" tabindex="-1"></a><span class="co"># Spatial autocorrelation in diversity and sequence count distribution</span></span>
+<span id="cb300-2"><a href="spatial-analysis---micro-samples.html#cb300-2" tabindex="-1"></a><span class="fu">sp.correlogram</span>(nb1, <span class="fu">log</span>(env<span class="sc">$</span>div), <span class="at">order =</span> <span class="dv">8</span>, <span class="at">method =</span> <span class="st">&quot;I&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Spatial correlogram for log(env$div) 
+method: Moran&#39;s I
+         estimate expectation   variance standard deviate Pr(I) two sided   
+1 (76) -0.0418637  -0.0133333  0.0081748          -0.3156        0.752343   
+2 (76) -0.0409739  -0.0133333  0.0047575          -0.4007        0.688614   
+3 (76)  0.0893327  -0.0133333  0.0037074           1.6861        0.091772 . 
+4 (76)  0.1660184  -0.0133333  0.0035245           3.0210        0.002519 **
+5 (76) -0.0545644  -0.0133333  0.0037651          -0.6720        0.501615   
+6 (76) -0.0538944  -0.0133333  0.0041481          -0.6298        0.528840   
+7 (76) -0.0106319  -0.0133333  0.0045015           0.0403        0.967882   
+8 (76) -0.1052143  -0.0133333  0.0048664          -1.3171        0.187802   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb302-1"><a href="spatial-analysis---micro-samples.html#cb302-1" tabindex="-1"></a><span class="fu">sp.correlogram</span>(nb1, env<span class="sc">$</span>log_seq_counts, <span class="at">order =</span> <span class="dv">8</span>, <span class="at">method =</span> <span class="st">&quot;I&quot;</span>)</span></code></pre></div>
+<pre class="script-output"><code>Spatial correlogram for env$log_seq_counts 
+method: Moran&#39;s I
+          estimate expectation    variance standard deviate Pr(I) two sided
+1 (76) -0.01329967 -0.01333333  0.00835172           0.0004          0.9997
+2 (76)  0.05096863 -0.01333333  0.00486022           0.9224          0.3563
+3 (76)  0.02002293 -0.01333333  0.00378753           0.5420          0.5878
+4 (76) -0.03582229 -0.01333333  0.00360057          -0.3748          0.7078
+5 (76) -0.07307632 -0.01333333  0.00384606          -0.9633          0.3354
+6 (76)  0.00052658 -0.01333333  0.00423725           0.2129          0.8314
+7 (76) -0.08211439 -0.01333333  0.00459816          -1.0143          0.3104
+8 (76) -0.10034643 -0.01333333  0.00497085          -1.2342          0.2171</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb304-1"><a href="spatial-analysis---micro-samples.html#cb304-1" tabindex="-1"></a>lw1 <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb1) <span class="co"># gives a neighbours list with spatial weights (i.e. matrix W)</span></span>
+<span id="cb304-2"><a href="spatial-analysis---micro-samples.html#cb304-2" tabindex="-1"></a>lw1</span></code></pre></div>
+<pre class="script-output"><code>Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 76 
+Number of nonzero links: 250 
+Percentage nonzero weights: 4.328255 
+Average number of links: 3.289474 
+
+Weights style: W 
+Weights constants summary:
+   n   nn S0       S1       S2
+W 76 5776 76 50.48611 311.9639</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb306-1"><a href="spatial-analysis---micro-samples.html#cb306-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb306-2"><a href="spatial-analysis---micro-samples.html#cb306-2" tabindex="-1"></a><span class="fu">plot</span>(nb1, spa, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb306-3"><a href="spatial-analysis---micro-samples.html#cb306-3" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">&quot;Gabriel Graph&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/gabriel_graph_plot-1.png" width="672" /></p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb307-1"><a href="spatial-analysis---micro-samples.html#cb307-1" tabindex="-1"></a><span class="fu">class</span>(nb1)</span></code></pre></div>
+<pre class="script-output"><code>[1] &quot;nb&quot;</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb309-1"><a href="spatial-analysis---micro-samples.html#cb309-1" tabindex="-1"></a><span class="co"># [1] &quot;nb&quot;</span></span>
+<span id="cb309-2"><a href="spatial-analysis---micro-samples.html#cb309-2" tabindex="-1"></a><span class="co"># This is the Gabriel graph -the graph that in this case defines which points</span></span>
+<span id="cb309-3"><a href="spatial-analysis---micro-samples.html#cb309-3" tabindex="-1"></a><span class="co"># are connected</span></span>
+<span id="cb309-4"><a href="spatial-analysis---micro-samples.html#cb309-4" tabindex="-1"></a></span>
+<span id="cb309-5"><a href="spatial-analysis---micro-samples.html#cb309-5" tabindex="-1"></a><span class="co"># The matrix of spatial variables is obtained as the eigenvectors of a</span></span>
+<span id="cb309-6"><a href="spatial-analysis---micro-samples.html#cb309-6" tabindex="-1"></a><span class="co"># neighbour matrix. This matrix is analysed by principal component analysis.</span></span>
+<span id="cb309-7"><a href="spatial-analysis---micro-samples.html#cb309-7" tabindex="-1"></a>nb1.neigh <span class="ot">&lt;-</span> <span class="fu">nb2neig</span>(nb1)</span>
+<span id="cb309-8"><a href="spatial-analysis---micro-samples.html#cb309-8" tabindex="-1"></a>vecspa <span class="ot">&lt;-</span> <span class="fu">scores.neig</span>(nb1.neigh)</span>
+<span id="cb309-9"><a href="spatial-analysis---micro-samples.html#cb309-9" tabindex="-1"></a>pcaspa <span class="ot">&lt;-</span> <span class="fu">dudi.pca</span>(vecspa, coacomp<span class="sc">$</span>lw, <span class="at">scan =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="fu">ncol</span>(vecspa))</span>
+<span id="cb309-10"><a href="spatial-analysis---micro-samples.html#cb309-10" tabindex="-1"></a><span class="fu">summary</span>(pcaspa)</span></code></pre></div>
+<pre class="script-output"><code>Class: pca dudi
+Call: dudi.pca(df = vecspa, row.w = coacomp$lw, scannf = FALSE, nf = ncol(vecspa))
+
+Total inertia: 75
+
+Eigenvalues:
+    Ax1     Ax2     Ax3     Ax4     Ax5 
+  1.614   1.600   1.565   1.508   1.479 
+
+Projected inertia (%):
+    Ax1     Ax2     Ax3     Ax4     Ax5 
+  2.152   2.133   2.086   2.010   1.971 
+
+Cumulative projected inertia (%):
+    Ax1   Ax1:2   Ax1:3   Ax1:4   Ax1:5 
+  2.152   4.285   6.371   8.382  10.353 
+
+(Only 5 dimensions (out of 75) are shown)</code></pre>
+</div>
+<div id="pca-analysis-of-the-env-matrix" class="section level6 hasAnchor" number="18.3.0.0.0.3">
+<h6><span class="header-section-number">18.3.0.0.0.3</span> PCA analysis of the env matrix<a href="spatial-analysis---micro-samples.html#pca-analysis-of-the-env-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb311-1"><a href="spatial-analysis---micro-samples.html#cb311-1" tabindex="-1"></a>pcaenv <span class="ot">&lt;-</span> <span class="fu">dudi.pca</span>(env, <span class="at">row.w =</span> coacomp<span class="sc">$</span>lw, <span class="at">scannf =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">2</span>)</span>
+<span id="cb311-2"><a href="spatial-analysis---micro-samples.html#cb311-2" tabindex="-1"></a><span class="fu">summary</span>(pcaenv)</span></code></pre></div>
+<pre class="script-output"><code>Class: pca dudi
+Call: dudi.pca(df = env, row.w = coacomp$lw, scannf = FALSE, nf = 2)
+
+Total inertia: 2
+
+Eigenvalues:
+    Ax1     Ax2 
+ 1.6984  0.3016 
+
+Projected inertia (%):
+    Ax1     Ax2 
+  84.92   15.08 
+
+Cumulative projected inertia (%):
+    Ax1   Ax1:2 
+  84.92  100.00 </code></pre>
+</div>
+<div id="the-distances-between-species-based-on-their-biological-traits-analyzed-by-pcoa." class="section level6 hasAnchor" number="18.3.0.0.0.4">
+<h6><span class="header-section-number">18.3.0.0.0.4</span> The distances between species based on their biological traits, analyzed by PCoA.<a href="spatial-analysis---micro-samples.html#the-distances-between-species-based-on-their-biological-traits-analyzed-by-pcoa." class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<p>I will set these eval=FALSE as I get an error and I do not have time to troubleshoot yet.</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb313-1"><a href="spatial-analysis---micro-samples.html#cb313-1" tabindex="-1"></a><span class="co"># Distance matrices for traits separately</span></span>
+<span id="cb313-2"><a href="spatial-analysis---micro-samples.html#cb313-2" tabindex="-1"></a>listdis <span class="ot">&lt;-</span> <span class="fu">ldist.ktab</span>(<span class="fu">ktab.list.df</span>(<span class="fu">list</span>(genome_funct)), <span class="fu">c</span>(<span class="st">&quot;Q&quot;</span>), <span class="at">scan =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb313-3"><a href="spatial-analysis---micro-samples.html#cb313-3" tabindex="-1"></a><span class="co"># choose 1</span></span>
+<span id="cb313-4"><a href="spatial-analysis---micro-samples.html#cb313-4" tabindex="-1"></a></span>
+<span id="cb313-5"><a href="spatial-analysis---micro-samples.html#cb313-5" tabindex="-1"></a><span class="co"># Distance matrix for traits together</span></span>
+<span id="cb313-6"><a href="spatial-analysis---micro-samples.html#cb313-6" tabindex="-1"></a>disT <span class="ot">&lt;-</span> <span class="fu">dist.ktab</span>(<span class="fu">ktab.list.df</span>(<span class="fu">list</span>(genome_funct)), <span class="fu">c</span>(<span class="st">&quot;Q&quot;</span>), <span class="at">scan =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb313-7"><a href="spatial-analysis---micro-samples.html#cb313-7" tabindex="-1"></a><span class="co"># choose 1</span></span>
+<span id="cb313-8"><a href="spatial-analysis---micro-samples.html#cb313-8" tabindex="-1"></a>pcotraits <span class="ot">&lt;-</span> <span class="fu">dudi.pco</span>(disT, coacomp<span class="sc">$</span>cw, <span class="at">full =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb313-9"><a href="spatial-analysis---micro-samples.html#cb313-9" tabindex="-1"></a></span>
+<span id="cb313-10"><a href="spatial-analysis---micro-samples.html#cb313-10" tabindex="-1"></a><span class="fu">summary</span>(pcotraits)</span>
+<span id="cb313-11"><a href="spatial-analysis---micro-samples.html#cb313-11" tabindex="-1"></a></span>
+<span id="cb313-12"><a href="spatial-analysis---micro-samples.html#cb313-12" tabindex="-1"></a><span class="co"># n_dis &lt;- attr(disT, &quot;Size&quot;) %||% nrow(as.matrix(disT))</span></span>
+<span id="cb313-13"><a href="spatial-analysis---micro-samples.html#cb313-13" tabindex="-1"></a><span class="co"># length(coacomp$cw); length(coacomp$lw); n_dis</span></span>
+<span id="cb313-14"><a href="spatial-analysis---micro-samples.html#cb313-14" tabindex="-1"></a><span class="co"># summary(coacomp$cw); summary(coacomp$lw)</span></span></code></pre></div>
+</div>
+<div id="the-distances-between-species-based-on-their-phylogenetic-relatedness-analysed-by-pcoa." class="section level6 hasAnchor" number="18.3.0.0.0.5">
+<h6><span class="header-section-number">18.3.0.0.0.5</span> The distances between species based on their phylogenetic relatedness, analysed by PCoA.<a href="spatial-analysis---micro-samples.html#the-distances-between-species-based-on-their-phylogenetic-relatedness-analysed-by-pcoa." class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb314-1"><a href="spatial-analysis---micro-samples.html#cb314-1" tabindex="-1"></a><span class="co"># Trying to make the genome names match</span></span>
+<span id="cb314-2"><a href="spatial-analysis---micro-samples.html#cb314-2" tabindex="-1"></a><span class="co"># Clean tree names</span></span>
+<span id="cb314-3"><a href="spatial-analysis---micro-samples.html#cb314-3" tabindex="-1"></a><span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;^X&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist))</span>
+<span id="cb314-4"><a href="spatial-analysis---micro-samples.html#cb314-4" tabindex="-1"></a><span class="fu">colnames</span>(phylog<span class="sc">$</span>Wdist) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;^X&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">colnames</span>(phylog<span class="sc">$</span>Wdist))</span>
+<span id="cb314-5"><a href="spatial-analysis---micro-samples.html#cb314-5" tabindex="-1"></a></span>
+<span id="cb314-6"><a href="spatial-analysis---micro-samples.html#cb314-6" tabindex="-1"></a><span class="co"># Filter comp to taxa that are in the tree</span></span>
+<span id="cb314-7"><a href="spatial-analysis---micro-samples.html#cb314-7" tabindex="-1"></a>comp <span class="ot">&lt;-</span> comp[<span class="fu">names</span>(comp) <span class="sc">%in%</span> <span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist)]</span>
+<span id="cb314-8"><a href="spatial-analysis---micro-samples.html#cb314-8" tabindex="-1"></a></span>
+<span id="cb314-9"><a href="spatial-analysis---micro-samples.html#cb314-9" tabindex="-1"></a><span class="co"># Ensure comp is ordered to match tree</span></span>
+<span id="cb314-10"><a href="spatial-analysis---micro-samples.html#cb314-10" tabindex="-1"></a>comp <span class="ot">&lt;-</span> comp[<span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist)]</span>
+<span id="cb314-11"><a href="spatial-analysis---micro-samples.html#cb314-11" tabindex="-1"></a></span>
+<span id="cb314-12"><a href="spatial-analysis---micro-samples.html#cb314-12" tabindex="-1"></a><span class="fu">length</span>(comp)</span>
+<span id="cb314-13"><a href="spatial-analysis---micro-samples.html#cb314-13" tabindex="-1"></a><span class="fu">nrow</span>(phylog<span class="sc">$</span>Wdist)</span>
+<span id="cb314-14"><a href="spatial-analysis---micro-samples.html#cb314-14" tabindex="-1"></a></span>
+<span id="cb314-15"><a href="spatial-analysis---micro-samples.html#cb314-15" tabindex="-1"></a><span class="co"># Check alignment</span></span>
+<span id="cb314-16"><a href="spatial-analysis---micro-samples.html#cb314-16" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">names</span>(comp), <span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist))</span>
+<span id="cb314-17"><a href="spatial-analysis---micro-samples.html#cb314-17" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">rownames</span>(phylog<span class="sc">$</span>Wdist), <span class="fu">names</span>(comp))</span>
+<span id="cb314-18"><a href="spatial-analysis---micro-samples.html#cb314-18" tabindex="-1"></a></span>
+<span id="cb314-19"><a href="spatial-analysis---micro-samples.html#cb314-19" tabindex="-1"></a></span>
+<span id="cb314-20"><a href="spatial-analysis---micro-samples.html#cb314-20" tabindex="-1"></a><span class="fu">length</span>(comp)                          <span class="co"># number of taxa used</span></span>
+<span id="cb314-21"><a href="spatial-analysis---micro-samples.html#cb314-21" tabindex="-1"></a><span class="fu">nrow</span>(phylog<span class="sc">$</span>Wdist)                    <span class="co"># same number of taxa</span></span>
+<span id="cb314-22"><a href="spatial-analysis---micro-samples.html#cb314-22" tabindex="-1"></a><span class="fu">length</span>(coacomp<span class="sc">$</span>cw)                    <span class="co"># weight vector length</span></span>
+<span id="cb314-23"><a href="spatial-analysis---micro-samples.html#cb314-23" tabindex="-1"></a></span>
+<span id="cb314-24"><a href="spatial-analysis---micro-samples.html#cb314-24" tabindex="-1"></a><span class="do">## Actual code</span></span>
+<span id="cb314-25"><a href="spatial-analysis---micro-samples.html#cb314-25" tabindex="-1"></a>pcophy <span class="ot">&lt;-</span> <span class="fu">dudi.pco</span>(<span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(phylog<span class="sc">$</span>Wdist)[<span class="fu">names</span>(comp), <span class="fu">names</span>(comp)]), coacomp<span class="sc">$</span>cw, <span class="at">full =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb314-26"><a href="spatial-analysis---micro-samples.html#cb314-26" tabindex="-1"></a><span class="fu">summary</span>(pcophy)</span>
+<span id="cb314-27"><a href="spatial-analysis---micro-samples.html#cb314-27" tabindex="-1"></a></span>
+<span id="cb314-28"><a href="spatial-analysis---micro-samples.html#cb314-28" tabindex="-1"></a><span class="do">## 11. Tests for phylogenetic signals in traits</span></span>
+<span id="cb314-29"><a href="spatial-analysis---micro-samples.html#cb314-29" tabindex="-1"></a><span class="do">## *******************************************</span></span>
+<span id="cb314-30"><a href="spatial-analysis---micro-samples.html#cb314-30" tabindex="-1"></a><span class="co"># Function rtest.decdiv() in appendix S5, Pavoine et al., 2011. [1]</span></span>
+<span id="cb314-31"><a href="spatial-analysis---micro-samples.html#cb314-31" tabindex="-1"></a><span class="co"># All traits together</span></span>
+<span id="cb314-32"><a href="spatial-analysis---micro-samples.html#cb314-32" tabindex="-1"></a>phystot <span class="ot">&lt;-</span> <span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">108</span>), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(disT)[<span class="fu">names</span>(phylog<span class="sc">$</span>leaves), <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)]),</span>
+<span id="cb314-33"><a href="spatial-analysis---micro-samples.html#cb314-33" tabindex="-1"></a>  <span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>, <span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-34"><a href="spatial-analysis---micro-samples.html#cb314-34" tabindex="-1"></a>)</span>
+<span id="cb314-35"><a href="spatial-analysis---micro-samples.html#cb314-35" tabindex="-1"></a>phystot</span>
+<span id="cb314-36"><a href="spatial-analysis---micro-samples.html#cb314-36" tabindex="-1"></a></span>
+<span id="cb314-37"><a href="spatial-analysis---micro-samples.html#cb314-37" tabindex="-1"></a><span class="co"># All traits independently</span></span>
+<span id="cb314-38"><a href="spatial-analysis---micro-samples.html#cb314-38" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D01)[</span>
+<span id="cb314-39"><a href="spatial-analysis---micro-samples.html#cb314-39" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-40"><a href="spatial-analysis---micro-samples.html#cb314-40" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-41"><a href="spatial-analysis---micro-samples.html#cb314-41" tabindex="-1"></a>]),</span>
+<span id="cb314-42"><a href="spatial-analysis---micro-samples.html#cb314-42" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-43"><a href="spatial-analysis---micro-samples.html#cb314-43" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-44"><a href="spatial-analysis---micro-samples.html#cb314-44" tabindex="-1"></a>)</span>
+<span id="cb314-45"><a href="spatial-analysis---micro-samples.html#cb314-45" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D02)[</span>
+<span id="cb314-46"><a href="spatial-analysis---micro-samples.html#cb314-46" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-47"><a href="spatial-analysis---micro-samples.html#cb314-47" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-48"><a href="spatial-analysis---micro-samples.html#cb314-48" tabindex="-1"></a>]),</span>
+<span id="cb314-49"><a href="spatial-analysis---micro-samples.html#cb314-49" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-50"><a href="spatial-analysis---micro-samples.html#cb314-50" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-51"><a href="spatial-analysis---micro-samples.html#cb314-51" tabindex="-1"></a>)</span>
+<span id="cb314-52"><a href="spatial-analysis---micro-samples.html#cb314-52" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D03)[</span>
+<span id="cb314-53"><a href="spatial-analysis---micro-samples.html#cb314-53" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-54"><a href="spatial-analysis---micro-samples.html#cb314-54" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-55"><a href="spatial-analysis---micro-samples.html#cb314-55" tabindex="-1"></a>]),</span>
+<span id="cb314-56"><a href="spatial-analysis---micro-samples.html#cb314-56" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-57"><a href="spatial-analysis---micro-samples.html#cb314-57" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-58"><a href="spatial-analysis---micro-samples.html#cb314-58" tabindex="-1"></a>)</span>
+<span id="cb314-59"><a href="spatial-analysis---micro-samples.html#cb314-59" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D05)[</span>
+<span id="cb314-60"><a href="spatial-analysis---micro-samples.html#cb314-60" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-61"><a href="spatial-analysis---micro-samples.html#cb314-61" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-62"><a href="spatial-analysis---micro-samples.html#cb314-62" tabindex="-1"></a>]),</span>
+<span id="cb314-63"><a href="spatial-analysis---micro-samples.html#cb314-63" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-64"><a href="spatial-analysis---micro-samples.html#cb314-64" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-65"><a href="spatial-analysis---micro-samples.html#cb314-65" tabindex="-1"></a>)</span>
+<span id="cb314-66"><a href="spatial-analysis---micro-samples.html#cb314-66" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D06)[</span>
+<span id="cb314-67"><a href="spatial-analysis---micro-samples.html#cb314-67" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-68"><a href="spatial-analysis---micro-samples.html#cb314-68" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-69"><a href="spatial-analysis---micro-samples.html#cb314-69" tabindex="-1"></a>]),</span>
+<span id="cb314-70"><a href="spatial-analysis---micro-samples.html#cb314-70" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-71"><a href="spatial-analysis---micro-samples.html#cb314-71" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-72"><a href="spatial-analysis---micro-samples.html#cb314-72" tabindex="-1"></a>)</span>
+<span id="cb314-73"><a href="spatial-analysis---micro-samples.html#cb314-73" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D07)[</span>
+<span id="cb314-74"><a href="spatial-analysis---micro-samples.html#cb314-74" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-75"><a href="spatial-analysis---micro-samples.html#cb314-75" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-76"><a href="spatial-analysis---micro-samples.html#cb314-76" tabindex="-1"></a>]),</span>
+<span id="cb314-77"><a href="spatial-analysis---micro-samples.html#cb314-77" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-78"><a href="spatial-analysis---micro-samples.html#cb314-78" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-79"><a href="spatial-analysis---micro-samples.html#cb314-79" tabindex="-1"></a>)</span>
+<span id="cb314-80"><a href="spatial-analysis---micro-samples.html#cb314-80" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D08)[</span>
+<span id="cb314-81"><a href="spatial-analysis---micro-samples.html#cb314-81" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-82"><a href="spatial-analysis---micro-samples.html#cb314-82" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-83"><a href="spatial-analysis---micro-samples.html#cb314-83" tabindex="-1"></a>]),</span>
+<span id="cb314-84"><a href="spatial-analysis---micro-samples.html#cb314-84" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-85"><a href="spatial-analysis---micro-samples.html#cb314-85" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-86"><a href="spatial-analysis---micro-samples.html#cb314-86" tabindex="-1"></a>)</span>
+<span id="cb314-87"><a href="spatial-analysis---micro-samples.html#cb314-87" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>D09)[</span>
+<span id="cb314-88"><a href="spatial-analysis---micro-samples.html#cb314-88" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-89"><a href="spatial-analysis---micro-samples.html#cb314-89" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-90"><a href="spatial-analysis---micro-samples.html#cb314-90" tabindex="-1"></a>]),</span>
+<span id="cb314-91"><a href="spatial-analysis---micro-samples.html#cb314-91" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-92"><a href="spatial-analysis---micro-samples.html#cb314-92" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-93"><a href="spatial-analysis---micro-samples.html#cb314-93" tabindex="-1"></a>)</span>
+<span id="cb314-94"><a href="spatial-analysis---micro-samples.html#cb314-94" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B01)[</span>
+<span id="cb314-95"><a href="spatial-analysis---micro-samples.html#cb314-95" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-96"><a href="spatial-analysis---micro-samples.html#cb314-96" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-97"><a href="spatial-analysis---micro-samples.html#cb314-97" tabindex="-1"></a>]),</span>
+<span id="cb314-98"><a href="spatial-analysis---micro-samples.html#cb314-98" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-99"><a href="spatial-analysis---micro-samples.html#cb314-99" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-100"><a href="spatial-analysis---micro-samples.html#cb314-100" tabindex="-1"></a>)</span>
+<span id="cb314-101"><a href="spatial-analysis---micro-samples.html#cb314-101" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B02)[</span>
+<span id="cb314-102"><a href="spatial-analysis---micro-samples.html#cb314-102" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-103"><a href="spatial-analysis---micro-samples.html#cb314-103" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-104"><a href="spatial-analysis---micro-samples.html#cb314-104" tabindex="-1"></a>]),</span>
+<span id="cb314-105"><a href="spatial-analysis---micro-samples.html#cb314-105" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-106"><a href="spatial-analysis---micro-samples.html#cb314-106" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-107"><a href="spatial-analysis---micro-samples.html#cb314-107" tabindex="-1"></a>)</span>
+<span id="cb314-108"><a href="spatial-analysis---micro-samples.html#cb314-108" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B03)[</span>
+<span id="cb314-109"><a href="spatial-analysis---micro-samples.html#cb314-109" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-110"><a href="spatial-analysis---micro-samples.html#cb314-110" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-111"><a href="spatial-analysis---micro-samples.html#cb314-111" tabindex="-1"></a>]),</span>
+<span id="cb314-112"><a href="spatial-analysis---micro-samples.html#cb314-112" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-113"><a href="spatial-analysis---micro-samples.html#cb314-113" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-114"><a href="spatial-analysis---micro-samples.html#cb314-114" tabindex="-1"></a>)</span>
+<span id="cb314-115"><a href="spatial-analysis---micro-samples.html#cb314-115" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B06)[</span>
+<span id="cb314-116"><a href="spatial-analysis---micro-samples.html#cb314-116" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-117"><a href="spatial-analysis---micro-samples.html#cb314-117" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-118"><a href="spatial-analysis---micro-samples.html#cb314-118" tabindex="-1"></a>]),</span>
+<span id="cb314-119"><a href="spatial-analysis---micro-samples.html#cb314-119" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-120"><a href="spatial-analysis---micro-samples.html#cb314-120" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-121"><a href="spatial-analysis---micro-samples.html#cb314-121" tabindex="-1"></a>)</span>
+<span id="cb314-122"><a href="spatial-analysis---micro-samples.html#cb314-122" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B07)[</span>
+<span id="cb314-123"><a href="spatial-analysis---micro-samples.html#cb314-123" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-124"><a href="spatial-analysis---micro-samples.html#cb314-124" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-125"><a href="spatial-analysis---micro-samples.html#cb314-125" tabindex="-1"></a>]),</span>
+<span id="cb314-126"><a href="spatial-analysis---micro-samples.html#cb314-126" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-127"><a href="spatial-analysis---micro-samples.html#cb314-127" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-128"><a href="spatial-analysis---micro-samples.html#cb314-128" tabindex="-1"></a>)</span>
+<span id="cb314-129"><a href="spatial-analysis---micro-samples.html#cb314-129" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B08)[</span>
+<span id="cb314-130"><a href="spatial-analysis---micro-samples.html#cb314-130" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-131"><a href="spatial-analysis---micro-samples.html#cb314-131" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-132"><a href="spatial-analysis---micro-samples.html#cb314-132" tabindex="-1"></a>]),</span>
+<span id="cb314-133"><a href="spatial-analysis---micro-samples.html#cb314-133" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-134"><a href="spatial-analysis---micro-samples.html#cb314-134" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-135"><a href="spatial-analysis---micro-samples.html#cb314-135" tabindex="-1"></a>)</span>
+<span id="cb314-136"><a href="spatial-analysis---micro-samples.html#cb314-136" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B09)[</span>
+<span id="cb314-137"><a href="spatial-analysis---micro-samples.html#cb314-137" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-138"><a href="spatial-analysis---micro-samples.html#cb314-138" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-139"><a href="spatial-analysis---micro-samples.html#cb314-139" tabindex="-1"></a>]),</span>
+<span id="cb314-140"><a href="spatial-analysis---micro-samples.html#cb314-140" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-141"><a href="spatial-analysis---micro-samples.html#cb314-141" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-142"><a href="spatial-analysis---micro-samples.html#cb314-142" tabindex="-1"></a>)</span>
+<span id="cb314-143"><a href="spatial-analysis---micro-samples.html#cb314-143" tabindex="-1"></a><span class="fu">rtest.decdiv</span>(phylog, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(comp)), <span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(listdis<span class="sc">$</span>B10)[</span>
+<span id="cb314-144"><a href="spatial-analysis---micro-samples.html#cb314-144" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves),</span>
+<span id="cb314-145"><a href="spatial-analysis---micro-samples.html#cb314-145" tabindex="-1"></a>  <span class="fu">names</span>(phylog<span class="sc">$</span>leaves)</span>
+<span id="cb314-146"><a href="spatial-analysis---micro-samples.html#cb314-146" tabindex="-1"></a>]),</span>
+<span id="cb314-147"><a href="spatial-analysis---micro-samples.html#cb314-147" tabindex="-1"></a><span class="at">nrep =</span> <span class="dv">99</span>, <span class="at">vranking =</span> <span class="st">&quot;droot&quot;</span>, <span class="at">optiontest =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb314-148"><a href="spatial-analysis---micro-samples.html#cb314-148" tabindex="-1"></a><span class="at">ties.method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">option =</span> <span class="dv">3</span></span>
+<span id="cb314-149"><a href="spatial-analysis---micro-samples.html#cb314-149" tabindex="-1"></a>)</span>
+<span id="cb314-150"><a href="spatial-analysis---micro-samples.html#cb314-150" tabindex="-1"></a></span>
+<span id="cb314-151"><a href="spatial-analysis---micro-samples.html#cb314-151" tabindex="-1"></a><span class="do">## Update the PCOA of traits to remove traits without phylogenetic signal</span></span>
+<span id="cb314-152"><a href="spatial-analysis---micro-samples.html#cb314-152" tabindex="-1"></a><span class="co"># Distance matrix for traits together</span></span>
+<span id="cb314-153"><a href="spatial-analysis---micro-samples.html#cb314-153" tabindex="-1"></a>disT <span class="ot">&lt;-</span> <span class="fu">dist.ktab</span>(<span class="fu">ktab.list.df</span>(<span class="fu">list</span>(genome_funct[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">13</span>)])), <span class="fu">c</span>(<span class="st">&quot;Q&quot;</span>), <span class="at">scan =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb314-154"><a href="spatial-analysis---micro-samples.html#cb314-154" tabindex="-1"></a><span class="co"># choose 1</span></span>
+<span id="cb314-155"><a href="spatial-analysis---micro-samples.html#cb314-155" tabindex="-1"></a>pcotraits <span class="ot">&lt;-</span> <span class="fu">dudi.pco</span>(disT, coacomp<span class="sc">$</span>cw, <span class="at">full =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb314-156"><a href="spatial-analysis---micro-samples.html#cb314-156" tabindex="-1"></a><span class="fu">summary</span>(pcotraits)</span></code></pre></div>
+</div>
+<div id="extended-rlq-analysis-1" class="section level6 hasAnchor" number="18.3.0.0.0.6">
+<h6><span class="header-section-number">18.3.0.0.0.6</span> Extended RLQ analysis<a href="spatial-analysis---micro-samples.html#extended-rlq-analysis-1" class="anchor-section" aria-label="Anchor link to header"></a></h6>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb315-1"><a href="spatial-analysis---micro-samples.html#cb315-1" tabindex="-1"></a>rlqmix <span class="ot">&lt;-</span> <span class="fu">rlqESLTP</span>(pcaenv, pcaspa, coacomp, pcotraits, pcophy, <span class="at">scan =</span> F, <span class="at">nf =</span> <span class="dv">2</span>)</span>
+<span id="cb315-2"><a href="spatial-analysis---micro-samples.html#cb315-2" tabindex="-1"></a><span class="fu">barplot</span>(rlqmix<span class="sc">$</span>eig)</span>
+<span id="cb315-3"><a href="spatial-analysis---micro-samples.html#cb315-3" tabindex="-1"></a>rlqmix<span class="sc">$</span>eig[<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(rlqmix<span class="sc">$</span>eig)</span>
+<span id="cb315-4"><a href="spatial-analysis---micro-samples.html#cb315-4" tabindex="-1"></a><span class="co"># [1] 0.73</span></span>
+<span id="cb315-5"><a href="spatial-analysis---micro-samples.html#cb315-5" tabindex="-1"></a>rlqmix<span class="sc">$</span>eig[<span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sum</span>(rlqmix<span class="sc">$</span>eig)</span>
+<span id="cb315-6"><a href="spatial-analysis---micro-samples.html#cb315-6" tabindex="-1"></a><span class="co"># [1] 0.12</span></span></code></pre></div>
+<p><strong>1st axis</strong></p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb316-1"><a href="spatial-analysis---micro-samples.html#cb316-1" tabindex="-1"></a><span class="fu">plot</span>(rlqmix, <span class="at">xy =</span> spa, <span class="at">ax =</span> <span class="dv">1</span>, <span class="at">wh =</span> <span class="st">&quot;S&quot;</span>)</span>
+<span id="cb316-2"><a href="spatial-analysis---micro-samples.html#cb316-2" tabindex="-1"></a><span class="fu">plot</span>(rlqmix, <span class="at">phy =</span> phylog, <span class="at">ax =</span> <span class="dv">1</span>, <span class="at">wh =</span> <span class="st">&quot;P&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb317-1"><a href="spatial-analysis---micro-samples.html#cb317-1" tabindex="-1"></a><span class="fu">plot</span>(rlqmix, <span class="at">traits =</span> genome_funct[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">13</span>)], <span class="at">ax =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;Q&quot;</span>, <span class="at">wh =</span> <span class="st">&quot;T&quot;</span>)</span>
+<span id="cb317-2"><a href="spatial-analysis---micro-samples.html#cb317-2" tabindex="-1"></a></span>
+<span id="cb317-3"><a href="spatial-analysis---micro-samples.html#cb317-3" tabindex="-1"></a>GIFT_db <span class="sc">%&gt;%</span></span>
+<span id="cb317-4"><a href="spatial-analysis---micro-samples.html#cb317-4" tabindex="-1"></a>  <span class="fu">distinct</span>(Code_function, Function)<span class="sc">%&gt;%</span></span>
+<span id="cb317-5"><a href="spatial-analysis---micro-samples.html#cb317-5" tabindex="-1"></a>  <span class="fu">filter</span>(Code_function <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D02&quot;</span>, <span class="st">&quot;B07&quot;</span>, <span class="st">&quot;D03&quot;</span>, <span class="st">&quot;D09&quot;</span>, <span class="st">&quot;D07&quot;</span>, <span class="st">&quot;D08&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb318-1"><a href="spatial-analysis---micro-samples.html#cb318-1" tabindex="-1"></a><span class="fu">plot</span>(rlqmix, <span class="at">env =</span> pcaenv<span class="sc">$</span>tab, <span class="at">ax =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;Q&quot;</span>, <span class="at">wh =</span> <span class="st">&quot;E&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb319-1"><a href="spatial-analysis---micro-samples.html#cb319-1" tabindex="-1"></a><span class="fu">s.value</span>(metadata_ca_cryosection[, <span class="fu">c</span>(<span class="st">&quot;Xcoord&quot;</span>, <span class="st">&quot;Ycoord&quot;</span>)],</span>
+<span id="cb319-2"><a href="spatial-analysis---micro-samples.html#cb319-2" tabindex="-1"></a>  rlqmix<span class="sc">$</span>lR[, <span class="dv">1</span>],</span>
+<span id="cb319-3"><a href="spatial-analysis---micro-samples.html#cb319-3" tabindex="-1"></a>  <span class="at">sub =</span> <span class="st">&quot;Patterns in S and E&quot;</span>,</span>
+<span id="cb319-4"><a href="spatial-analysis---micro-samples.html#cb319-4" tabindex="-1"></a>  <span class="at">csub =</span> <span class="fl">1.5</span>,</span>
+<span id="cb319-5"><a href="spatial-analysis---micro-samples.html#cb319-5" tabindex="-1"></a>  <span class="at">include.origin =</span> F,</span>
+<span id="cb319-6"><a href="spatial-analysis---micro-samples.html#cb319-6" tabindex="-1"></a>  <span class="at">csize =</span> <span class="fl">0.8</span></span>
+<span id="cb319-7"><a href="spatial-analysis---micro-samples.html#cb319-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb320-1"><a href="spatial-analysis---micro-samples.html#cb320-1" tabindex="-1"></a><span class="fu">plot</span>(rlqmix, <span class="at">env =</span> pcaenv<span class="sc">$</span>tab, <span class="at">ax =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">&quot;Q&quot;</span>, <span class="at">wh =</span> <span class="st">&quot;E&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb321-1"><a href="spatial-analysis---micro-samples.html#cb321-1" tabindex="-1"></a><span class="fu">dotchart.phylog</span>(phylog, rlqmix<span class="sc">$</span>lQ[<span class="fu">names</span>(phylog<span class="sc">$</span>leaves), <span class="dv">1</span>],</span>
+<span id="cb321-2"><a href="spatial-analysis---micro-samples.html#cb321-2" tabindex="-1"></a>  <span class="at">cleav =</span> <span class="dv">0</span>, <span class="at">cdot =</span> <span class="dv">1</span>,</span>
+<span id="cb321-3"><a href="spatial-analysis---micro-samples.html#cb321-3" tabindex="-1"></a>  <span class="at">scaling =</span> F, <span class="at">yjoi =</span> <span class="dv">0</span>, <span class="at">cex.axis =</span> <span class="fl">1.5</span>, <span class="at">sub =</span> <span class="st">&quot;patterns in T and P&quot;</span>, <span class="at">csub =</span> <span class="dv">0</span></span>
+<span id="cb321-4"><a href="spatial-analysis---micro-samples.html#cb321-4" tabindex="-1"></a>)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="beta-diversity---macro-vs-micro-comparison.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="export-data-for-microbetag.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
