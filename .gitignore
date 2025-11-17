@@ -32,3 +32,24 @@ Thumbs.db
 data/micro/preprocess_data/
 data/macro/preprocess_data/
 
+
+.RDataTmp
+DEVELOPER_INSTRUCTIONS.md
+_main_files/
+check_chunk_names.py
+data/Afekta_Histomonas_Metabolites/
+data/MAG_catalogue/checkm2.quality_report.tsv
+data/MAG_catalogue/dram.annotations.tsv.gz
+data/MAG_catalogue/drep.0.95.fa
+data/MAG_catalogue/genome_names.tsv
+data/MAG_catalogue/gtdbtk.backbone.bac120.classify.tree
+data/MAG_catalogue/gtdbtk.summary.tsv
+data/MAG_catalogue/unique_genome_names.tsv
+data/macro/genome.count.REF0029-m_mg_hybrid-drep.0.95.tsv.gz
+data/macro/genome.covered_bases.REF0029-m_mg_hybrid-drep.0.95.tsv.gz
+data/macro/quantify/
+data/micro/MSEB0042_45/
+data/micro/MSEB0042_59/
+fix_headings_and_comments.py
+older_code/
+results/
