@@ -49,15 +49,15 @@ boxplot_reads_prc_1 <- plot_data_stats_macro %>%
 
 ```{r plot_histomonas_macro_barplot, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
 barplot_hist <- plot_data_stats_macro %>%
-    filter(treatment != "TM0") %>%
-  ggplot(aes(x = microsample, y = histomonas_total_mapped, fill = treatment)) +
+  filter(treatment != "TM0") %>%
+  ggplot(aes(x = animal, y = histomonas_total_mapped, fill = treatment)) +
   geom_bar(stat = "identity", colour = "white", linewidth = 0.1) +
   scale_fill_manual(values = treatment_colours_bright) +
-  labs(x = "Samples", y = "Histomonas reads", fill = "Read type") +
+  labs(x = "Animal", y = "Histomonas reads", fill = "Read type") +
   facet_nested(. ~ treatment_expl + age_category, scales = "free", space = "free") +
   theme_minimal() +
   custom_ggplot_theme +
-  theme(axis.text.x = element_blank(),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_text(),
         legend.position = "bottom",
         plot.margin = margin(0.2, 0.2, 0.2, 0.2)) #+

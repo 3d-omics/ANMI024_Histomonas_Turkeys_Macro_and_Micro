@@ -76,6 +76,34 @@ bacterial_load_macro_plot
 
 
 ```
+```{r plot_bacterial_load_macro_metadata, warning=FALSE, comments="", message=FALSE, fig.height=5, fig.width=10}
+barplot_2 <- tidy_plot_data_stats_counts_macro %>%
+  filter(treatment != "TM0") %>%
+  ggplot(aes(y = counts, x = animal, fill = label)) +
+  geom_bar(stat="identity", colour="white", linewidth=0.1) + #plot stacked bars with white borders
+  scale_fill_manual(values = color_palette_tidy_plot_data_stats_counts) +
+  labs(x = "Animals",y = "Read Counts",fill = "Read type") +
+  facet_nested(. ~ treatment_expl + age_category, scales = "free", space = "free") +
+  theme_minimal() +
+  custom_ggplot_theme +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.text.y = element_text(),
+        legend.position = "bottom",
+        plot.margin = margin(0.2, 0.2, 0.2, 0.2)) 
+# barplot_2
+```
+
+```{r plot_bacterial_load_macro_combo, warning=FALSE, comments="", message=FALSE, fig.height=8, fig.width=10}
+
+(bacterial_load_macro_plot_log + barplot_2) + 
+  plot_layout(
+    ncol = 1,        # single column
+    heights = c(2, 1),   # assign relative heights
+    guides = "collect"
+  ) + 
+  plot_annotation(tag_levels = 'a') &
+    theme(legend.position = "bottom", legend.box = "vertical")
+```
 
 
 ## Micro-samples

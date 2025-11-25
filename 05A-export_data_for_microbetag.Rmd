@@ -66,6 +66,14 @@ cat("Dimensions:", nrow(metabolites_mm), "rows (metabolites),", ncol(metabolites
 cat("Number of samples:", ncol(metabolites_mm) - 1, "\n")
 ```
 
+Export metabolites MM data
+```{r export_metabolites_mm, eval=FALSE}
+write_csv(metabolites_hm, "export/metabolites_hm.csv")
+cat("Exported metabolites_hm to export/metabolites_hm.csv\n")
+cat("Dimensions:", nrow(metabolites_mm), "rows (metabolites),", ncol(metabolites_mm), "columns (Curated ID + samples)\n")
+cat("Number of samples:", ncol(metabolites_mm) - 1, "\n")
+```
+
 ## Export genome metadata
 
 This file contains metadata for all Metagenome-Assembled Genomes (MAGs) used in the analysis.
